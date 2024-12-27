@@ -10,11 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Observable;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
+import Bista.KZ_XehetasunakIkusi;
 
-import bista.KZ_XehetasunakIkusi;
 @SuppressWarnings("deprecation")
 public class KatalogoZabalduaKargatu extends Observable{
 	private static KatalogoZabalduaKargatu nKZK;
