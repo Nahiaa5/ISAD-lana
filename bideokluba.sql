@@ -33,18 +33,18 @@ CREATE TABLE `erabiltzaile` (
   `email` varchar(50) DEFAULT NULL,
   `pasahitza` varchar(30) DEFAULT NULL,
   `abizena` varchar(30) DEFAULT NULL,
-  `admin` TINYINT(1) DEFAULT NULL
+  `admin` TINYINT(1) DEFAULT 0,
+  `onartuta` TINYINT(1) DEFAULT 0,
+  PRIMARY KEY (`NAN`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `erabiltzaile`
 --
 
-INSERT INTO `erabiltzaile` (`NAN`, `izena`, `email`, `pasahitza`, `abizena`, `admin`) VALUES
-('455678123P', 'Amaia', 'am@gmail.com', '9876agur', 'Garcia', 0),
-('79136031T', 'Laura', 'laura@gmail.com', 'hola1234', 'Caballero', 0),
-('12345678Z', 'Erabiltzaile', 'erabiltzaile@gmail.com', 'erab123', 'User', 0),
-('79224675A', 'Admin', 'admin@gmail.com', 'admin', 'admin', 1);
+INSERT INTO `erabiltzaile` (`NAN`, `izena`, `email`, `pasahitza`, `abizena`, `admin`, `onartuta`) VALUES
+('12345678Z', 'Erabiltzaile', 'erabiltzaile@gmail.com', 'erab123', 'User', 0, 1),
+('79224675A', 'Admin', 'admin@gmail.com', 'admin', 'admin', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -53,22 +53,25 @@ INSERT INTO `erabiltzaile` (`NAN`, `izena`, `email`, `pasahitza`, `abizena`, `ad
 --
 
 CREATE TABLE `film` (
-  `filmID` int(11) NOT NULL,
+  `filmID` int(11) NOT NULL AUTO_INCREMENT,
   `izenburua` varchar(50) DEFAULT NULL,
   `aktoreak` varchar(255) DEFAULT NULL,
   `urtea` year(4) DEFAULT NULL,
   `generoa` varchar(50) DEFAULT NULL,
   `zuzendaria` varchar(20) DEFAULT NULL,
-  `erabiltzaileNAN` varchar(10) DEFAULT NULL,
+  `adminNAN` varchar(10) DEFAULT NULL,
   `katalogoan` tinyint(1) NOT NULL DEFAULT 0,
-  `puntuazioaBb` double DEFAULT 0
+  `puntuazioaBb` double DEFAULT 0,
+  PRIMARY KEY (`filmID`),
+  FOREIGN KEY (`adminNAN`) REFERENCES `erabiltzaile`(`NAN`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `film`
 --
 
-
+INSERT INTO `film` (`izenburua`, `aktoreak`, `urtea`, `generoa`, `zuzendaria`, `adminNAN`, `katalogoan`, `puntuazioaBb`) VALUES 
+('La la land', 'Ryan Gosling, Emma Stone', '2016', 'Musical', 'Damien Chazelle', '79224675A', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -77,10 +80,12 @@ CREATE TABLE `film` (
 --
 
 CREATE TABLE `filmzerrenda` (
-  `zerrendaID` int(11) NOT NULL,
+  `zerrendaID` int(11) NOT NULL AUTO_INCREMENT,
   `erabiltzaileNAN` varchar(10) DEFAULT NULL,
   `izena` varchar(30) DEFAULT NULL,
-  `pribazitatea` tinyint(1) DEFAULT NULL
+  `pribazitatea` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`zerrendaID`),
+  FOREIGN KEY (`erabiltzaileNAN`) REFERENCES `erabiltzaile`(`NAN`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -91,7 +96,10 @@ CREATE TABLE `filmzerrenda` (
 
 CREATE TABLE `kudeatu` (
   `erabiltzaileNAN` varchar(10) NOT NULL,
-  `adminNAN` varchar(10) NOT NULL
+  `adminNAN` varchar(10) NOT NULL,
+  PRIMARY KEY (`erabiltzaileNAN`, `adminNAN`),
+  FOREIGN KEY (`erabiltzaileNAN`) REFERENCES `erabiltzaile`(`NAN`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`adminNAN`) REFERENCES `erabiltzaile`(`NAN`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -102,7 +110,10 @@ CREATE TABLE `kudeatu` (
 
 CREATE TABLE `parteizan` (
   `zerrendaID` int(11) NOT NULL,
-  `filmID` int(11) NOT NULL
+  `filmID` int(11) NOT NULL,
+  PRIMARY KEY (`zerrendaID`, `filmID`),
+  FOREIGN KEY (`zerrendaID`) REFERENCES `filmzerrenda`(`zerrendaID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`filmID`) REFERENCES `film`(`filmID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -116,106 +127,39 @@ CREATE TABLE `puntuazioa` (
   `filmID` int(11) NOT NULL,
   `puntuazioa` tinyint(1) DEFAULT NULL,
   `iruzkina` text DEFAULT NULL,
-  `data` date DEFAULT NULL
+  `data` date DEFAULT NULL,
+  PRIMARY KEY (`NAN`, `filmID`),
+  FOREIGN KEY (`NAN`) REFERENCES `erabiltzaile`(`NAN`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`filmID`) REFERENCES `film`(`filmID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Índices para tablas volcadas
---
+-- --------------------------------------------------------
 
 --
--- Indices de la tabla `erabiltzaile`
---
-ALTER TABLE `erabiltzaile`
-  ADD PRIMARY KEY (`NAN`);
-
---
--- Indices de la tabla `film`
---
-ALTER TABLE `film`
-  ADD PRIMARY KEY (`filmID`),
-  ADD KEY `erabiltzaileNAN` (`erabiltzaileNAN`);
-
---
--- Indices de la tabla `filmzerrenda`
---
-ALTER TABLE `filmzerrenda`
-  ADD PRIMARY KEY (`zerrendaID`),
-  ADD KEY `erabiltzaileNAN` (`erabiltzaileNAN`);
-
---
--- Indices de la tabla `kudeatu`
---
-ALTER TABLE `kudeatu`
-  ADD PRIMARY KEY (`erabiltzaileNAN`,`adminNAN`),
-  ADD KEY `adminNAN` (`adminNAN`);
-
---
--- Indices de la tabla `parteizan`
---
-ALTER TABLE `parteizan`
-  ADD PRIMARY KEY (`zerrendaID`,`filmID`),
-  ADD KEY `filmID` (`filmID`);
-
---
--- Indices de la tabla `puntuazioa`
---
-ALTER TABLE `puntuazioa`
-  ADD PRIMARY KEY (`NAN`,`filmID`),
-  ADD KEY `filmID` (`filmID`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
+-- Estructura de tabla para la tabla `hasData`
 --
 
---
--- AUTO_INCREMENT de la tabla `film`
---
-ALTER TABLE `film`
-  MODIFY `filmID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+CREATE TABLE `hasData` (
+  `data` date NOT NULL,
+  PRIMARY KEY (`data`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
 
 --
--- Restricciones para tablas volcadas
+-- Estructura de tabla para la tabla `alokairua`
 --
 
---
--- Filtros para la tabla `film`
---
-ALTER TABLE `film`
-  ADD CONSTRAINT `film_ibfk_1` FOREIGN KEY (`erabiltzaileNAN`) REFERENCES `erabiltzaile` (`NAN`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `filmzerrenda`
---
-ALTER TABLE `filmzerrenda`
-  ADD CONSTRAINT `filmzerrenda_ibfk_1` FOREIGN KEY (`erabiltzaileNAN`) REFERENCES `erabiltzaile` (`NAN`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `kudeatu`
---
-ALTER TABLE `kudeatu`
-  ADD CONSTRAINT `kudeatu_ibfk_1` FOREIGN KEY (`erabiltzaileNAN`) REFERENCES `erabiltzaile` (`NAN`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `kudeatu_ibfk_2` FOREIGN KEY (`adminNAN`) REFERENCES `erabiltzaile` (`NAN`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `parteizan`
---
-ALTER TABLE `parteizan`
-  ADD CONSTRAINT `parteizan_ibfk_1` FOREIGN KEY (`zerrendaID`) REFERENCES `filmzerrenda` (`zerrendaID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `parteizan_ibfk_2` FOREIGN KEY (`filmID`) REFERENCES `film` (`filmID`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `puntuazioa`
---
-ALTER TABLE `puntuazioa`
-  ADD CONSTRAINT `puntuazioa_ibfk_1` FOREIGN KEY (`NAN`) REFERENCES `erabiltzaile` (`NAN`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `puntuazioa_ibfk_2` FOREIGN KEY (`filmID`) REFERENCES `film` (`filmID`) ON DELETE CASCADE ON UPDATE CASCADE;
-COMMIT;
-
-INSERT INTO `film` (`filmID`, `izenburua`, `aktoreak`, `urtea`, `generoa`, `zuzendaria`, `erabiltzaileNAN`, `katalogoan`, `puntuazioaBb`) VALUES 
-(3, 'La la land', 'Ryan Gosling, Emma Stone', '2016', 'Musical', 'Damien Chazelle', '455678123P', 1, 0);
-
-INSERT INTO `erabiltzaile` (`NAN`, `izena`, `email`, `pasahitza`, `abizena`) VALUES ('79224675A', 'Admin', 'admin@gmail.com', 'admin', 'admin');
+CREATE TABLE `alokairua` (
+  `erabiltzaileNAN` varchar(10) NOT NULL,
+  `filmID` int(11) NOT NULL,
+  `hasData` date NOT NULL,
+  `bukData` date DEFAULT NULL,
+  PRIMARY KEY (`erabiltzaileNAN`, `filmID`, `hasData`),
+  FOREIGN KEY (`erabiltzaileNAN`) REFERENCES `erabiltzaile`(`NAN`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`filmID`) REFERENCES `film`(`filmID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`hasData`) REFERENCES `hasData`(`data`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

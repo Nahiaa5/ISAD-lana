@@ -25,11 +25,11 @@ public class DB_kudeatzailea {
                 int urtea = rs.getInt("urtea");
                 String generoa = rs.getString("generoa");
                 String zuzendaria = rs.getString("zuzendaria");
-                String erabiltzaileNAN = rs.getString("erabiltzaileNAN");
+                String adminNAN = rs.getString("adminNAN");
                 boolean katalogoan = rs.getInt("katalogoan") == 1;
                 double puntuazioaBb = rs.getDouble("puntuazioaBb");
 
-                Film film = new Film(filmID, izenburua, aktoreak, urtea, generoa, zuzendaria, erabiltzaileNAN, katalogoan, puntuazioaBb);
+                Film film = new Film(filmID, izenburua, aktoreak, urtea, generoa, zuzendaria, adminNAN, katalogoan, puntuazioaBb);
                 filmak.add(film);
             }
 

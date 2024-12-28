@@ -12,19 +12,19 @@ public class Film extends Observable{
     private int urtea; 
     private String generoa; 
     private String zuzendaria; 
-    private String erabiltzaileNAN; 
+    private String adminNAN; 
     private boolean katalogoan; 
     private double puntuazioaBb;
     private List<String> iruzkinak;
     
-    public Film(int filmID, String izenburua, String aktoreak, int urtea, String generoa, String zuzendaria, String erabiltzaileNAN, boolean katalogoan, double puntuazioaBb) {
+    public Film(int filmID, String izenburua, String aktoreak, int urtea, String generoa, String zuzendaria, String adminNAN, boolean katalogoan, double puntuazioaBb) {
         this.filmID = filmID;
         this.izenburua = izenburua;
         this.aktoreak = aktoreak;
         this.urtea = urtea;
         this.generoa = generoa;
         this.zuzendaria = zuzendaria;
-        this.erabiltzaileNAN = erabiltzaileNAN;
+        this.adminNAN = adminNAN;
         this.katalogoan = katalogoan;
         this.puntuazioaBb = puntuazioaBb;
         this.iruzkinak=new ArrayList<>();
@@ -81,11 +81,11 @@ public class Film extends Observable{
     }
 
     public String getErabiltzaileNAN() {
-        return erabiltzaileNAN;
+        return adminNAN;
     }
 
     public void setErabiltzaileNAN(String erabiltzaileNAN) {
-        this.erabiltzaileNAN = erabiltzaileNAN;
+        this.adminNAN = erabiltzaileNAN;
     }
 
     public boolean getKatalogoan() {
@@ -132,7 +132,7 @@ public class Film extends Observable{
                 ", urtea=" + urtea +
                 ", generoa='" + generoa + '\'' +
                 ", zuzendaria='" + zuzendaria + '\'' +
-                ", erabiltzaileNAN='" + erabiltzaileNAN + '\'' +
+                ", adminNAN='" + adminNAN + '\'' +
                 ", katalogoan=" + katalogoan +
                 ", Batez besteko puntuazioa=" + puntuazioaBb +
                 '}';
