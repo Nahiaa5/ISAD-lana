@@ -1,6 +1,7 @@
 package Bista;
 
 import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -24,6 +25,7 @@ import Eredua.Film;
 import Eredua.KatalogoNagusia;
 
 public class KatalogoNagusiaB extends JFrame implements Observer {
+	private static final long serialVersionUID = 1L;
 	private KatalogoNagusia katalogo;
 	private JTextField bilaketa;
 	private JButton bilatuBtn;
@@ -31,6 +33,7 @@ public class KatalogoNagusiaB extends JFrame implements Observer {
 	private JPanel filmPanel;
 	private JLabel emaitzikEz;
 	private DB_kudeatzailea dbK;
+	private Controler controler;
 
 	/**
 	 * Launch the application.
@@ -41,8 +44,8 @@ public class KatalogoNagusiaB extends JFrame implements Observer {
 				try {
 					KatalogoNagusia katalogo=KatalogoNagusia.getKN();
 					DB_kudeatzailea dbK = new DB_kudeatzailea();
-					KatalogoNagusiaB window = new KatalogoNagusiaB(katalogo, dbK);
-					window.setVisible(true);
+					KatalogoNagusiaB frame = new KatalogoNagusiaB(katalogo, dbK);
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -58,6 +61,7 @@ public class KatalogoNagusiaB extends JFrame implements Observer {
 		this.dbK=dbK;
 		this.katalogo.addObserver(this);
 		initialize();
+		controler=new Controler();
 		katalogo.loadFilmak(dbK);
 	}
 
@@ -74,30 +78,9 @@ public class KatalogoNagusiaB extends JFrame implements Observer {
 		bilatuBtn=new JButton("Bilatu");
 		ordenatuBtn=new JButton("Ordenatu");
 		
-		bilatuBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String f=bilaketa.getText().toLowerCase();
-				katalogo.filmaBilatu(f);
-			}
-		});
-		
-		bilaketa.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode()==KeyEvent.VK_ENTER) {
-					String f=bilaketa.getText().toLowerCase();
-					katalogo.filmaBilatu(f);
-				}
-			}
-		});
-		
-		ordenatuBtn.addActionListener(new ActionListener() {
-			@Override 
-			public void actionPerformed(ActionEvent e) {
-				katalogo.ordenatuPuntuazioz();
-			}
-		});
+		bilatuBtn.addActionListener(getControler());
+		bilaketa.addKeyListener(getControler());
+		ordenatuBtn.addActionListener(getControler());
 		
 		bilaketaPanel.add(bilaketa);
 		bilaketaPanel.add(bilatuBtn);
@@ -157,4 +140,31 @@ public class KatalogoNagusiaB extends JFrame implements Observer {
 			}
 		}
 	}
+	
+	private Controler getControler() {
+        if (controler == null) {
+            controler = new Controler();
+        }
+        return controler;
+    }
+
+    private class Controler extends KeyAdapter implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource().equals(bilatuBtn)) {
+            	String f = bilaketa.getText().toLowerCase();
+                katalogo.filmaBilatu(f);
+            } else if (e.getSource().equals(ordenatuBtn)) {
+                katalogo.ordenatuPuntuazioz();
+            }
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            if (e.getSource().equals(bilaketa) && e.getKeyCode() == KeyEvent.VK_ENTER) {
+            	String f = bilaketa.getText().toLowerCase();
+                katalogo.filmaBilatu(f);
+            }
+        }
+    }
 }
