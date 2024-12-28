@@ -43,6 +43,7 @@ CREATE TABLE `erabiltzaile` (
 INSERT INTO `erabiltzaile` (`NAN`, `izena`, `email`, `pasahitza`, `abizena`, `admin`) VALUES
 ('455678123P', 'Amaia', 'am@gmail.com', '9876agur', 'Garcia', 0),
 ('79136031T', 'Laura', 'laura@gmail.com', 'hola1234', 'Caballero', 0),
+('12345678Z', 'Erabiltzaile', 'erabiltzaile@gmail.com', 'erab123', 'User', 0),
 ('79224675A', 'Admin', 'admin@gmail.com', 'admin', 'admin', 1);
 
 -- --------------------------------------------------------
