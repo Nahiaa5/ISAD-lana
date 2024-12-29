@@ -13,6 +13,7 @@ import java.util.Observable;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import Bista.KZ_XehetasunakIkusi;
+import Kontroladorea.GestoreFilm;
 
 @SuppressWarnings("deprecation")
 public class KatalogoZabalduaKargatu extends Observable{
@@ -70,9 +71,6 @@ public class KatalogoZabalduaKargatu extends Observable{
         String izenburua = zatiak[0].trim();
         String year = zatiak[1].replace(")", "").trim();
         
-        System.out.println("Título: " + izenburua);
-        System.out.println("Año: " + year);
-        
 		try {
 			String apiKey = "209e2977";
 			String urlString = "http://www.omdbapi.com/?apikey=" + apiKey + "&t=" + izenburua.replace(" ", "%20") + "&y=" + year;
@@ -103,38 +101,14 @@ public class KatalogoZabalduaKargatu extends Observable{
 	}
 	
 	public void bidaliEskaera() {
-		System.out.println("cuando este lo demas pues aqui se mandan los datos");
-		System.out.println(datuak);	 
-		try {
-			Connection konexioa = DB_konexioa.getConexion();
-			String query = "SELECT COUNT(*) AS count FROM film WHERE izenburua=? AND urtea=?;";
-			PreparedStatement cst = konexioa.prepareStatement(query);
-			cst.setString(1, datuak.getString("Title"));
-			cst.setString(2, datuak.getString("Year"));
-			ResultSet rs = cst.executeQuery();
-			if (rs.next() && rs.getInt("count") > 0) {
-                setChanged();
-                notifyObservers(false);
-            } 
-			else {
-				System.out.println(rs.getInt("count"));
-				query="INSERT into film(izenburua, aktoreak, urtea, generoa, zuzendaria, erabiltzaileNAN, katalogoan) values(?, ?, ?, ?, ?, ?, ?);" ;
-				PreparedStatement st = konexioa.prepareStatement(query);
-				st.setString(1, datuak.getString("Title"));
-				st.setString(2, datuak.getString("Actors"));
-				st.setString(3, datuak.getString("Year"));
-				st.setString(4, datuak.getString("Genre"));
-				st.setString(5, datuak.getString("Director"));
-				st.setString(6, "79224675A");
-				st.setString(7, "0");
-				st.executeUpdate();
-				st.close();
-			}
-			cst.close();
-			
-		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		String izenburua = datuak.getString("Title");
+		Integer urtea = datuak.getInt("Year");
+		if (GestoreFilm.getKN().badagoFilma(izenburua, urtea)) {
+            setChanged();
+            notifyObservers(false);
+        } 
+		else {
+			GestoreFilm.getKN().addFilma(datuak);
 		}
 	}
 }

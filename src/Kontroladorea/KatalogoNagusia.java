@@ -9,12 +9,12 @@ import java.util.Observable;
 import java.util.stream.Collectors;
 import Eredua.*;
 
-public class GestoreFilm extends Observable {
+public class KatalogoNagusia extends Observable {
 	private List<Film> filmak;
 	private List<Film> jatorrizkoFilmak;
 	private static GestoreFilm nKN=null;
 	
-	private GestoreFilm() {
+	private KatalogoNagusia() {
 		filmak=new ArrayList<>();
 	}
 	
@@ -68,6 +68,31 @@ public class GestoreFilm extends Observable {
 		}
 		setChanged();
 		notifyObservers();
+	}
+	
+	//No es lo mismo que filmaBilatu porque puede haber varias con el mismo nombre
+	public boolean badagoFilma(String izena, int urtea) {
+		for (Film filma : filmak) {
+			if (filma.getIzenburua().equalsIgnoreCase(izena) && filma.getUrtea() == urtea) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void addFilma(JSONObject filmDatuak) {
+		int id = filmak.size()+1;
+        String izenburua = filmDatuak.getString("Title");
+        String aktoreak = filmDatuak.getString("Actors");
+        int urtea = filmDatuak.getInt("Year");
+        String generoa = filmDatuak.getString("Genre");
+        String zuzendaria = filmDatuak.getString("Director");
+        String adminNAN = "79224675A"; // TODO Cambiar luego
+        boolean katalogoan = false;
+        double puntuazioaBb = 0;
+        Film filma = new Film(id, izenburua, aktoreak, urtea, generoa, zuzendaria, adminNAN, katalogoan, puntuazioaBb);
+        filmak.add(filma);
+        System.out.println(filmak);
 	}
 	
 	public void loadFilmak() {

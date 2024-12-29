@@ -86,7 +86,6 @@ public class KZ_XehetasunakIkusi extends JDialog implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println(arg.getClass());
 		if(arg.getClass().equals(JSONObject.class)) {
 			JSONObject datuak = (JSONObject) arg;
 			getTestua().setText("Izenburua: " + datuak.getString("Title") +
@@ -99,7 +98,6 @@ public class KZ_XehetasunakIkusi extends JDialog implements Observer {
 			testua.setOpaque(false);
 		}
 		else if(arg.getClass().equals(Boolean.class)) {
-			System.out.println("a");
 			JOptionPane.showMessageDialog(this, "Filma badago katalogoan edo eskatuta");
 		}
 	}
