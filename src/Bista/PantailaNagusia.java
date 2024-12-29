@@ -78,6 +78,7 @@ public class PantailaNagusia extends JFrame implements Observer {
 			// TODO Auto-generated method stub
 			if (e.getSource().equals(btnSaioaHasi)) {
 				new SaioaHasi();
+				setVisible(false);
 			}
 		}
 	}

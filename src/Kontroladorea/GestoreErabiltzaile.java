@@ -6,7 +6,7 @@ import java.util.List;
 
 public class GestoreErabiltzaile {
 	private List<Erabiltzaile> erabiltzaileak;
-	private String saioaNan;
+	private String saioaNan = null;
 	private static GestoreErabiltzaile nGE = null;
 	
 	private GestoreErabiltzaile() {
@@ -34,5 +34,9 @@ public class GestoreErabiltzaile {
 		}
 		
 		return aurkituta;
+	}
+	
+	public void setSaioaNan(String pNan) {
+		this.saioaNan = pNan;
 	}
 }

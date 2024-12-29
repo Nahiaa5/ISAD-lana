@@ -26,5 +26,9 @@ public class Erabiltzaile {
 	public String getPasahitza() {
 		return this.pasahitza;
 	}
+	
+	public int getAdmin() {
+		return this.admin;
+	}
 
 }

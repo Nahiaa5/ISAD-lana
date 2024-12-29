@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import java.util.Observable;
+import Eredua.*;
 
-public class GestoreNagusia {
+public class GestoreNagusia extends Observable {
 
 	private static GestoreNagusia nGN = null;
 	
@@ -34,7 +36,18 @@ public class GestoreNagusia {
 		return array;
 	}
 	
-	public void getErabiltzaile() {
+	public void getErabiltzaile(String pNan, String pPas) {
+		Erabiltzaile e = GestoreErabiltzaile.getGE().erabiltzaileaBilatu(pNan, pPas);
+		if (e == null) {
+			setChanged();
+			notifyObservers("Txarto");
+		}
+		else {
+			GestoreErabiltzaile.getGE().setSaioaNan(e.getNan());
+			setChanged();
+			notifyObservers(e);
+		}
+		
 		
 	}
 	
