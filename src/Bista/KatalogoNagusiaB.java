@@ -1,5 +1,7 @@
 package Bista;
 
+import org.json.JSONArray;
+
 import java.awt.BorderLayout;
 
 import java.awt.Color;
@@ -22,9 +24,11 @@ import javax.swing.JTextField;
 
 import Eredua.DB_kudeatzailea;
 import Eredua.Film;
-import Eredua.KatalogoNagusia;
+import Kontroladorea.KatalogoNagusia;
+import org.json.JSONObject;
 
-public class KatalogoNagusiaB extends JFrame implements Observer {
+public class KatalogoNagusiaB extends JFrame //implements Observer 
+{
 	private static final long serialVersionUID = 1L;
 	private KatalogoNagusia katalogo;
 	private JTextField bilaketa;
@@ -33,36 +37,18 @@ public class KatalogoNagusiaB extends JFrame implements Observer {
 	private JPanel filmPanel;
 	private JLabel emaitzikEz;
 	private DB_kudeatzailea dbK;
-	private Controler controler;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					KatalogoNagusia katalogo=KatalogoNagusia.getKN();
-					DB_kudeatzailea dbK = new DB_kudeatzailea();
-					KatalogoNagusiaB frame = new KatalogoNagusiaB(katalogo, dbK);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private GNKatalogoNagusia GNkn = null;
 
 	/**
 	 * Create the application.
 	 */
-	public KatalogoNagusiaB(KatalogoNagusia katalogo, DB_kudeatzailea dbK) {
-		this.katalogo=katalogo;
-		this.dbK=dbK;
-		this.katalogo.addObserver(this);
+	public KatalogoNagusiaB() {
+		this.katalogo = KatalogoNagusia.getKN();
+		this.dbK = DB_kudeatzailea.getDB();
+		//katalogo.addObserver(this);
 		initialize();
-		controler=new Controler();
-		katalogo.loadFilmak(dbK);
+		filmakErakutsi();
+		setVisible(true);
 	}
 
 	/**
@@ -78,9 +64,9 @@ public class KatalogoNagusiaB extends JFrame implements Observer {
 		bilatuBtn=new JButton("Bilatu");
 		ordenatuBtn=new JButton("Ordenatu");
 		
-		bilatuBtn.addActionListener(getControler());
-		bilaketa.addKeyListener(getControler());
-		ordenatuBtn.addActionListener(getControler());
+		bilatuBtn.addActionListener(getGN());
+		bilaketa.addKeyListener(getGN());
+		ordenatuBtn.addActionListener(getGN());
 		
 		bilaketaPanel.add(bilaketa);
 		bilaketaPanel.add(bilatuBtn);
@@ -98,57 +84,75 @@ public class KatalogoNagusiaB extends JFrame implements Observer {
 		emaitzikEz.setVisible(false);  
 	    getContentPane().add(emaitzikEz, BorderLayout.SOUTH);
 	}
-
-	@Override
-	public void update(Observable o, Object arg) {
-		if(o instanceof KatalogoNagusia) {
-			KatalogoNagusia katalogo = (KatalogoNagusia) o;
-			List<Film> filmak=katalogo.getFilmak();
-			
-			if(filmPanel!=null) {
-				filmPanel.removeAll();
-			}
+	
+	public void filmakErakutsi() {
+		JSONArray emaitza = getGN().getInfoFilmak();
 		
-			if(filmak.isEmpty()) {
-				emaitzikEz.setVisible(true);
-			}else {
-				emaitzikEz.setVisible(false);
-				for(Film film: filmak) {
-					film.eguneratuPuntuBb(dbK);
-					JButton infoBtn=new JButton("Xehetasunak");
-					infoBtn.addActionListener(new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							FilmXehetasunakB xehetasunP=new FilmXehetasunakB(film, dbK);
-							xehetasunP.setVisible(true);
-						}
-					});
-					
-					JPanel filmaP=new JPanel();
-					filmaP.setLayout(new BorderLayout());
-					
-					String izenbPuntu=String.format("%s (%.2f)",film.getIzenburua(),film.getPuntuazioaBb());
-					JLabel filmLabel=new JLabel(izenbPuntu);
-					filmaP.add(filmLabel,BorderLayout.CENTER);	
-					filmaP.add(infoBtn, BorderLayout.EAST);
-					filmPanel.add(filmaP);
-				}
-			}
-			if(filmPanel!=null) {
-				filmPanel.revalidate();
-				filmPanel.repaint();
-			}
+		if(filmPanel!=null) {
+			filmPanel.removeAll();
+		}
+	
+		if(emaitza.length() == 0) {
+			emaitzikEz.setVisible(true);
+		} else {
+			emaitzikEz.setVisible(false);
+			
+			for (int i = 0; i < emaitza.length(); i++) {
+	            // Obtener el JSONObject en la posición 'i' del JSONArray
+	            JSONObject filmJson = emaitza.getJSONObject(i);
+	            // Obtener el nombre de la película
+	            String nombre = filmJson.getString("izenburua");
+	            double puntuazioa = filmJson.getDouble("puntuazioa");
+	            
+	            JButton infoBtn=new JButton("Xehetasunak");
+	            infoBtn.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						//FilmXehetasunakB xehetasunP=new FilmXehetasunakB(film, dbK);
+						//xehetasunP.setVisible(true);
+					}
+				});
+	            
+	            JPanel filmaP=new JPanel();
+				filmaP.setLayout(new BorderLayout());
+				
+				String izenbPuntu=String.format("%s (%.2f)",nombre,puntuazioa);
+				JLabel filmLabel=new JLabel(izenbPuntu);
+				filmaP.add(filmLabel,BorderLayout.CENTER);	
+				filmaP.add(infoBtn, BorderLayout.EAST);
+				filmPanel.add(filmaP);
+	        }
+		}
+		if(filmPanel!=null) {
+			filmPanel.revalidate();
+			filmPanel.repaint();
 		}
 	}
 	
-	private Controler getControler() {
-        if (controler == null) {
-            controler = new Controler();
+	private GNKatalogoNagusia getGN() {
+        if (GNkn == null) {
+            GNkn = new GNKatalogoNagusia();
         }
-        return controler;
+        return GNkn;
     }
 
-    private class Controler extends KeyAdapter implements ActionListener {
+//-------------------------------GESTORE NAGUSIA-------------------------------
+	
+    private class GNKatalogoNagusia extends KeyAdapter implements ActionListener {
+    	
+    	public JSONArray getInfoFilmak() {
+    		KatalogoNagusia kat = KatalogoNagusia.getKN();
+    		List<Film> filmak = kat.getFilmak();
+    		
+    		JSONArray JSONfilm = new JSONArray();
+    		for (Film film : filmak) {
+    			JSONObject json = kat.getInfo(film);
+    			JSONfilm.put(json);
+    		}
+    		
+    		return JSONfilm;
+    	}
+    	
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource().equals(bilatuBtn)) {

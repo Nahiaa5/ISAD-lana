@@ -8,7 +8,21 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import Kontroladorea.KatalogoNagusia;
+
 public class DB_kudeatzailea {
+	
+	private static DB_kudeatzailea nDB=null;
+	
+	private DB_kudeatzailea() {}
+	
+	public static DB_kudeatzailea getDB() {
+		if(nDB==null) {
+			nDB=new DB_kudeatzailea();
+			
+		}
+		return nDB;
+	}
 	
 	public List<Film> kargatuFilmak() {
         List<Film> filmak = new ArrayList<>();

@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import Eredua.DB_kudeatzailea;
-import Eredua.KatalogoNagusia;
+import Kontroladorea.KatalogoNagusia;
 
 public class ErabiltzailePN extends JFrame{
 	private static final long serialVersionUID = 1L;

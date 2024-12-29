@@ -1,10 +1,12 @@
-package Eredua;
+package Kontroladorea;
 
+import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Observable;
 import java.util.stream.Collectors;
+import Eredua.*;
 
 public class KatalogoNagusia extends Observable {
 	private List<Film> filmak;
@@ -24,7 +26,18 @@ public class KatalogoNagusia extends Observable {
 	}
 	
 	public List<Film> getFilmak(){
-		return this.filmak;//
+		return this.filmak;
+	}
+	
+	public JSONObject getInfo(Film film) {
+		// JSONObject bat sortu
+	    JSONObject json = new JSONObject();
+
+	    // Izena eta puntuazioa jarri JSON-ean
+	    json.put("izenburua", film.getIzenburua());
+	    json.put("puntuazioa", film.getPuntuazioaBb());
+
+	    return json;
 	}
 	
 	public void filmaBilatu(String izena){
@@ -44,11 +57,9 @@ public class KatalogoNagusia extends Observable {
 		notifyObservers();
 	}
 	
-	public void loadFilmak(DB_kudeatzailea pDBK) {
-	    this.filmak=pDBK.kargatuFilmak();
+	public void loadFilmak() {
+	    this.filmak=DB_kudeatzailea.getDB().kargatuFilmak();
 	    this.jatorrizkoFilmak=new ArrayList<>(filmak);
-	    setChanged();
-	    notifyObservers();
 	}
 	
 	public void ordenatuPuntuazioz() {
