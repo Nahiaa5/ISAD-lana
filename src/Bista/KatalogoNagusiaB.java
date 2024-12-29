@@ -30,21 +30,17 @@ import org.json.JSONObject;
 public class KatalogoNagusiaB extends JFrame //implements Observer 
 {
 	private static final long serialVersionUID = 1L;
-	private KatalogoNagusia katalogo;
 	private JTextField bilaketa;
 	private JButton bilatuBtn;
 	private JButton ordenatuBtn;
 	private JPanel filmPanel;
 	private JLabel emaitzikEz;
-	private DB_kudeatzailea dbK;
 	private GNKatalogoNagusia GNkn = null;
 
 	/**
 	 * Create the application.
 	 */
 	public KatalogoNagusiaB() {
-		this.katalogo = KatalogoNagusia.getKN();
-		this.dbK = DB_kudeatzailea.getDB();
 		//katalogo.addObserver(this);
 		initialize();
 		filmakErakutsi();
@@ -157,9 +153,9 @@ public class KatalogoNagusiaB extends JFrame //implements Observer
         public void actionPerformed(ActionEvent e) {
             if (e.getSource().equals(bilatuBtn)) {
             	String f = bilaketa.getText().toLowerCase();
-                katalogo.filmaBilatu(f);
+                KatalogoNagusia.getKN().filmaBilatu(f);
             } else if (e.getSource().equals(ordenatuBtn)) {
-                katalogo.ordenatuPuntuazioz();
+                KatalogoNagusia.getKN().ordenatuPuntuazioz();
             }
         }
 
@@ -167,7 +163,7 @@ public class KatalogoNagusiaB extends JFrame //implements Observer
         public void keyPressed(KeyEvent e) {
             if (e.getSource().equals(bilaketa) && e.getKeyCode() == KeyEvent.VK_ENTER) {
             	String f = bilaketa.getText().toLowerCase();
-                katalogo.filmaBilatu(f);
+                KatalogoNagusia.getKN().filmaBilatu(f);
             }
         }
     }
