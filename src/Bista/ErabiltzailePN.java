@@ -11,7 +11,7 @@ public class ErabiltzailePN extends JFrame{
 	private JPanel contentPane;
 	private JButton zabaldua;
 	private JButton btnKN;
-	private Controler controler;
+	private Controller controller;
 
 	/**
 	 * Create the application.
@@ -26,7 +26,7 @@ public class ErabiltzailePN extends JFrame{
         contentPane.add(getBtnKN());
         contentPane.add(getZabaldua());
 
-        controler = new Controler();
+        controller = new Controller();
         setVisible(true);
 	}
 
@@ -38,7 +38,7 @@ public class ErabiltzailePN extends JFrame{
 		if (btnKN == null) {
             btnKN = new JButton("Katalogoa ikusi");
             btnKN.setBounds(50, 50, 150, 30);
-            btnKN.addActionListener(getControler());
+            btnKN.addActionListener(getController());
         }
 		return btnKN;
 	}
@@ -47,19 +47,19 @@ public class ErabiltzailePN extends JFrame{
 		if (zabaldua == null) {
             zabaldua = new JButton("Filma eskatu");
             zabaldua.setBounds(250, 50, 150, 30);
-            zabaldua.addActionListener(getControler());
+            zabaldua.addActionListener(getController());
         }
 		return zabaldua;
 	}
 
-	private Controler getControler() {
-		if (controler == null) {
-			controler = new Controler();
+	private Controller getController() {
+		if (controller == null) {
+			controller = new Controller();
         }
-        return controler;
+        return controller;
 	}
 	
-	private class Controler implements ActionListener {
+	private class Controller implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource().equals(btnKN)) {

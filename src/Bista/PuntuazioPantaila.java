@@ -36,7 +36,7 @@ public class PuntuazioPantaila extends JFrame{
 	private Film film;
 	private String NAN;
 	private DB_kudeatzailea dbK;
-	private Controler controler;
+	private Controller controller;
 
 	/**
 	 * Create the application.
@@ -46,7 +46,7 @@ public class PuntuazioPantaila extends JFrame{
 		this.NAN = NAN;
 		this.dbK = dbK;
 		initialize();
-		controler = new Controler();
+		controller = new Controller();
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class PuntuazioPantaila extends JFrame{
             radioButton.setActionCommand(String.valueOf(i)); // Establecer el comando de acción
             buttonGroup.add(radioButton);
             panel.add(radioButton);
-            radioButton.addActionListener(getControler());
+            radioButton.addActionListener(getController());
 		}
 		
 		JPanel panel_1 = new JPanel();
@@ -83,18 +83,18 @@ public class PuntuazioPantaila extends JFrame{
 		
 		JButton btnGorde = new JButton("Gorde");
 		panel_1.add(btnGorde, BorderLayout.SOUTH);
-		btnGorde.addActionListener(getControler());
+		btnGorde.addActionListener(getController());
 	}
 
 	
-	private Controler getControler() {
-        if (controler == null) {
-            controler = new Controler();  
+	private Controller getController() {
+        if (controller == null) {
+            controller = new Controller();  
         }
-        return controler;
+        return controller;
     }
 
-    private class Controler implements ActionListener {
+    private class Controller implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() instanceof JButton && ((JButton) e.getSource()).getText().equals("Gorde")) {

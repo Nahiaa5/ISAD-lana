@@ -1,5 +1,6 @@
 package Bista;
 
+import Kontroladorea.GestoreNagusia;
 import java.awt.EventQueue;
 import java.awt.event.*;
 import javax.swing.JFrame;
@@ -15,7 +16,7 @@ public class PantailaNagusia extends JFrame {
 	private JPanel contentPane;
 	private JButton btnSaioaHasi;
 	private JButton btnErregistratu;
-	private GNPantailaNagusia GNpn = null;
+	private Controller Controller = null;
 
 	/**
 	 * Create the frame.
@@ -23,7 +24,7 @@ public class PantailaNagusia extends JFrame {
 	public PantailaNagusia() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		initialize();
-		getGN().datuakKargatu();
+		GestoreNagusia.getGN().datuakKargatu();
 	}
 	
 	private void initialize() {
@@ -40,33 +41,29 @@ public class PantailaNagusia extends JFrame {
 	private JButton getBtnSaioaHasi() {
 		if (btnSaioaHasi == null) {
 			btnSaioaHasi = new JButton("Saioa hasi");
-			btnSaioaHasi.addActionListener(getGN());
+			btnSaioaHasi.addActionListener(getController());
 		}
 		return btnSaioaHasi;
 	}
 	private JButton getBtnErregistratu() {
 		if (btnErregistratu == null) {
 			btnErregistratu = new JButton("Erregistratu");
-			btnErregistratu.addActionListener(getGN());
+			btnErregistratu.addActionListener(getController());
 		}
 		return btnErregistratu;
 	}
 	
-	private GNPantailaNagusia getGN() {
-		if (GNpn == null) {
-			GNpn = new GNPantailaNagusia();
+	private Controller getController() {
+		if (Controller == null) {
+			Controller = new Controller();
 		}
-		return GNpn;
+		return Controller;
 	}
 	
 	//---------------------------------------KONTROLADOREA---------------------------------------
-	private class GNPantailaNagusia implements MouseListener, ActionListener{
+	private class Controller implements MouseListener, ActionListener{
 		
-		public GNPantailaNagusia() {}
-		
-		public void datuakKargatu() {
-			KatalogoNagusia.getKN().loadFilmak();
-		}
+		public Controller() {}
 		
 		@Override
 		public void mouseClicked(MouseEvent e) {

@@ -1,5 +1,6 @@
 package Bista;
 
+import Kontroladorea.GestoreNagusia;
 import org.json.JSONArray;
 
 import java.awt.BorderLayout;
@@ -35,7 +36,7 @@ public class KatalogoNagusiaB extends JFrame //implements Observer
 	private JButton ordenatuBtn;
 	private JPanel filmPanel;
 	private JLabel emaitzikEz;
-	private GNKatalogoNagusia GNkn = null;
+	private Controller controller = null;
 
 	/**
 	 * Create the application.
@@ -60,9 +61,9 @@ public class KatalogoNagusiaB extends JFrame //implements Observer
 		bilatuBtn=new JButton("Bilatu");
 		ordenatuBtn=new JButton("Ordenatu");
 		
-		bilatuBtn.addActionListener(getGN());
-		bilaketa.addKeyListener(getGN());
-		ordenatuBtn.addActionListener(getGN());
+		bilatuBtn.addActionListener(getController());
+		bilaketa.addKeyListener(getController());
+		ordenatuBtn.addActionListener(getController());
 		
 		bilaketaPanel.add(bilaketa);
 		bilaketaPanel.add(bilatuBtn);
@@ -82,7 +83,7 @@ public class KatalogoNagusiaB extends JFrame //implements Observer
 	}
 	
 	public void filmakErakutsi() {
-		JSONArray emaitza = getGN().getInfoFilmak();
+		JSONArray emaitza = GestoreNagusia.getGN().getInfoFilmak();
 		
 		if(filmPanel!=null) {
 			filmPanel.removeAll();
@@ -94,25 +95,23 @@ public class KatalogoNagusiaB extends JFrame //implements Observer
 			emaitzikEz.setVisible(false);
 			
 			for (int i = 0; i < emaitza.length(); i++) {
-	            // Obtener el JSONObject en la posición 'i' del JSONArray
 	            JSONObject filmJson = emaitza.getJSONObject(i);
-	            // Obtener el nombre de la película
-	            String nombre = filmJson.getString("izenburua");
+
+	            String izena = filmJson.getString("izenburua");
 	            double puntuazioa = filmJson.getDouble("puntuazioa");
 	            
 	            JButton infoBtn=new JButton("Xehetasunak");
 	            infoBtn.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						//FilmXehetasunakB xehetasunP=new FilmXehetasunakB(film, dbK);
-						//xehetasunP.setVisible(true);
+						new FilmXehetasunakB(izena);
 					}
 				});
 	            
 	            JPanel filmaP=new JPanel();
 				filmaP.setLayout(new BorderLayout());
 				
-				String izenbPuntu=String.format("%s (%.2f)",nombre,puntuazioa);
+				String izenbPuntu=String.format("%s (%.2f)",izena,puntuazioa);
 				JLabel filmLabel=new JLabel(izenbPuntu);
 				filmaP.add(filmLabel,BorderLayout.CENTER);	
 				filmaP.add(infoBtn, BorderLayout.EAST);
@@ -125,29 +124,16 @@ public class KatalogoNagusiaB extends JFrame //implements Observer
 		}
 	}
 	
-	private GNKatalogoNagusia getGN() {
-        if (GNkn == null) {
-            GNkn = new GNKatalogoNagusia();
+	private Controller getController() {
+        if (controller == null) {
+            controller = new Controller();
         }
-        return GNkn;
+        return controller;
     }
 
 //-------------------------------GESTORE NAGUSIA-------------------------------
 	
-    private class GNKatalogoNagusia extends KeyAdapter implements ActionListener {
-    	
-    	public JSONArray getInfoFilmak() {
-    		KatalogoNagusia kat = KatalogoNagusia.getKN();
-    		List<Film> filmak = kat.getFilmak();
-    		
-    		JSONArray JSONfilm = new JSONArray();
-    		for (Film film : filmak) {
-    			JSONObject json = kat.getInfo(film);
-    			JSONfilm.put(json);
-    		}
-    		
-    		return JSONfilm;
-    	}
+    private class Controller extends KeyAdapter implements ActionListener {
     	
         @Override
         public void actionPerformed(ActionEvent e) {

@@ -86,14 +86,14 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
 		if (bTextField == null) {
 			bTextField = new JTextField();
 			bTextField.setColumns(25);
-			bTextField.addActionListener(getCont());
+			bTextField.addActionListener(getController());
 		}
 		return bTextField;
 	}
 	private JButton getBilatuJButton() {
 		if (bJButton == null) {
 			bJButton = new JButton("Bilatu");
-			bJButton.addActionListener(getCont());
+			bJButton.addActionListener(getController());
 		}
 		return bJButton;
 	}
@@ -102,7 +102,7 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
         panel1.add(button);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setMaximumSize(new Dimension(Integer.MAX_VALUE, button.getPreferredSize().height));
-        button.addActionListener(getCont());
+        button.addActionListener(getController());
         revalidate();
         repaint();
     }
@@ -121,7 +121,7 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
 			}
 		}
 	}
-	public Controller getCont() {
+	public Controller getController() {
 		if (controller == null) {
 			controller = new Controller();
 		}

@@ -1,5 +1,6 @@
 package Kontroladorea;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -29,7 +30,19 @@ public class KatalogoNagusia extends Observable {
 		return this.filmak;
 	}
 	
-	public JSONObject getInfo(Film film) {
+	public JSONArray getInfoFilmak() {
+		List<Film> filmak = getFilmak();
+		
+		JSONArray JSONfilm = new JSONArray();
+		for (Film film : filmak) {
+			JSONObject json = getInfo(film);
+			JSONfilm.put(json);
+		}
+		
+		return JSONfilm;
+	}
+	
+	private JSONObject getInfo(Film film) {
 		// JSONObject bat sortu
 	    JSONObject json = new JSONObject();
 
@@ -66,5 +79,30 @@ public class KatalogoNagusia extends Observable {
 		this.filmak.sort(Comparator.comparingDouble(Film::getPuntuazioaBb).reversed());
 		setChanged();
 		notifyObservers();
+	}
+	
+//-------------------------------REVISADO
+	private Film bilatuIzenarekin(String filmIzena) {
+	    for (Film film : filmak) {
+	        if (film.getIzenburua().equalsIgnoreCase(filmIzena)) {
+	            return film;
+	        }
+	    }
+	    return null;
+	}
+	
+	public JSONObject getFilmXehetasunak(String filmIzena) {
+		Film film = bilatuIzenarekin(filmIzena);
+		
+		JSONObject json = new JSONObject();
+
+	    json.put("izenburua", film.getIzenburua());
+	    json.put("aktoreak", film.getAktoreak());
+	    json.put("urtea", film.getUrtea());
+	    json.put("generoa", film.getGeneroa());
+	    json.put("zuzendaria", film.getZuzendaria());
+	    json.put("bbpuntuazioa", film.getPuntuazioaBb());
+	    
+	    return json;
 	}
 }

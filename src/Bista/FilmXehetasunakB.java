@@ -1,10 +1,10 @@
 package Bista;
 
 import javax.swing.*;
-
 import Eredua.DB_kudeatzailea;
 import Eredua.Film;
-
+import Kontroladorea.GestoreNagusia;
+import org.json.JSONObject;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,34 +13,27 @@ import java.util.Observable;
 
 public class FilmXehetasunakB extends JFrame implements Observer {
     private static final long serialVersionUID = 1L;
-    private Film film; 
     private JButton baloratuBtn;
     private JButton itxiBtn;
     private JLabel puntuBbLabel;
     private JTextArea iruzkinakArea;
-    private DB_kudeatzailea dbK;
-    private Controler controler;
+    private Controller controller = null;
     private JPanel panel_1;
     private JButton alokatuBtn;
     private JPanel panel_2;
 
-    public FilmXehetasunakB(Film film, DB_kudeatzailea dbK) {
-        this.film = film;
-        this.dbK=dbK;
-        this.film.addObserver(this); 
-        
-        setTitle("Xehetasunak - " + film.getIzenburua());
+    public FilmXehetasunakB(String filmIzena) {
+        setTitle("Xehetasunak - " + filmIzena);
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); 
         setLocationRelativeTo(null); 
         
-        initialize();
+        initialize(filmIzena);
         
-        controler=new Controler();
-        film.gordeIruzkinak(dbK);
+        controller = getController();
     }
 
-    private void initialize() {
+    private void initialize(String filmIzena) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JScrollPane scrollPane=new JScrollPane();
@@ -55,36 +48,38 @@ public class FilmXehetasunakB extends JFrame implements Observer {
         
         alokatuBtn = new JButton("Alokatu");
         panel_1.add(alokatuBtn);
-        baloratuBtn.addActionListener(getControler());
+        baloratuBtn.addActionListener(getController());
        
         itxiBtn=new JButton("Itxi");
-        itxiBtn.addActionListener(getControler());
+        itxiBtn.addActionListener(getController());
         panel.add(itxiBtn);
         
         getContentPane().add(panel, BorderLayout.SOUTH);
         
         panel_2 = new JPanel();
         getContentPane().add(panel_2, BorderLayout.NORTH);
-                panel_2.setLayout(new GridLayout(7, 1, 0, 0));
+        panel_2.setLayout(new GridLayout(7, 1, 0, 0));
+        JSONObject xehetasunak = GestoreNagusia.getGN().getFilmXehetasunak(filmIzena);
         
-                JLabel label = new JLabel("Izenburua: " + film.getIzenburua());
-                panel_2.add(label);
-                JLabel label_1 = new JLabel("Aktoreak: " + film.getAktoreak());
-                panel_2.add(label_1);
-                JLabel label_2 = new JLabel("Urtea: " + film.getUrtea());
-                panel_2.add(label_2);
-                JLabel label_3 = new JLabel("Generoa: " + film.getGeneroa());
-                panel_2.add(label_3);
-                JLabel label_4 = new JLabel("Zuzendaria: " + film.getZuzendaria());
-                panel_2.add(label_4);
-                puntuBbLabel = new JLabel("Batez besteko Puntuazioa: " + film.getPuntuazioaBb());
-                panel_2.add(puntuBbLabel);
-                JLabel label_5 = new JLabel("Iruzkinak: ");
-                panel_2.add(label_5);
+        JLabel label = new JLabel("Izenburua: " + xehetasunak.getString("izenburua"));
+        panel_2.add(label);
+        JLabel label_1 = new JLabel("Aktoreak: " + xehetasunak.getString("aktoreak"));
+        panel_2.add(label_1);
+        JLabel label_2 = new JLabel("Urtea: " + xehetasunak.getInt("urtea"));
+        panel_2.add(label_2);
+        JLabel label_3 = new JLabel("Generoa: " + xehetasunak.getString("generoa"));
+        panel_2.add(label_3);
+        JLabel label_4 = new JLabel("Zuzendaria: " + xehetasunak.getString("zuzendaria"));
+        panel_2.add(label_4);
+        puntuBbLabel = new JLabel("Batez besteko Puntuazioa: " + xehetasunak.getDouble("bbpuntuazioa"));
+        panel_2.add(puntuBbLabel);
+        JLabel label_5 = new JLabel("Iruzkinak: ");
+        panel_2.add(label_5);
                 
-                        iruzkinakArea=new JTextArea(6, 30);
-                        getContentPane().add(iruzkinakArea, BorderLayout.CENTER);
-                        iruzkinakArea.setEditable(false);
+        iruzkinakArea=new JTextArea(6, 30);
+        getContentPane().add(iruzkinakArea, BorderLayout.CENTER);
+        iruzkinakArea.setEditable(false);
+        setVisible(true);
     }
 
     @Override
@@ -102,19 +97,19 @@ public class FilmXehetasunakB extends JFrame implements Observer {
         }
     }
     
-    private Controler getControler() {
-        if (controler == null) {
-            controler = new Controler();
+    private Controller getController() {
+        if (controller == null) {
+            controller = new Controller();
         }
-        return controler;
+        return controller;
     }
 
-    private class Controler implements ActionListener {
+    private class Controller implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource().equals(baloratuBtn)) {
                 String NAN = "79136031T"; // De prueba, cambiar cuando se implemente el usuario
-                PuntuazioPantaila puntuP = new PuntuazioPantaila(film, NAN, dbK);
+                PuntuazioPantaila puntuP = new PuntuazioPantaila(film, NAN);
                 puntuP.setVisible(true);
             }
 
