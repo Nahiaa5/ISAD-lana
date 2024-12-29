@@ -18,5 +18,13 @@ public class Erabiltzaile {
 		admin = pAdmin;
 		onartuta = pOnartuta;
 	}
+	
+	public String getNan() {
+		return this.nan;
+	}
+	
+	public String getPasahitza() {
+		return this.pasahitza;
+	}
 
 }

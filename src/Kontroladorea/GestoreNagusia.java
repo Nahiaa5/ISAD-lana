@@ -34,4 +34,8 @@ public class GestoreNagusia {
 		return array;
 	}
 	
+	public void getErabiltzaile() {
+		
+	}
+	
 }

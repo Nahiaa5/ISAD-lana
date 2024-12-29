@@ -7,16 +7,18 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import Kontroladorea.GestoreFilm;
-
 import javax.swing.JButton;
+import java.util.Observer;
+import java.util.Observable;
 
-public class PantailaNagusia extends JFrame {
+
+public class PantailaNagusia extends JFrame implements Observer {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton btnSaioaHasi;
 	private JButton btnErregistratu;
-	private Controller Controller = null;
+	private PantailaNagusiaKontroladorea kontroladorea = null;
 
 	/**
 	 * Create the frame.
@@ -25,6 +27,7 @@ public class PantailaNagusia extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		initialize();
 		GestoreNagusia.getGN().datuakKargatu();
+		
 	}
 	
 	private void initialize() {
@@ -41,52 +44,40 @@ public class PantailaNagusia extends JFrame {
 	private JButton getBtnSaioaHasi() {
 		if (btnSaioaHasi == null) {
 			btnSaioaHasi = new JButton("Saioa hasi");
-			btnSaioaHasi.addActionListener(getController());
+			btnSaioaHasi.addActionListener(getPN());
 		}
 		return btnSaioaHasi;
 	}
 	private JButton getBtnErregistratu() {
 		if (btnErregistratu == null) {
 			btnErregistratu = new JButton("Erregistratu");
-			btnErregistratu.addActionListener(getController());
+			btnErregistratu.addActionListener(getPN());
 		}
 		return btnErregistratu;
 	}
 	
-	private Controller getController() {
-		if (Controller == null) {
-			Controller = new Controller();
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		
+	}
+	
+	private PantailaNagusiaKontroladorea getPN() {
+		if (kontroladorea == null) {
+			kontroladorea = new PantailaNagusiaKontroladorea ();
 		}
-		return Controller;
+		return kontroladorea;
 	}
 	
 	//---------------------------------------KONTROLADOREA---------------------------------------
-	private class Controller implements MouseListener, ActionListener{
+	private class PantailaNagusiaKontroladorea implements ActionListener{
 		
-		public Controller() {}
+		public PantailaNagusiaKontroladorea() {}
 		
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			
-		}
-		
-		@Override
-		public void mousePressed(MouseEvent e) {}
-		
-		@Override
-		public void mouseReleased(MouseEvent e) {}
-		
-		@Override
-		public void mouseEntered(MouseEvent e) {}
-		
-		@Override
-		public void mouseExited(MouseEvent e) {}
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			if (e.getSource().equals(btnSaioaHasi)) {
-				new ErabiltzailePN();
+				new SaioaHasi();
 			}
 		}
 	}

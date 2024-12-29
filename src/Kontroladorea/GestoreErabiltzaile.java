@@ -24,5 +24,15 @@ public class GestoreErabiltzaile {
 	public void loadErabiltzaileak() {
 		this.erabiltzaileak = DB_kudeatzailea.getDB().kargatuErabiltzaileak();
 	}
-
+	
+	public Erabiltzaile erabiltzaileaBilatu(String pNAN, String pPasahitza) {
+		Erabiltzaile aurkituta = null;
+		for (Erabiltzaile e: erabiltzaileak) {
+			if(e.getNan().equals(pNAN) && e.getPasahitza().equals(pPasahitza)){
+				aurkituta = e;
+			}	
+		}
+		
+		return aurkituta;
+	}
 }
