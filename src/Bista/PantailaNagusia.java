@@ -6,7 +6,7 @@ import java.awt.event.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import Kontroladorea.KatalogoNagusia;
+import Kontroladorea.GestoreFilm;
 
 import javax.swing.JButton;
 

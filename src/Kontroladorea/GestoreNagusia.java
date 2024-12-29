@@ -20,16 +20,17 @@ public class GestoreNagusia {
 	}
 	
 	public JSONObject getFilmXehetasunak(String filmIzena) {
-		JSONObject json = KatalogoNagusia.getKN().getFilmXehetasunak(filmIzena);
+		JSONObject json = GestoreFilm.getKN().getFilmXehetasunak(filmIzena);
 		return json;
 	}
 	
 	public void datuakKargatu() {
-		KatalogoNagusia.getKN().loadFilmak();
+		GestoreFilm.getKN().loadFilmak();
+		GestoreErabiltzaile.getGE().loadErabiltzaileak();
 	}
 	
 	public JSONArray getInfoFilmak() {
-		JSONArray array = KatalogoNagusia.getKN().getInfoFilmak();
+		JSONArray array = GestoreFilm.getKN().getInfoFilmak();
 		return array;
 	}
 	

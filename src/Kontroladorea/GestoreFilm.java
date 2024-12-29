@@ -9,18 +9,18 @@ import java.util.Observable;
 import java.util.stream.Collectors;
 import Eredua.*;
 
-public class KatalogoNagusia extends Observable {
+public class GestoreFilm extends Observable {
 	private List<Film> filmak;
 	private List<Film> jatorrizkoFilmak;
-	private static KatalogoNagusia nKN=null;
+	private static GestoreFilm nKN=null;
 	
-	private KatalogoNagusia() {
+	private GestoreFilm() {
 		filmak=new ArrayList<>();
 	}
 	
-	public static KatalogoNagusia getKN() {
+	public static GestoreFilm getKN() {
 		if(nKN==null) {
-			nKN=new KatalogoNagusia();
+			nKN=new GestoreFilm();
 			
 		}
 		return nKN;

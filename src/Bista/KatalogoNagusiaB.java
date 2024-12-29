@@ -25,7 +25,7 @@ import javax.swing.JTextField;
 
 import Eredua.DB_kudeatzailea;
 import Eredua.Film;
-import Kontroladorea.KatalogoNagusia;
+import Kontroladorea.GestoreFilm;
 import org.json.JSONObject;
 
 public class KatalogoNagusiaB extends JFrame //implements Observer 
@@ -139,9 +139,9 @@ public class KatalogoNagusiaB extends JFrame //implements Observer
         public void actionPerformed(ActionEvent e) {
             if (e.getSource().equals(bilatuBtn)) {
             	String f = bilaketa.getText().toLowerCase();
-                KatalogoNagusia.getKN().filmaBilatu(f);
+                GestoreFilm.getKN().filmaBilatu(f);
             } else if (e.getSource().equals(ordenatuBtn)) {
-                KatalogoNagusia.getKN().ordenatuPuntuazioz();
+                GestoreFilm.getKN().ordenatuPuntuazioz();
             }
         }
 
@@ -149,7 +149,7 @@ public class KatalogoNagusiaB extends JFrame //implements Observer
         public void keyPressed(KeyEvent e) {
             if (e.getSource().equals(bilaketa) && e.getKeyCode() == KeyEvent.VK_ENTER) {
             	String f = bilaketa.getText().toLowerCase();
-                KatalogoNagusia.getKN().filmaBilatu(f);
+                GestoreFilm.getKN().filmaBilatu(f);
             }
         }
     }

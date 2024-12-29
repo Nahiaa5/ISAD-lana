@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import Kontroladorea.KatalogoNagusia;
+import Kontroladorea.GestoreFilm;
 
 public class DB_kudeatzailea {
 	
@@ -22,6 +22,35 @@ public class DB_kudeatzailea {
 			
 		}
 		return nDB;
+	}
+	
+	public List<Erabiltzaile> kargatuErabiltzaileak(){
+		List<Erabiltzaile> erabiltzaileak = new ArrayList<>();
+        String query = "SELECT * FROM erabiltzaile";
+
+        try (Connection conn = DB_konexioa.getConexion();
+             PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                String nan = rs.getString("NAN");
+                String izena = rs.getString("izena");
+                String email = rs.getString("email");
+                String pasahitza = rs.getString("pasahitza");
+                String abizena = rs.getString("abizena");
+                int admin = rs.getInt("admin");
+                int onartuta = rs.getInt("onartuta");
+                
+                Erabiltzaile erabiltzaile = new Erabiltzaile(nan, izena, email, pasahitza, abizena, admin, onartuta);
+                erabiltzaileak.add(erabiltzaile);
+            }
+            
+        } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+            
+        }
+        
+        return erabiltzaileak;
 	}
 	
 	public List<Film> kargatuFilmak() {
