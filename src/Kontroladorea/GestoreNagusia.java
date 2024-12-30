@@ -32,8 +32,8 @@ public class GestoreNagusia extends Observable {
 		GestoreErabiltzaile.getGE().loadErabiltzaileak();
 	}
 	
-	public JSONArray getInfoFilmak() {
-		JSONArray array = GestoreFilm.getKN().getInfoFilmak();
+	public JSONArray getInfoKatalogokoFilmGuztiak() {
+		JSONArray array = GestoreFilm.getKN().getInfoKatalogokoFilmGuztiak();
 		return array;
 	}
 	
@@ -117,4 +117,9 @@ public class GestoreNagusia extends Observable {
 	public void gordePuntuazioa(String NAN, int filmID, int puntuazioa, String iruzkina) {
         GestoreFilm.getKN().gordePuntuazioa(NAN, filmID, puntuazioa, iruzkina);
     }
+
+	public JSONArray bilaketaEgin(String text) {
+		JSONArray json = GestoreFilm.getKN().bilatuFilmKatalogoan(text);
+		return json;
+	}
 }

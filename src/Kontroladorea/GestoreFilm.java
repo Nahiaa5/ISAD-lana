@@ -32,20 +32,6 @@ public class GestoreFilm extends Observable {
 		return this.filmak;
 	}
 	
-	public JSONArray getInfoFilmak() {
-		List<Film> filmak = getFilmak();
-		
-		JSONArray JSONfilm = new JSONArray();
-		for (Film film : filmak) {
-			if(film.getKatalogoan()==true) {
-				JSONObject json = getInfo(film);
-				JSONfilm.put(json);
-			}
-		}
-		
-		return JSONfilm;
-	}
-	
 	private JSONObject getInfo(Film film) {
 		// JSONObject bat sortu
 	    JSONObject json = new JSONObject();
@@ -57,24 +43,33 @@ public class GestoreFilm extends Observable {
 	    return json;
 	}
 	
-	public void filmaBilatu(String izena){
-		if(izena==null || izena.trim().isEmpty()) {
-			this.filmak=new ArrayList<>(jatorrizkoFilmak);
-		}else {
-			List<Film> emaitza=jatorrizkoFilmak.stream()
-					.filter(film->film.getIzenburua().toLowerCase().contains(izena))
-					.collect(Collectors.toList());
-			if(emaitza.isEmpty()) {
-				this.filmak=new ArrayList<>();
-			}else {
-				this.filmak=new ArrayList<>(emaitza);
+	public JSONArray getInfoKatalogokoFilmGuztiak() {
+		List<Film> filmak = getFilmak();
+		
+		JSONArray JSONfilm = new JSONArray();
+		for (Film film : filmak) {
+			if(film.getKatalogoan()) {
+				JSONObject json = getInfo(film);
+				JSONfilm.put(json);
 			}
 		}
-		setChanged();
-		notifyObservers();
+		
+		return JSONfilm;
 	}
 	
-	//No es lo mismo que filmaBilatu porque puede haber varias con el mismo nombre
+	public JSONArray bilatuFilmKatalogoan(String text) {
+		JSONArray zerrenda = new JSONArray();
+		
+		for (Film film : filmak) {
+			if (film.getKatalogoan() && film.izenburuaTestuarekinKointziditu(text)) {
+				JSONObject object = getInfo(film);
+				zerrenda.put(object);
+			}
+		}
+		
+		return zerrenda;
+	}
+
 	public boolean badagoFilma(String izena, int urtea) {
 		for (Film filma : filmak) {
 			if (filma.getIzenburua().equalsIgnoreCase(izena) && filma.getUrtea() == urtea) {

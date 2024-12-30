@@ -49,6 +49,10 @@ public class Film extends Observable{
         setChanged();
         notifyObservers();
     }
+    
+    public boolean izenburuaTestuarekinKointziditu(String text) {
+    	return izenburua.toLowerCase().contains(text.toLowerCase());
+    }
 
     public String getAktoreak() {
         return aktoreak;

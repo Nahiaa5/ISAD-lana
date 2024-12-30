@@ -44,7 +44,7 @@ public class KatalogoNagusiaB extends JFrame //implements Observer
 	public KatalogoNagusiaB() {
 		//katalogo.addObserver(this);
 		initialize();
-		filmakErakutsi();
+		katalogoaErakutsi();
 		setVisible(true);
 	}
 
@@ -82,20 +82,23 @@ public class KatalogoNagusiaB extends JFrame //implements Observer
 	    getContentPane().add(emaitzikEz, BorderLayout.SOUTH);
 	}
 	
-	public void filmakErakutsi() {
-		JSONArray emaitza = GestoreNagusia.getGN().getInfoFilmak();
-		
+	public void katalogoaErakutsi() {
+		JSONArray emaitza = GestoreNagusia.getGN().getInfoKatalogokoFilmGuztiak();
+		eguneratuZerrenda(emaitza);
+	}
+	
+	public void eguneratuZerrenda(JSONArray zerrenda) {
 		if(filmPanel!=null) {
 			filmPanel.removeAll();
 		}
 	
-		if(emaitza.length() == 0) {
+		if(zerrenda.length() == 0) {
 			emaitzikEz.setVisible(true);
 		} else {
 			emaitzikEz.setVisible(false);
 			
-			for (int i = 0; i < emaitza.length(); i++) {
-	            JSONObject filmJson = emaitza.getJSONObject(i);
+			for (int i = 0; i < zerrenda.length(); i++) {
+	            JSONObject filmJson = zerrenda.getJSONObject(i);
 
 	            String izena = filmJson.getString("izenburua");
 	            double puntuazioa = filmJson.getDouble("puntuazioa");
@@ -138,8 +141,13 @@ public class KatalogoNagusiaB extends JFrame //implements Observer
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource().equals(bilatuBtn)) {
-            	String f = bilaketa.getText().toLowerCase();
-                GestoreFilm.getKN().filmaBilatu(f);
+            	String f = bilaketa.getText();
+            	if (!f.isEmpty()) {
+            		JSONArray filmak = GestoreNagusia.getGN().bilaketaEgin(f);
+            		eguneratuZerrenda(filmak);
+            	} else {
+            		katalogoaErakutsi();
+            	}
             } else if (e.getSource().equals(ordenatuBtn)) {
                 GestoreFilm.getKN().ordenatuPuntuazioz();
             }
@@ -148,8 +156,13 @@ public class KatalogoNagusiaB extends JFrame //implements Observer
         @Override
         public void keyPressed(KeyEvent e) {
             if (e.getSource().equals(bilaketa) && e.getKeyCode() == KeyEvent.VK_ENTER) {
-            	String f = bilaketa.getText().toLowerCase();
-                GestoreFilm.getKN().filmaBilatu(f);
+            	String f = bilaketa.getText();
+            	if (!f.isEmpty()) {
+            		JSONArray filmak = GestoreNagusia.getGN().bilaketaEgin(f);
+            		eguneratuZerrenda(filmak);
+            	} else {
+            		katalogoaErakutsi();
+            	}
             }
         }
     }
