@@ -24,7 +24,7 @@ public class GestoreNagusia extends Observable {
 	
 	public JSONObject getFilmXehetasunak(String filmIzena) {
 		JSONObject json = GestoreFilm.getKN().getFilmXehetasunak(filmIzena);
-		return json;
+			return json;
 	}
 	
 	public void datuakKargatu() {
@@ -122,6 +122,8 @@ public class GestoreNagusia extends Observable {
 	
 	public void gordePuntuazioa(String NAN, int filmID, int puntuazioa, String iruzkina) {
         GestoreFilm.getKN().gordePuntuazioa(NAN, filmID, puntuazioa, iruzkina);
+        setChanged();
+        notifyObservers();
     }
 
 	public JSONArray bilaketaEgin(String text) {
