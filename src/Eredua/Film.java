@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 
+import Kontroladorea.GestoreErabiltzaile;
+
 public class Film extends Observable{
     private int filmID;
     private String izenburua; 
@@ -157,5 +159,6 @@ public class Film extends Observable{
     
     public void onartu() {
     	katalogoan = true;
+    	adminNAN=GestoreErabiltzaile.getGE().getSaioaNan();
     }
 }
