@@ -54,7 +54,6 @@ public class ErabKudeatu extends JFrame {
 		bilatuBtn=new JButton("Bilatu");
 		
 		bilatuBtn.addActionListener(getEK());
-		bilaketa.addKeyListener(getEK());
 		
 		bilaketaPanel.add(bilaketa);
 		bilaketaPanel.add(bilatuBtn);
@@ -74,18 +73,22 @@ public class ErabKudeatu extends JFrame {
 	
 	public void erabiltzaileakErakutsi() {
 		JSONArray emaitza = GestoreNagusia.getGN().getInfoErabiltzaileak();
+		erabiltzaileakEguneratu(emaitza);
+	}
+	
+	public void erabiltzaileakEguneratu(JSONArray erabiltzaileak) {
 		
 		if(erabPanel!=null) {
 			erabPanel.removeAll();
 		}
 	
-		if(emaitza.length() == 0) {
+		if(erabiltzaileak.length() == 0) {
 			emaitzikEz.setVisible(true);
 		} else {
 			emaitzikEz.setVisible(false);
 			
-			for (int i = 0; i < emaitza.length(); i++) {
-	            JSONObject erabJson = emaitza.getJSONObject(i);
+			for (int i = 0; i < erabiltzaileak.length(); i++) {
+	            JSONObject erabJson = erabiltzaileak.getJSONObject(i);
 
 	            String nan = erabJson.getString("NAN");
 	            String izena = erabJson.getString("Izena");
@@ -132,6 +135,7 @@ public class ErabKudeatu extends JFrame {
 		}
 	}
 	
+	
 	private ErabKudeatuKontroladorea getEK() {
 		if (kontroladorea == null) {
 			kontroladorea = new ErabKudeatuKontroladorea ();
@@ -140,15 +144,24 @@ public class ErabKudeatu extends JFrame {
 	}
 	
 	//---------------------------------------KONTROLADOREA---------------------------------------
-	private class ErabKudeatuKontroladorea extends KeyAdapter implements ActionListener {
+	private class ErabKudeatuKontroladorea implements ActionListener {
 		
 		public ErabKudeatuKontroladorea() {}
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
+			 if (e.getSource().equals(bilatuBtn)) {
+	            	String erab = bilaketa.getText();
+	            	if (!erab.isEmpty()) {
+	            		JSONArray erabiltzaileak = GestoreNagusia.getGN().bilatzaileanErabiltzaileak(erab);
+	            		erabiltzaileakEguneratu(erabiltzaileak);
+	            	} else {
+	            		erabiltzaileakErakutsi();
+	            	}
+	            }
 
 		}
-	}
+	} 
 
 }

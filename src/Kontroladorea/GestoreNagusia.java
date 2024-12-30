@@ -128,4 +128,9 @@ public class GestoreNagusia extends Observable {
 		JSONArray json = GestoreFilm.getKN().bilatuFilmKatalogoan(text);
 		return json;
 	}
+	
+	public JSONArray bilatzaileanErabiltzaileak(String text) {
+		JSONArray erabiltzaileak = GestoreErabiltzaile.getGE().bilatzaileanErabiltzaileak(text);
+		return erabiltzaileak;
+	}
 }

@@ -109,4 +109,17 @@ public class GestoreErabiltzaile {
 			}
 		}
 	}
+	
+	public JSONArray bilatzaileanErabiltzaileak(String text) {
+		JSONArray zerrenda = new JSONArray();
+		
+		for (Erabiltzaile e : erabiltzaileak) {
+			if (e.izenaTestuarekinKointziditu(text)) {
+				JSONObject object = getInfo(e);
+				zerrenda.put(object);
+			}
+		}
+		
+		return zerrenda;
+	}
 }
