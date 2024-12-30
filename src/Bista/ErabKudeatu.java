@@ -162,7 +162,8 @@ public class ErabKudeatu extends JFrame {
 
 		         switch (action) {
 		         	case "aldatu":
-		               
+		         		new DatuakAldatu();
+		         		setVisible(false);
 		            break;
 		            
 		            case "ezabatu":

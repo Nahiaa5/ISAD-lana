@@ -12,6 +12,7 @@ public class ErabiltzailePN extends JFrame{
 	private JButton zabaldua;
 	private JButton btnKN;
 	private Controller controller;
+	private JButton btnDatuakAldatu;
 
 	/**
 	 * Create the application.
@@ -25,6 +26,7 @@ public class ErabiltzailePN extends JFrame{
 
         contentPane.add(getBtnKN());
         contentPane.add(getZabaldua());
+        contentPane.add(getBtnDatuakAldatu());
 
         controller = new Controller();
         setVisible(true);
@@ -37,7 +39,7 @@ public class ErabiltzailePN extends JFrame{
 	public JButton getBtnKN() {
 		if (btnKN == null) {
             btnKN = new JButton("Katalogoa ikusi");
-            btnKN.setBounds(50, 50, 150, 30);
+            btnKN.setBounds(52, 155, 150, 30);
             btnKN.addActionListener(getController());
         }
 		return btnKN;
@@ -50,6 +52,14 @@ public class ErabiltzailePN extends JFrame{
             zabaldua.addActionListener(getController());
         }
 		return zabaldua;
+	}
+	private JButton getBtnDatuakAldatu() {
+		if (btnDatuakAldatu == null) {
+			btnDatuakAldatu = new JButton("Datuak aldatu");
+			btnDatuakAldatu.setBounds(52, 50, 150, 30);
+			btnDatuakAldatu.addActionListener(getController());
+		}
+		return btnDatuakAldatu;
 	}
 
 	private Controller getController() {
@@ -69,6 +79,11 @@ public class ErabiltzailePN extends JFrame{
             if (e.getSource().equals(zabaldua)) {
                 FilmKatalogoZabaldua FKZ = FilmKatalogoZabaldua.getPN();
                 FKZ.setVisible(true);
+            }
+            
+            if (e.getSource().equals(btnDatuakAldatu)) {
+            	new DatuakAldatu();
+            	setVisible(false);
             }
         }
     }
