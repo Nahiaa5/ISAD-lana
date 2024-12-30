@@ -13,6 +13,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import Eredua.KatalogoZabalduaKargatu;
+import Kontroladorea.GestoreNagusia;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -132,12 +134,12 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource().equals(bJButton) || e.getSource().equals(bTextField)) {
-				KatalogoZabalduaKargatu.getnZK().FilmakBilatu(getBilatuTextField().getText());
+				GestoreNagusia.getGN().KZFilmakBilatu(getBilatuTextField().getText());
 			}
 			else {
 				JButton botoia = (JButton) e.getSource();
 				String datuak = botoia.getText();
-				KatalogoZabalduaKargatu.getnZK().xehetasunakBilatu(datuak);
+				GestoreNagusia.getGN().KZXehetasunakBilatu(datuak);
 			}
 		}
 	}

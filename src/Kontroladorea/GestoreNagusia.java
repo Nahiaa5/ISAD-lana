@@ -78,4 +78,16 @@ public class GestoreNagusia extends Observable {
 	public void erabiltzaileaEzabatu(String nan) {
 		GestoreErabiltzaile.getGE().erabiltzaileaEzabatu(nan);
 	}
+	
+	public void KZFilmakBilatu(String izena) {
+		KatalogoZabalduaKargatu.getnZK().FilmakBilatu(izena);
+	}
+	
+	public void KZXehetasunakBilatu(String izena) {
+		KatalogoZabalduaKargatu.getnZK().xehetasunakBilatu(izena);
+	}
+	
+	public void KZBidaliEskaera() {
+		KatalogoZabalduaKargatu.getnZK().bidaliEskaera();
+	}
 }
