@@ -94,20 +94,13 @@ public class ErabKudeatu extends JFrame {
 	            String izena = erabJson.getString("Izena");
 	            
 	            JButton aldatuBtn=new JButton("Aldatu");
-	            aldatuBtn.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						
-					}
-				});
+	            aldatuBtn.setActionCommand("aldatu:" + nan);
+	            aldatuBtn.addActionListener(getEK());
 	            
 	            JButton ezabatuBtn=new JButton("Ezabatu");
-	            ezabatuBtn.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						
-					}
-				});
+	            ezabatuBtn.setActionCommand("ezabatu:" + nan);
+	            ezabatuBtn.addActionListener(getEK());
+			
 	            
 	            JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0)); 
 	            btnPanel.add(aldatuBtn);
@@ -159,9 +152,27 @@ public class ErabKudeatu extends JFrame {
 	            	} else {
 	            		erabiltzaileakErakutsi();
 	            	}
-	            }
+	         }
+			 
+			 String command = e.getActionCommand();
+			 if (command != null) {
+		    	 String[] parts = command.split(":");
+		         String action = parts[0];
+		         String nan = parts[1];
 
-		}
-	} 
-
+		         switch (action) {
+		         	case "aldatu":
+		               
+		            break;
+		            
+		            case "ezabatu":
+		                GestoreNagusia.getGN().erabiltzaileaEzabatu(nan);
+		                erabiltzaileakErakutsi();
+		                break;
+		            default:
+		                System.err.println("Acción desconocida: " + action);
+		         }
+		     }
+		} 
+	}
 }
