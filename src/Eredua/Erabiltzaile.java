@@ -30,5 +30,13 @@ public class Erabiltzaile {
 	public int getAdmin() {
 		return this.admin;
 	}
+	
+	public String getIzena() {
+		return this.izena;
+	}
+	
+	public int getOnartuta() {
+		return this.onartuta;
+	}
 
 }

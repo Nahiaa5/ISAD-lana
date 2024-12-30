@@ -4,6 +4,9 @@ import Eredua.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class GestoreErabiltzaile {
 	private List<Erabiltzaile> erabiltzaileak;
 	private String saioaNan = null;
@@ -19,6 +22,10 @@ public class GestoreErabiltzaile {
 			
 		}
 		return nGE;
+	}
+	
+	public List<Erabiltzaile> getErabiltzaileak(){
+		return this.erabiltzaileak;
 	}
 	
 	public void loadErabiltzaileak() {
@@ -38,5 +45,30 @@ public class GestoreErabiltzaile {
 	
 	public void setSaioaNan(String pNan) {
 		this.saioaNan = pNan;
+	}
+	
+	public JSONArray getInfoErabiltzaileak() {
+		List<Erabiltzaile> erabiltzaileak = getErabiltzaileak();
+		JSONArray JSONerab = new JSONArray();
+		
+		for (Erabiltzaile e : erabiltzaileak) {
+			if(e.getOnartuta() == 1) {
+				JSONObject json = getInfo(e);
+				JSONerab.put(json);
+			}
+		}
+		
+		return JSONerab;
+	}
+	
+	private JSONObject getInfo(Erabiltzaile e) {
+		// JSONObject bat sortu
+	    JSONObject json = new JSONObject();
+
+	    // Izena eta NAN-a jarri JSON-ean
+	    json.put("NAN", e.getNan());
+	    json.put("Izena", e.getIzena());
+
+	    return json;
 	}
 }

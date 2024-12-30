@@ -36,6 +36,11 @@ public class GestoreNagusia extends Observable {
 		return array;
 	}
 	
+	public JSONArray getInfoErabiltzaileak() {
+		JSONArray array = GestoreErabiltzaile.getGE().getInfoErabiltzaileak();
+		return array;
+	}
+	
 	public void getErabiltzaile(String pNan, String pPas) {
 		Erabiltzaile e = GestoreErabiltzaile.getGE().erabiltzaileaBilatu(pNan, pPas);
 		if (e == null) {
