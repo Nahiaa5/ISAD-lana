@@ -30,9 +30,9 @@ SET time_zone = "+00:00";
 CREATE TABLE `erabiltzaile` (
   `NAN` varchar(10) NOT NULL,
   `izena` varchar(20) DEFAULT NULL,
+  `abizena` varchar(30) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   `pasahitza` varchar(30) DEFAULT NULL,
-  `abizena` varchar(30) DEFAULT NULL,
   `admin` TINYINT(1) DEFAULT 0,
   `onartuta` TINYINT(1) DEFAULT 0,
   PRIMARY KEY (`NAN`)
@@ -42,9 +42,9 @@ CREATE TABLE `erabiltzaile` (
 -- Volcado de datos para la tabla `erabiltzaile`
 --
 
-INSERT INTO `erabiltzaile` (`NAN`, `izena`, `email`, `pasahitza`, `abizena`, `admin`, `onartuta`) VALUES
-('12345678Z', 'Erabiltzaile', 'erabiltzaile@gmail.com', 'erab123', 'User', 0, 1),
-('79224675A', 'Admin', 'admin@gmail.com', 'admin', 'admin', 1, 1);
+INSERT INTO `erabiltzaile` (`NAN`, `izena`, `abizena`, `email`, `pasahitza`,  `admin`, `onartuta`) VALUES
+('12345678Z', 'Erabiltzaile', 'User', 'erabiltzaile@gmail.com', 'erab123', 0, 1),
+('79224675A', 'Admin','admin' , 'admin@gmail.com', 'admin', 1, 1);
 
 -- --------------------------------------------------------
 

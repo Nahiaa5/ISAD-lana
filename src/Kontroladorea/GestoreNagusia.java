@@ -51,4 +51,16 @@ public class GestoreNagusia extends Observable {
 		
 	}
 	
+	public void ErabiltzaileBerriaSartu(String pNAN, String pIzena, String pAbizena, String pEmail, String pPasahitza) {
+		boolean ondo;
+		if(pNAN.isEmpty()|| pIzena.isEmpty() || pAbizena.isEmpty() || pEmail.isEmpty() || pPasahitza.isEmpty()) {
+			ondo = false;
+		}
+		else {
+			ondo = DB_kudeatzailea.getDB().erabiltzaileBerriaSartu(pNAN, pIzena, pAbizena, pEmail, pPasahitza);
+		}
+		setChanged();
+		notifyObservers(ondo);
+	}
+	
 }

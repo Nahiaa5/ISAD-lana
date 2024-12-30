@@ -80,6 +80,10 @@ public class PantailaNagusia extends JFrame implements Observer {
 				new SaioaHasi();
 				setVisible(false);
 			}
+			else if(e.getSource().equals(btnErregistratu)) {
+				new Erregistratu();
+				setVisible(false);
+			}
 		}
 	}
 }

@@ -35,13 +35,13 @@ public class DB_kudeatzailea {
             while (rs.next()) {
                 String nan = rs.getString("NAN");
                 String izena = rs.getString("izena");
+                String abizena = rs.getString("abizena");
                 String email = rs.getString("email");
                 String pasahitza = rs.getString("pasahitza");
-                String abizena = rs.getString("abizena");
                 int admin = rs.getInt("admin");
                 int onartuta = rs.getInt("onartuta");
                 
-                Erabiltzaile erabiltzaile = new Erabiltzaile(nan, izena, email, pasahitza, abizena, admin, onartuta);
+                Erabiltzaile erabiltzaile = new Erabiltzaile(nan, izena, abizena, email, pasahitza, admin, onartuta);
                 erabiltzaileak.add(erabiltzaile);
             }
             
@@ -52,6 +52,31 @@ public class DB_kudeatzailea {
         
         return erabiltzaileak;
 	}
+	
+	public boolean erabiltzaileBerriaSartu(String pNAN, String pIzena, String pAbizena, String pEmail, String pPasahitza) {
+		String query = "INSERT INTO Erabiltzaile (NAN, izena, abizena, email, pasahitza) VALUES (?, ?, ?, ?, ?)";
+	    boolean ondo = false;
+	    try (Connection conn = DB_konexioa.getConexion();
+	        PreparedStatement stmt = conn.prepareStatement(query)) {
+	        stmt.setString(1, pNAN);
+	        stmt.setString(2, pIzena);
+	        stmt.setString(3, pAbizena);
+	        stmt.setString(4, pEmail);
+	        stmt.setString(5, pPasahitza);
+
+	        int rowsAffected = stmt.executeUpdate();
+
+	        if (rowsAffected > 0) {
+	            ondo = true;
+	        } 
+
+	    } catch (SQLException | ClassNotFoundException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return ondo;
+	}
+		
 	
 	public List<Film> kargatuFilmak() {
         List<Film> filmak = new ArrayList<>();
