@@ -30,6 +30,7 @@ public class GestoreNagusia extends Observable {
 		GestoreFilm.getKN().loadFilmak();
 		GestoreFilm.getKN().loadPuntuazioak();
 		GestoreErabiltzaile.getGE().loadErabiltzaileak();
+		GestoreAlokairu.getGA().loadAlokairuak();
 	}
 	
 	public JSONArray getInfoKatalogokoFilmGuztiak() {

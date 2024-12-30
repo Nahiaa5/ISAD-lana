@@ -7,8 +7,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import Kontroladorea.GestoreFilm;
+import Kontroladorea.*;
 
 public class DB_kudeatzailea {
 	
@@ -42,6 +41,7 @@ public class DB_kudeatzailea {
                 int onartuta = rs.getInt("onartuta");
                 
                 Erabiltzaile erabiltzaile = new Erabiltzaile(nan, izena, abizena, email, pasahitza, admin, onartuta);
+                
                 erabiltzaileak.add(erabiltzaile);
             }
             
@@ -51,6 +51,41 @@ public class DB_kudeatzailea {
         }
         
         return erabiltzaileak;
+	}
+	
+	public List<Alokairua> kargatuAlokairuak() {
+		List<Alokairua> alokairuak = new ArrayList<>();
+        String query = "SELECT * FROM alokairua";
+
+        try (Connection conn = DB_konexioa.getConexion();
+             PreparedStatement stmt = conn.prepareStatement(query);
+        	 ResultSet rs = stmt.executeQuery()) {
+        	
+        	while (rs.next()) {
+                String erabiltzaileNAN = rs.getString("erabiltzaileNAN");
+                int filmID = rs.getInt("filmID");
+                String hasieData = rs.getString("hasData");
+                LocalDate hasiData = LocalDate.parse(hasieData);
+                
+                HasData hasData = new HasData(hasiData);
+                
+                String bukaData = rs.getString("bukData");
+                LocalDate bukData = LocalDate.parse(bukaData);
+                
+                Film film = GestoreFilm.getKN().bilatuFilma(filmID);
+                
+                Alokairua alokairua = new Alokairua(film, hasData, bukData);
+                
+                Erabiltzaile erabiltzailea = GestoreErabiltzaile.getGE().getErabiltzaileByNAN(erabiltzaileNAN);
+                erabiltzailea.gehituAlokairua(alokairua);
+                
+                alokairuak.add(alokairua);
+            }
+        	
+        } catch (SQLException | ClassNotFoundException e) {
+        	e.printStackTrace();
+        }
+        return alokairuak;
 	}
 	
 	public boolean erabiltzaileBerriaSartu(String pNAN, String pIzena, String pAbizena, String pEmail, String pPasahitza) {

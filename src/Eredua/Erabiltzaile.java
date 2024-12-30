@@ -1,5 +1,8 @@
 package Eredua;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class Erabiltzaile {
 	private String nan;
 	private String izena;
@@ -8,6 +11,7 @@ public class Erabiltzaile {
 	private String pasahitza;
 	private int admin;
 	private int onartuta;
+	private List<Alokairua> egindakoAlokairuak;
 	
 	public Erabiltzaile(String pNan, String pIzena,String pAbizena, String pEmail, String pPasahitza, int pAdmin, int pOnartuta) {
 		nan = pNan;
@@ -17,6 +21,7 @@ public class Erabiltzaile {
 		abizena = pAbizena;
 		admin = pAdmin;
 		onartuta = pOnartuta;
+		egindakoAlokairuak = new ArrayList<Alokairua>();
 	}
 	
 	public String getNan() {
@@ -41,6 +46,10 @@ public class Erabiltzaile {
 	
 	public void Onartu() {
 		onartuta = 1;
+	}
+	
+	public void gehituAlokairua(Alokairua alokairua) {
+		egindakoAlokairuak.add(alokairua);
 	}
 
 }

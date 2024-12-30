@@ -13,7 +13,6 @@ import Eredua.*;
 
 public class GestoreFilm extends Observable {
 	private List<Film> filmak;
-	private List<Film> jatorrizkoFilmak;
 	private static GestoreFilm nKN=null;
 	
 	private GestoreFilm() {
@@ -96,7 +95,6 @@ public class GestoreFilm extends Observable {
 	
 	public void loadFilmak() {
 	    this.filmak=DB_kudeatzailea.getDB().kargatuFilmak();
-	    this.jatorrizkoFilmak=new ArrayList<>(filmak);
 	}
 	
 	public void ordenatuPuntuazioz() {
@@ -181,7 +179,7 @@ public class GestoreFilm extends Observable {
         return false;
     }
 	
-	private Film bilatuFilma(int filmID) {
+	public Film bilatuFilma(int filmID) {
         for (Film film : filmak) {
             if (film.getFilmID() == filmID) {
                 return film;

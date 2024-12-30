@@ -154,7 +154,7 @@ CREATE TABLE `alokairua` (
   `erabiltzaileNAN` varchar(10) NOT NULL,
   `filmID` int(11) NOT NULL,
   `hasData` date NOT NULL,
-  `bukData` date DEFAULT NULL,
+  `bukData` date NOT NULL,
   PRIMARY KEY (`erabiltzaileNAN`, `filmID`, `hasData`),
   FOREIGN KEY (`erabiltzaileNAN`) REFERENCES `erabiltzaile`(`NAN`) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (`filmID`) REFERENCES `film`(`filmID`) ON DELETE CASCADE ON UPDATE CASCADE,

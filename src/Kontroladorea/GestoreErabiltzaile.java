@@ -28,6 +28,15 @@ public class GestoreErabiltzaile {
 		return this.erabiltzaileak;
 	}
 	
+	public Erabiltzaile getErabiltzaileByNAN(String nan) {
+	    for (Erabiltzaile erabiltzaile : erabiltzaileak) {
+	        if (erabiltzaile.getNan().equals(nan)) {
+	            return erabiltzaile;
+	        }
+	    }
+	    return null;
+	}
+	
 	public void loadErabiltzaileak() {
 		this.erabiltzaileak = DB_kudeatzailea.getDB().kargatuErabiltzaileak();
 	}
