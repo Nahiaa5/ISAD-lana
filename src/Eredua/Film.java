@@ -137,4 +137,8 @@ public class Film extends Observable{
                 ", Batez besteko puntuazioa=" + puntuazioaBb +
                 '}';
     }
+    
+    public void onartu() {
+    	katalogoan = true;
+    }
 }

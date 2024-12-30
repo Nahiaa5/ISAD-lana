@@ -90,4 +90,17 @@ public class GestoreNagusia extends Observable {
 	public void KZBidaliEskaera() {
 		KatalogoZabalduaKargatu.getnZK().bidaliEskaera();
 	}
+	
+	public JSONArray getFilmEskaerak() {
+		JSONArray eskaerak = GestoreFilm.getKN().getFilmEskaerak();
+		return eskaerak;
+	}
+	
+	public void filmaOnartu(String izena) {
+		GestoreFilm.getKN().filmaOnartu(izena);
+	}
+	
+	public void filmaEzabatu(String izena) {
+		GestoreFilm.getKN().filmaEzabatu(izena);
+	}
 }

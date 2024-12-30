@@ -47,6 +47,10 @@ public class GestoreErabiltzaile {
 		this.saioaNan = pNan;
 	}
 	
+	public String getSaioaNan() {
+		return saioaNan;
+	}
+	
 	public JSONArray getInfoErabiltzaileak() {
 		List<Erabiltzaile> erabiltzaileak = getErabiltzaileak();
 		JSONArray JSONerab = new JSONArray();

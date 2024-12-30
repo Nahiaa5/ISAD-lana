@@ -58,7 +58,7 @@ public class AdminPN extends JFrame {
 			btnFilm = new JButton("Film eskaerak");
 			btnFilm.setFont(new Font("Tahoma", Font.PLAIN, 11));
 			btnFilm.setBounds(115, 168, 196, 38);
-			btnEska.addActionListener(getA());
+			btnFilm.addActionListener(getA());
 		}
 		return btnFilm;
 	}
@@ -92,6 +92,10 @@ public class AdminPN extends JFrame {
 			}
 			else if(e.getSource().equals(btnEska)) {
 				new ErabEskaeraKudeatu();
+				setVisible(false);
+			}
+			else if(e.getSource().equals(btnFilm)) {
+				new FilmEskaeraKudeatu();
 				setVisible(false);
 			}
 		}

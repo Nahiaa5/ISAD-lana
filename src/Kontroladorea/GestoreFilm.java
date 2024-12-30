@@ -35,8 +35,10 @@ public class GestoreFilm extends Observable {
 		
 		JSONArray JSONfilm = new JSONArray();
 		for (Film film : filmak) {
-			JSONObject json = getInfo(film);
-			JSONfilm.put(json);
+			if(film.getKatalogoan()==true) {
+				JSONObject json = getInfo(film);
+				JSONfilm.put(json);
+			}
 		}
 		
 		return JSONfilm;
@@ -87,7 +89,7 @@ public class GestoreFilm extends Observable {
         int urtea = filmDatuak.getInt("Year");
         String generoa = filmDatuak.getString("Genre");
         String zuzendaria = filmDatuak.getString("Director");
-        String adminNAN = "79224675A"; // TODO Cambiar luego
+        String adminNAN = null;
         boolean katalogoan = false;
         double puntuazioaBb = 0;
         Film filma = new Film(id, izenburua, aktoreak, urtea, generoa, zuzendaria, adminNAN, katalogoan, puntuazioaBb);
@@ -129,5 +131,26 @@ public class GestoreFilm extends Observable {
 	    json.put("bbpuntuazioa", film.getPuntuazioaBb());
 	    
 	    return json;
+	}
+	
+	public JSONArray getFilmEskaerak() {
+		JSONArray JSONesk = new JSONArray();
+		for(Film film : filmak) {
+			if(film.getKatalogoan() == false) {
+				JSONObject json = getFilmXehetasunak(film.getIzenburua());
+				JSONesk.put(json);
+			}
+		}
+		return JSONesk;
+	}
+	
+	public void filmaOnartu(String izena) {
+		Film filma = bilatuIzenarekin(izena);
+		filma.onartu();
+	}
+	
+	public void filmaEzabatu(String izena) {
+		Film filma = bilatuIzenarekin(izena);
+		filmak.remove(filma);
 	}
 }
