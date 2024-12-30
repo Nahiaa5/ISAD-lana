@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import java.util.Iterator;  
 
 public class GestoreErabiltzaile {
 	private List<Erabiltzaile> erabiltzaileak;
@@ -103,10 +104,26 @@ public class GestoreErabiltzaile {
 	}
 	
 	public void erabiltzaileaEzabatu(String nan) {
-		for(Erabiltzaile erab : erabiltzaileak) {
+		Iterator<Erabiltzaile> it = erabiltzaileak.iterator();
+		while(it.hasNext()) {
+			Erabiltzaile erab = it.next();
 			if(erab.getNan().equals(nan)) {
-				erabiltzaileak.remove(erab);
+				it.remove();
+				break;
 			}
 		}
+	}
+	
+	public JSONArray bilatzaileanErabiltzaileak(String text) {
+		JSONArray zerrenda = new JSONArray();
+		
+		for (Erabiltzaile e : erabiltzaileak) {
+			if (e.izenaTestuarekinKointziditu(text)) {
+				JSONObject object = getInfo(e);
+				zerrenda.put(object);
+			}
+		}
+		
+		return zerrenda;
 	}
 }

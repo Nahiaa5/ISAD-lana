@@ -42,5 +42,12 @@ public class Erabiltzaile {
 	public void Onartu() {
 		onartuta = 1;
 	}
+	
+	public boolean izenaTestuarekinKointziditu(String text) {
+		 if (izena == null || text == null) {
+		        return false; 
+		    }
+		 return izena.trim().equalsIgnoreCase(text.trim());
+    }
 
 }
