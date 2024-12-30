@@ -20,6 +20,7 @@ import javax.swing.border.TitledBorder;
 import Eredua.DB_kudeatzailea;
 import Eredua.Film;
 import Eredua.Puntuazioa;
+import Kontroladorea.GestoreNagusia;
 
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
@@ -41,7 +42,7 @@ public class PuntuazioPantaila extends JFrame{
 	/**
 	 * Create the application.
 	 */
-	public PuntuazioPantaila(Film film, String NAN, DB_kudeatzailea dbK) {
+	public PuntuazioPantaila(Film film, String NAN) {
 		this.film = film;
 		this.NAN = NAN;
 		this.dbK = dbK;
@@ -119,17 +120,7 @@ public class PuntuazioPantaila extends JFrame{
                     JOptionPane.showMessageDialog(PuntuazioPantaila.this, "Idatzi iruzkina bat.", "Errorea", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-
-                Puntuazioa puntu = new Puntuazioa(NAN, film.getFilmID(), puntuazioa, iruzkina, LocalDate.now());
-
-                if (dbK.puntuazioaExistitzenDa(NAN, film.getFilmID())) {
-                    dbK.eguneratuPuntuazioa(puntu);
-                } else {
-                    dbK.gordePuntuazioa(puntu);
-                }
-
-                film.eguneratuPuntuBb(dbK);
-                film.gordeIruzkinak(dbK);
+                GestoreNagusia.getGN().gordePuntuazioa(NAN, film.getFilmID(), puntuazioa, iruzkina);
 
                 JOptionPane.showMessageDialog(PuntuazioPantaila.this, "Puntuazioa gorde da.", "Arrakasta", JOptionPane.INFORMATION_MESSAGE);
                 dispose(); 

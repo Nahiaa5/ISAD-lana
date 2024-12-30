@@ -7,13 +7,18 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import Kontroladorea.GestoreNagusia;
+import java.util.Observer;
+import java.util.Observable;
+import Eredua.*;
 
-public class SaioaHasi extends JFrame {
+public class SaioaHasi extends JFrame implements Observer {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -30,7 +35,6 @@ public class SaioaHasi extends JFrame {
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		contentPane.add(getTextFieldNan());
@@ -39,6 +43,7 @@ public class SaioaHasi extends JFrame {
 		contentPane.add(getTextFieldPas());
 		contentPane.add(getBtnSaioaHasi());
 		setVisible(true);
+		GestoreNagusia.getGN().addObserver(this);
 	}
 	private JTextField getTextFieldNan() {
 		if (textFieldNan == null) {
@@ -80,8 +85,32 @@ public class SaioaHasi extends JFrame {
 		if (btnSaioaHasi == null) {
 			btnSaioaHasi = new JButton("Saioa Hasi");
 			btnSaioaHasi.setBounds(156, 213, 103, 26);
+			btnSaioaHasi.addActionListener(getSH());
 		}
 		return btnSaioaHasi;
+	}
+	
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		if(arg1 instanceof String) {
+			JOptionPane.showMessageDialog(SaioaHasi.this, "Ez da aurkitu erabiltzailea.", "Ez da aurkitu erabiltzailea.", JOptionPane.INFORMATION_MESSAGE);
+		}
+		else if(arg1 instanceof Erabiltzaile) {
+			Erabiltzaile e = (Erabiltzaile) arg1;
+			pantailakAukeratu(e);
+		}
+	}
+	
+	public void pantailakAukeratu(Erabiltzaile e) {
+		if(e.getAdmin() == 0) {
+			new ErabiltzailePN();
+			setVisible(false);
+		}
+		else {
+			new AdminPN();
+			setVisible(false);
+		}
+		
 	}
 	
 	private SaioaHasiKontroladorea getSH() {
@@ -100,7 +129,7 @@ public class SaioaHasi extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			if (e.getSource().equals(btnSaioaHasi)) {
-				GestoreNagusia.getGN().getErabiltzaile();
+				GestoreNagusia.getGN().getErabiltzaile(textFieldNan.getText(), textFieldPas.getText());
 			}
 		}
 	}

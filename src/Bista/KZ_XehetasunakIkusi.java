@@ -18,6 +18,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import Eredua.KatalogoZabalduaKargatu;
+import Kontroladorea.GestoreNagusia;
 
 @SuppressWarnings("deprecation")
 public class KZ_XehetasunakIkusi extends JDialog implements Observer {
@@ -116,7 +117,7 @@ public class KZ_XehetasunakIkusi extends JDialog implements Observer {
 				setVisible(false);
 			}
 			else if (e.getSource().equals(eskatu)) {
-				KatalogoZabalduaKargatu.getnZK().bidaliEskaera();
+				GestoreNagusia.getGN().KZBidaliEskaera();
 			}
 		}
 	}

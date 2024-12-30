@@ -34,6 +34,7 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
 	private JTextField bTextField;
 	private JButton bJButton;
 	private JScrollPane scrollPane;
+	private SortuZerrenda caller;
 
 	/**
 	 * Launch the application.
@@ -82,18 +83,23 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
 		panel.add(getBilatuJButton());
 		
 	}
+	
+	public void setCaller(SortuZerrenda caller) {
+	    this.caller = caller;
+	}
+	
 	private JTextField getBilatuTextField() {
 		if (bTextField == null) {
 			bTextField = new JTextField();
 			bTextField.setColumns(25);
-			bTextField.addActionListener(getController());
+			bTextField.addActionListener(getCont());
 		}
 		return bTextField;
 	}
 	private JButton getBilatuJButton() {
 		if (bJButton == null) {
 			bJButton = new JButton("Bilatu");
-			bJButton.addActionListener(getController());
+			bJButton.addActionListener(getCont());
 		}
 		return bJButton;
 	}
@@ -102,7 +108,7 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
         panel1.add(button);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setMaximumSize(new Dimension(Integer.MAX_VALUE, button.getPreferredSize().height));
-        button.addActionListener(getController());
+        button.addActionListener(getCont());
         revalidate();
         repaint();
     }
@@ -121,7 +127,7 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
 			}
 		}
 	}
-	public Controller getController() {
+	public Controller getCont() {
 		if (controller == null) {
 			controller = new Controller();
 		}
@@ -138,7 +144,15 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
 				JButton botoia = (JButton) e.getSource();
 				String datuak = botoia.getText();
 				KatalogoZabalduaKargatu.getnZK().xehetasunakBilatu(datuak);
+				if (caller != null) {
+					FilmakSartuZerrenda FSZ = FilmakSartuZerrenda.getFSZ(caller.getIzena());
+					FSZ.sartuFilma(datuak);
+					FSZ.setVisible(true);
+		            dispose();
+		        }
 			}
 		}
 	}
+	
+	
 }

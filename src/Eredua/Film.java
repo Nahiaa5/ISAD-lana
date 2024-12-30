@@ -16,6 +16,7 @@ public class Film extends Observable{
     private boolean katalogoan; 
     private double puntuazioaBb;
     private List<String> iruzkinak;
+    private List<Puntuazioa> balorazioak;
     
     public Film(int filmID, String izenburua, String aktoreak, int urtea, String generoa, String zuzendaria, String adminNAN, boolean katalogoan, double puntuazioaBb) {
         this.filmID = filmID;
@@ -28,6 +29,7 @@ public class Film extends Observable{
         this.katalogoan = katalogoan;
         this.puntuazioaBb = puntuazioaBb;
         this.iruzkinak=new ArrayList<>();
+        this.balorazioak = new ArrayList<>();
     }
 
     public int getFilmID() {
@@ -46,6 +48,10 @@ public class Film extends Observable{
         this.izenburua = izenburua;
         setChanged();
         notifyObservers();
+    }
+    
+    public boolean izenburuaTestuarekinKointziditu(String text) {
+    	return izenburua.toLowerCase().contains(text.toLowerCase());
     }
 
     public String getAktoreak() {
@@ -105,13 +111,26 @@ public class Film extends Observable{
     	notifyObservers();
     }
     
-    public List<String> getIruzkinak(){
-    	return new ArrayList<>(iruzkinak);
+    public List<Puntuazioa> getBalorazioak(){
+    	return this.balorazioak;
     }
     
+    public void setBalorazioak(ArrayList pBalorazioak){
+    	this.balorazioak=pBalorazioak;
+    }
+    
+    public List<String> getIruzkinak(){
+    	List<String> iruzkinak = new ArrayList<>();
+    	for(Puntuazioa p: this.balorazioak) {
+    		iruzkinak.add(p.getIruzkina());
+    	}
+    	return iruzkinak;
+    }
     
     public void gordeIruzkinak(DB_kudeatzailea pDBK){
-    	this.iruzkinak= pDBK.iruzkinakKargatu(filmID);
+    	for(Puntuazioa p: this.balorazioak) {
+    		pDBK.gordePuntuazioa(p);
+    	}
 		setChanged();
 		notifyObservers();
     }
@@ -136,5 +155,9 @@ public class Film extends Observable{
                 ", katalogoan=" + katalogoan +
                 ", Batez besteko puntuazioa=" + puntuazioaBb +
                 '}';
+    }
+    
+    public void onartu() {
+    	katalogoan = true;
     }
 }
