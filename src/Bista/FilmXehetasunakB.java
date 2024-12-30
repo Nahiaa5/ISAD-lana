@@ -4,6 +4,8 @@ import javax.swing.*;
 import Eredua.DB_kudeatzailea;
 import Eredua.Film;
 import Kontroladorea.GestoreNagusia;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -23,6 +25,9 @@ public class FilmXehetasunakB extends JFrame implements Observer {
     private JPanel panel_2;
 
     public FilmXehetasunakB(String filmIzena) {
+    	Film filma = GestoreNagusia.getGN().bilatuFilmaIzenaz(filmIzena);
+    	filma.addObserver(this);
+    	
         setTitle("Xehetasunak - " + filmIzena);
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); 
@@ -71,7 +76,7 @@ public class FilmXehetasunakB extends JFrame implements Observer {
         panel_2.add(label_3);
         JLabel label_4 = new JLabel("Zuzendaria: " + xehetasunak.getString("zuzendaria"));
         panel_2.add(label_4);
-        puntuBbLabel = new JLabel("Batez besteko Puntuazioa: " + xehetasunak.getDouble("bbpuntuazioa"));
+        puntuBbLabel = new JLabel("Batez besteko Puntuazioa: " + xehetasunak.getDouble("puntuazioaBb"));
         panel_2.add(puntuBbLabel);
         JLabel label_5 = new JLabel("Iruzkinak: ");
         panel_2.add(label_5);
@@ -84,15 +89,17 @@ public class FilmXehetasunakB extends JFrame implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        if (o instanceof Film) {
-            film = (Film) o;
-            setTitle("Xehetasunak - " + film.getIzenburua());
-            puntuBbLabel.setText("Batez besteko Puntuazioa: "+film.getPuntuazioaBb());
+        if (arg instanceof JSONObject) { 
+            JSONObject xehetasunak = (JSONObject) arg;
+            setTitle("Xehetasunak - " + xehetasunak.getString("izenburua"));
+            puntuBbLabel.setText("Batez besteko Puntuazioa: " + xehetasunak.getDouble("puntuazioaBb"));
             
-            iruzkinakArea.setText("");
-           
-            for(String iruzkina: film.getIruzkinak()) {
-            	iruzkinakArea.append(iruzkina + "\n");
+            iruzkinakArea.setText(""); 
+            if (xehetasunak.has("iruzkinak")) {
+                JSONArray iruzkinak = xehetasunak.getJSONArray("iruzkinak");
+                for (int i = 0; i < iruzkinak.length(); i++) {
+                    iruzkinakArea.append(iruzkinak.getString(i) + "\n");
+                }
             }
         }
     }
@@ -105,10 +112,19 @@ public class FilmXehetasunakB extends JFrame implements Observer {
     }
 
     private class Controller implements ActionListener {
-        @Override
+    	@Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource().equals(baloratuBtn)) {
                 String NAN = "79136031T"; // De prueba, cambiar cuando se implemente el usuario
+                //
+                String labelText = ((JLabel) panel_2.getComponent(0)).getText();
+                String filmIzena = labelText.substring(labelText.indexOf(":")+2);
+                
+                Film film = GestoreNagusia.getGN().bilatuFilmaIzenaz(filmIzena);
+                if(film==null) {
+                	JOptionPane.showMessageDialog(FilmXehetasunakB.this, "Ez da aurkitu filma.", "Errorea", JOptionPane.ERROR_MESSAGE);
+                	return;
+                }
                 PuntuazioPantaila puntuP = new PuntuazioPantaila(film, NAN);
                 puntuP.setVisible(true);
             }

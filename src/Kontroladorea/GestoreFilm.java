@@ -2,6 +2,8 @@ package Kontroladorea;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -109,7 +111,7 @@ public class GestoreFilm extends Observable {
 	}
 	
 //-------------------------------REVISADO
-	private Film bilatuIzenarekin(String filmIzena) {
+	public Film bilatuIzenarekin(String filmIzena) {
 	    for (Film film : filmak) {
 	        if (film.getIzenburua().equalsIgnoreCase(filmIzena)) {
 	            return film;
@@ -128,7 +130,8 @@ public class GestoreFilm extends Observable {
 	    json.put("urtea", film.getUrtea());
 	    json.put("generoa", film.getGeneroa());
 	    json.put("zuzendaria", film.getZuzendaria());
-	    json.put("bbpuntuazioa", film.getPuntuazioaBb());
+	    json.put("puntuazioaBb", film.getPuntuazioaBb());
+	    json.put("iruzkinak", film.getIruzkinak());
 	    
 	    return json;
 	}
@@ -153,4 +156,61 @@ public class GestoreFilm extends Observable {
 		Film filma = bilatuIzenarekin(izena);
 		filmak.remove(filma);
 	}
+	
+	public void loadPuntuazioak() {
+	    List<Puntuazioa> puntuazioak = DB_kudeatzailea.getDB().kargatuPuntuazioak();
+
+	    for (Film film : filmak) {
+	        List<Puntuazioa> puntuazioIragaziak = puntuazioak.stream()
+	                .filter(p -> p.getFilmID() == film.getFilmID())
+	                .collect(Collectors.toList());
+
+	        film.setBalorazioak(new ArrayList<>(puntuazioIragaziak));
+	        film.eguneratuPuntuBb(DB_kudeatzailea.getDB());
+	    }
+
+	    setChanged();
+	    notifyObservers();
+	}
+	
+	public boolean puntuazioaBadago(String NAN, int filmID) {
+        Film film = bilatuFilma(filmID);
+        if (film == null) return false;
+        
+        List<Puntuazioa> puntuazioak = film.getBalorazioak();
+        for (Puntuazioa puntu : puntuazioak) {
+            if (puntu.getNAN().equals(NAN)) {
+                return true; 
+            }
+        }
+        return false;
+    }
+	
+	private Film bilatuFilma(int filmID) {
+        for (Film film : filmak) {
+            if (film.getFilmID() == filmID) {
+                return film;
+            }
+        }
+        return null;
+    }
+	
+	public void gordePuntuazioa(String NAN, int filmID, int puntuazioa, String iruzkina) {
+        Film film = bilatuFilma(filmID);
+        if (film == null) {
+            throw new IllegalArgumentException("Filma ez da aurkitu");
+        }
+
+        List<Puntuazioa> puntuazioak = film.getBalorazioak();
+        System.out.println(puntuazioak);
+        Puntuazioa puntu = new Puntuazioa(NAN, filmID, puntuazioa, iruzkina, LocalDate.now());
+
+        if (puntuazioaBadago(NAN, filmID)) {
+            puntuazioak.removeIf(p -> p.getNAN().equals(NAN));
+        }
+        puntuazioak.add(puntu);
+        System.out.println(puntuazioak);
+        setChanged();
+        notifyObservers();
+    }
 }

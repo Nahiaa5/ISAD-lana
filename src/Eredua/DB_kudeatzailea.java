@@ -240,5 +240,30 @@ public class DB_kudeatzailea {
 			e.printStackTrace();
 		}
 	}
+	
+	public List<Puntuazioa> kargatuPuntuazioak() {
+	    List<Puntuazioa> puntuazioak = new ArrayList<>();
+	    String query = "SELECT * FROM Puntuazioa";  
+
+	    try (Connection conn = DB_konexioa.getConexion();
+	         PreparedStatement stmt = conn.prepareStatement(query);
+	         ResultSet rs = stmt.executeQuery()) {
+
+	        while (rs.next()) {
+	            String NAN = rs.getString("NAN");
+	            int filmID = rs.getInt("filmID");
+	            int puntuazioa = rs.getInt("puntuazioa");
+	            String iruzkina = rs.getString("iruzkina");
+	            LocalDate data = rs.getDate("data").toLocalDate();
+	            
+	            puntuazioak.add(new Puntuazioa(NAN, filmID, puntuazioa, iruzkina, data));
+	        }
+
+	    } catch (SQLException | ClassNotFoundException e) {
+	        e.printStackTrace();
+	    }
+
+	    return puntuazioak;
+	}
 
 }

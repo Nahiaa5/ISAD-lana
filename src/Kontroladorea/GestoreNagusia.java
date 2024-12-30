@@ -28,6 +28,7 @@ public class GestoreNagusia extends Observable {
 	
 	public void datuakKargatu() {
 		GestoreFilm.getKN().loadFilmak();
+		GestoreFilm.getKN().loadPuntuazioak();
 		GestoreErabiltzaile.getGE().loadErabiltzaileak();
 	}
 	
@@ -103,4 +104,17 @@ public class GestoreNagusia extends Observable {
 	public void filmaEzabatu(String izena) {
 		GestoreFilm.getKN().filmaEzabatu(izena);
 	}
+	
+	public void ordenatuFilmaPuntuazioz() {
+		GestoreFilm.getKN().ordenatuPuntuazioz();
+	}
+	
+	public Film bilatuFilmaIzenaz(String filmIzena) {
+		Film film=GestoreFilm.getKN().bilatuIzenarekin(filmIzena);
+		return film;
+	}
+	
+	public void gordePuntuazioa(String NAN, int filmID, int puntuazioa, String iruzkina) {
+        GestoreFilm.getKN().gordePuntuazioa(NAN, filmID, puntuazioa, iruzkina);
+    }
 }
