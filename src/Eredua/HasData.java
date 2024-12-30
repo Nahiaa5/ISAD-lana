@@ -10,4 +10,11 @@ public class HasData {
 		this.hasData = hasData;
 	}
 	
+	public LocalDate getData() {
+		return hasData;
+	}
+	
+	public LocalDate kalkulatuBiEgun() {
+		return hasData.plusDays(2);
+	}
 }

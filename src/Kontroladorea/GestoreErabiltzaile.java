@@ -135,4 +135,9 @@ public class GestoreErabiltzaile {
 		
 		return zerrenda;
 	}
+	
+	public void alokairuaErabiltzailearenZerrendanGehitu(Alokairua alok) {
+		Erabiltzaile erab = getErabiltzaileByNAN(saioaNan);
+		erab.gehituAlokairua(alok);
+	}
 }

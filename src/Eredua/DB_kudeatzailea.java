@@ -88,6 +88,24 @@ public class DB_kudeatzailea {
         return alokairuak;
 	}
 	
+	public void alokairuaGorde(String erabNAN, int filmID, LocalDate hasData, LocalDate bukData) {
+		String query = "INSERT INTO Alokairua (erabiltzaileNAN, filmID, hasData, bukData) VALUES (?, ?, ?, ?)";
+		
+		try (Connection conn = DB_konexioa.getConexion();
+		     PreparedStatement stmt = conn.prepareStatement(query)) {
+
+		        stmt.setString(1, erabNAN);
+		        stmt.setInt(2, filmID);
+		        stmt.setDate(3, java.sql.Date.valueOf(hasData));
+		        stmt.setDate(4, java.sql.Date.valueOf(bukData));
+
+		        stmt.executeUpdate();
+
+		    } catch (SQLException | ClassNotFoundException e) {
+		        e.printStackTrace();
+		    }
+	}
+	
 	public boolean erabiltzaileBerriaSartu(String pNAN, String pIzena, String pAbizena, String pEmail, String pPasahitza) {
 		String query = "INSERT INTO Erabiltzaile (NAN, izena, abizena, email, pasahitza) VALUES (?, ?, ?, ?, ?)";
 	    boolean ondo = false;

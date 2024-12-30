@@ -26,4 +26,17 @@ public class GestoreAlokairu {
 	    this.alokairuak=DB_kudeatzailea.getDB().kargatuAlokairuak();
 	}
 	
+	public Alokairua alokairuaEgin(String erabNAN, Film film) {
+		HasData hasData = new HasData(LocalDate.now());
+		LocalDate bukData = hasData.kalkulatuBiEgun();
+		
+		Alokairua alok = new Alokairua(film, hasData, bukData);
+		
+		alokairuak.add(alok);
+		
+		DB_kudeatzailea.getDB().alokairuaGorde(erabNAN, film.getFilmID(), hasData.getData(), bukData);
+		
+		return alok;
+	}
+	
 }

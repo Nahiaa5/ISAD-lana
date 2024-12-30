@@ -50,10 +50,11 @@ public class FilmXehetasunakB extends JFrame implements Observer {
         
         baloratuBtn = new JButton("Baloratu");
         panel_1.add(baloratuBtn);
+        baloratuBtn.addActionListener(getController());
         
         alokatuBtn = new JButton("Alokatu");
         panel_1.add(alokatuBtn);
-        baloratuBtn.addActionListener(getController());
+        alokatuBtn.addActionListener(getController());
        
         itxiBtn=new JButton("Itxi");
         itxiBtn.addActionListener(getController());
@@ -146,10 +147,12 @@ public class FilmXehetasunakB extends JFrame implements Observer {
                 }
                 PuntuazioPantaila puntuP = new PuntuazioPantaila(film, NAN);
                 puntuP.setVisible(true);
-            }
-
-            if (e.getSource().equals(itxiBtn)) {
+            } else if (e.getSource().equals(itxiBtn)) {
                 dispose();
+            } else if (e.getSource().equals(alokatuBtn)) {
+            	String labelText = ((JLabel) panel_2.getComponent(0)).getText();
+                String filmIzena = labelText.substring(labelText.indexOf(":")+2);
+            	GestoreNagusia.getGN().filmaAlokatu(filmIzena);
             }
         }
     }
