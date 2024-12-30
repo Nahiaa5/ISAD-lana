@@ -10,6 +10,7 @@ import Eredua.*;
 public class GestoreNagusia extends Observable {
 
 	private static GestoreNagusia nGN = null;
+	private boolean kargatuDira = false;
 	
 	private GestoreNagusia() {}
 	
@@ -23,14 +24,17 @@ public class GestoreNagusia extends Observable {
 	
 	public JSONObject getFilmXehetasunak(String filmIzena) {
 		JSONObject json = GestoreFilm.getKN().getFilmXehetasunak(filmIzena);
-		return json;
+			return json;
 	}
 	
 	public void datuakKargatu() {
-		GestoreFilm.getKN().loadFilmak();
-		GestoreFilm.getKN().loadPuntuazioak();
-		GestoreErabiltzaile.getGE().loadErabiltzaileak();
-		GestoreAlokairu.getGA().loadAlokairuak();
+		if(!kargatuDira) {
+			GestoreFilm.getKN().loadFilmak();
+			GestoreFilm.getKN().loadPuntuazioak();
+			GestoreErabiltzaile.getGE().loadErabiltzaileak();
+			GestoreAlokairu.getGA().loadAlokairuak();
+			kargatuDira = true;
+		}
 	}
 	
 	public JSONArray getInfoKatalogokoFilmGuztiak() {
@@ -62,7 +66,9 @@ public class GestoreNagusia extends Observable {
 			ondo = false;
 		}
 		else {
-			ondo = DB_kudeatzailea.getDB().erabiltzaileBerriaSartu(pNAN, pIzena, pAbizena, pEmail, pPasahitza);
+			Erabiltzaile e = new Erabiltzaile(pNAN, pIzena, pAbizena, pEmail, pPasahitza, 0, 0);
+			GestoreErabiltzaile.getGE().gehituErabiltzailea(e);
+			ondo = true;
 		}
 		setChanged();
 		notifyObservers(ondo);
@@ -117,10 +123,17 @@ public class GestoreNagusia extends Observable {
 	
 	public void gordePuntuazioa(String NAN, int filmID, int puntuazioa, String iruzkina) {
         GestoreFilm.getKN().gordePuntuazioa(NAN, filmID, puntuazioa, iruzkina);
+        setChanged();
+        notifyObservers();
     }
 
 	public JSONArray bilaketaEgin(String text) {
 		JSONArray json = GestoreFilm.getKN().bilatuFilmKatalogoan(text);
 		return json;
+	}
+	
+	public JSONArray bilatzaileanErabiltzaileak(String text) {
+		JSONArray erabiltzaileak = GestoreErabiltzaile.getGE().bilatzaileanErabiltzaileak(text);
+		return erabiltzaileak;
 	}
 }

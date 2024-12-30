@@ -52,4 +52,11 @@ public class Erabiltzaile {
 		egindakoAlokairuak.add(alokairua);
 	}
 
+	public boolean izenaTestuarekinKointziditu(String text) {
+		 if (izena == null || text == null) {
+		        return false; 
+		    }
+		 return izena.trim().equalsIgnoreCase(text.trim());
+    }
+
 }

@@ -3,6 +3,7 @@ package Bista;
 import javax.swing.*;
 import Eredua.DB_kudeatzailea;
 import Eredua.Film;
+import Kontroladorea.GestoreFilm;
 import Kontroladorea.GestoreNagusia;
 
 import org.json.JSONArray;
@@ -25,8 +26,7 @@ public class FilmXehetasunakB extends JFrame implements Observer {
     private JPanel panel_2;
 
     public FilmXehetasunakB(String filmIzena) {
-    	Film filma = GestoreNagusia.getGN().bilatuFilmaIzenaz(filmIzena);
-    	filma.addObserver(this);
+    	GestoreNagusia.getGN().addObserver(this);
     	
         setTitle("Xehetasunak - " + filmIzena);
         setSize(400, 300);
@@ -34,7 +34,7 @@ public class FilmXehetasunakB extends JFrame implements Observer {
         setLocationRelativeTo(null); 
         
         initialize(filmIzena);
-        
+		iruzkinakErakutsi();
         controller = getController();
     }
 
@@ -65,7 +65,6 @@ public class FilmXehetasunakB extends JFrame implements Observer {
         getContentPane().add(panel_2, BorderLayout.NORTH);
         panel_2.setLayout(new GridLayout(7, 1, 0, 0));
         JSONObject xehetasunak = GestoreNagusia.getGN().getFilmXehetasunak(filmIzena);
-        
         JLabel label = new JLabel("Izenburua: " + xehetasunak.getString("izenburua"));
         panel_2.add(label);
         JLabel label_1 = new JLabel("Aktoreak: " + xehetasunak.getString("aktoreak"));
@@ -86,21 +85,41 @@ public class FilmXehetasunakB extends JFrame implements Observer {
         iruzkinakArea.setEditable(false);
         setVisible(true);
     }
+    
+    public void iruzkinakErakutsi() {
+    	String filmIzena = getTitle().substring("Xehetasunak - ".length());
+        
+        Film film = GestoreNagusia.getGN().bilatuFilmaIzenaz(filmIzena);
+        
+        if (film != null) {
+            JSONObject xehetasunak = GestoreNagusia.getGN().getFilmXehetasunak(filmIzena);
+            
+            JLabel label1 = (JLabel) panel_2.getComponent(0);
+            label1.setText("Izenburua: " + xehetasunak.getString("izenburua"));
+            
+            JLabel label2 = (JLabel) panel_2.getComponent(1);
+            label2.setText("Aktoreak: " + xehetasunak.getString("aktoreak"));
+            
+            JLabel label3 = (JLabel) panel_2.getComponent(2);
+            label3.setText("Urtea: " + xehetasunak.getInt("urtea"));
+            
+            JLabel label4 = (JLabel) panel_2.getComponent(3);
+            label4.setText("Generoa: " + xehetasunak.getString("generoa"));
+            
+            JLabel label5 = (JLabel) panel_2.getComponent(4);
+            label5.setText("Zuzendaria: " + xehetasunak.getString("zuzendaria"));
+            
+            puntuBbLabel.setText("Batez besteko Puntuazioa: " + xehetasunak.getDouble("puntuazioaBb"));
+            
+            String iruzkinak = String.join("\n", film.getIruzkinak());
+            iruzkinakArea.setText(iruzkinak);
+        }
+    }
 
     @Override
     public void update(Observable o, Object arg) {
-        if (arg instanceof JSONObject) { 
-            JSONObject xehetasunak = (JSONObject) arg;
-            setTitle("Xehetasunak - " + xehetasunak.getString("izenburua"));
-            puntuBbLabel.setText("Batez besteko Puntuazioa: " + xehetasunak.getDouble("puntuazioaBb"));
-            
-            iruzkinakArea.setText(""); 
-            if (xehetasunak.has("iruzkinak")) {
-                JSONArray iruzkinak = xehetasunak.getJSONArray("iruzkinak");
-                for (int i = 0; i < iruzkinak.length(); i++) {
-                    iruzkinakArea.append(iruzkinak.getString(i) + "\n");
-                }
-            }
+    	if (o instanceof GestoreNagusia) {
+    		iruzkinakErakutsi();
         }
     }
     

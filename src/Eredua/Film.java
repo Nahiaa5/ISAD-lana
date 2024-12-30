@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 
+import Kontroladorea.GestoreErabiltzaile;
+
 public class Film extends Observable{
     private int filmID;
     private String izenburua; 
@@ -15,7 +17,6 @@ public class Film extends Observable{
     private String adminNAN; 
     private boolean katalogoan; 
     private double puntuazioaBb;
-    private List<String> iruzkinak;
     private List<Puntuazioa> balorazioak;
     
     public Film(int filmID, String izenburua, String aktoreak, int urtea, String generoa, String zuzendaria, String adminNAN, boolean katalogoan, double puntuazioaBb) {
@@ -28,7 +29,6 @@ public class Film extends Observable{
         this.adminNAN = adminNAN;
         this.katalogoan = katalogoan;
         this.puntuazioaBb = puntuazioaBb;
-        this.iruzkinak=new ArrayList<>();
         this.balorazioak = new ArrayList<>();
     }
 
@@ -159,5 +159,6 @@ public class Film extends Observable{
     
     public void onartu() {
     	katalogoan = true;
+    	adminNAN=GestoreErabiltzaile.getGE().getSaioaNan();
     }
 }
