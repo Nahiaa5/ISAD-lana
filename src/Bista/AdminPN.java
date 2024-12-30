@@ -90,6 +90,10 @@ public class AdminPN extends JFrame {
 				new ErabKudeatu();
 				setVisible(false);
 			}
+			else if(e.getSource().equals(btnEska)) {
+				new ErabEskaeraKudeatu();
+				setVisible(false);
+			}
 		}
 	}
 }

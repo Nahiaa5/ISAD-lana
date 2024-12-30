@@ -38,5 +38,9 @@ public class Erabiltzaile {
 	public int getOnartuta() {
 		return this.onartuta;
 	}
+	
+	public void Onartu() {
+		onartuta = 1;
+	}
 
 }

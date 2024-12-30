@@ -51,9 +51,7 @@ public class GestoreNagusia extends Observable {
 			GestoreErabiltzaile.getGE().setSaioaNan(e.getNan());
 			setChanged();
 			notifyObservers(e);
-		}
-		
-		
+		}		
 	}
 	
 	public void ErabiltzaileBerriaSartu(String pNAN, String pIzena, String pAbizena, String pEmail, String pPasahitza) {
@@ -68,4 +66,16 @@ public class GestoreNagusia extends Observable {
 		notifyObservers(ondo);
 	}
 	
+	public JSONArray getInfoEskaerak() {
+		JSONArray eskaerak = GestoreErabiltzaile.getGE().getInfoEskaerak();
+		return eskaerak;
+	}
+	
+	public void erabiltzaileaOnartu(String nan) {
+		GestoreErabiltzaile.getGE().erabiltzaileaOnartu(nan);
+	}
+	
+	public void erabiltzaileaEzabatu(String nan) {
+		GestoreErabiltzaile.getGE().erabiltzaileaEzabatu(nan);
+	}
 }

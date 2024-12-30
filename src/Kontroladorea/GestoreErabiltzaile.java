@@ -71,4 +71,34 @@ public class GestoreErabiltzaile {
 
 	    return json;
 	}
+	
+	public JSONArray getInfoEskaerak() {
+		List<Erabiltzaile> erabiltzaileak = getErabiltzaileak();
+		JSONArray JSONesk = new JSONArray();
+		
+		for (Erabiltzaile e : erabiltzaileak) {
+			if(e.getOnartuta() == 0) {
+				JSONObject json = getInfo(e);
+				JSONesk.put(json);
+			}
+		}
+		
+		return JSONesk;
+	}
+	
+	public void erabiltzaileaOnartu(String nan) {
+		for(Erabiltzaile erab : erabiltzaileak) {
+			if(erab.getNan().equals(nan)) {
+				erab.Onartu();
+			}
+		}
+	}
+	
+	public void erabiltzaileaEzabatu(String nan) {
+		for(Erabiltzaile erab : erabiltzaileak) {
+			if(erab.getNan().equals(nan)) {
+				erabiltzaileak.remove(erab);
+			}
+		}
+	}
 }
