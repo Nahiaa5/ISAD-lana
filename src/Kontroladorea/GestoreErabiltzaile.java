@@ -43,6 +43,10 @@ public class GestoreErabiltzaile {
 		return aurkituta;
 	}
 	
+	public void gehituErabiltzailea(Erabiltzaile e) {
+		this.erabiltzaileak.add(e);
+	}
+	
 	public void setSaioaNan(String pNan) {
 		this.saioaNan = pNan;
 	}

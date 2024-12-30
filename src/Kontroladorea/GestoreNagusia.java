@@ -10,6 +10,7 @@ import Eredua.*;
 public class GestoreNagusia extends Observable {
 
 	private static GestoreNagusia nGN = null;
+	private boolean kargatuDira = false;
 	
 	private GestoreNagusia() {}
 	
@@ -27,9 +28,12 @@ public class GestoreNagusia extends Observable {
 	}
 	
 	public void datuakKargatu() {
-		GestoreFilm.getKN().loadFilmak();
-		GestoreFilm.getKN().loadPuntuazioak();
-		GestoreErabiltzaile.getGE().loadErabiltzaileak();
+		if(!kargatuDira) {
+			GestoreFilm.getKN().loadFilmak();
+			GestoreFilm.getKN().loadPuntuazioak();
+			GestoreErabiltzaile.getGE().loadErabiltzaileak();
+			kargatuDira = true;
+		}
 	}
 	
 	public JSONArray getInfoKatalogokoFilmGuztiak() {
@@ -61,7 +65,9 @@ public class GestoreNagusia extends Observable {
 			ondo = false;
 		}
 		else {
-			ondo = DB_kudeatzailea.getDB().erabiltzaileBerriaSartu(pNAN, pIzena, pAbizena, pEmail, pPasahitza);
+			Erabiltzaile e = new Erabiltzaile(pNAN, pIzena, pAbizena, pEmail, pPasahitza, 0, 0);
+			GestoreErabiltzaile.getGE().gehituErabiltzailea(e);
+			ondo = true;
 		}
 		setChanged();
 		notifyObservers(ondo);
