@@ -70,7 +70,7 @@ public class GestoreErabiltzaile {
 		JSONArray JSONerab = new JSONArray();
 		
 		for (Erabiltzaile e : erabiltzaileak) {
-			if(e.getOnartuta() == 1 && !e.getNan().equals(saioaNan)) {
+			if(e.getOnartuta() == 1) {
 				JSONObject json = getInfo(e);
 				JSONerab.put(json);
 			}
@@ -127,7 +127,7 @@ public class GestoreErabiltzaile {
 		JSONArray zerrenda = new JSONArray();
 		
 		for (Erabiltzaile e : erabiltzaileak) {
-			if (e.izenaTestuarekinKointziditu(text) && e.getOnartuta() == 1 && !e.getNan().equals(saioaNan)){
+			if (e.izenaTestuarekinKointziditu(text) && e.getOnartuta() == 1){
 				JSONObject object = getInfo(e);
 				zerrenda.put(object);
 			}

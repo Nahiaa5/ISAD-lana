@@ -11,18 +11,12 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import Kontroladorea.GestoreErabiltzaile;
 import Kontroladorea.GestoreNagusia;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -179,8 +173,14 @@ public class ErabKudeatu extends JFrame {
 		         			break;
 		            
 		         		case "ezabatu":
-		         			GestoreNagusia.getGN().erabiltzaileaEzabatu(nan);
-		         			erabiltzaileakErakutsi();
+		         			if(nan.equals(GestoreErabiltzaile.getGE().getSaioaNan())) {
+		         				JOptionPane.showMessageDialog(ErabKudeatu.this, "Ezin duzu zure erabiltzailea ezabatu.", "Ezin duzu zure erabiltzailea ezabatu.", JOptionPane.INFORMATION_MESSAGE);
+		         			}
+		         			else {
+		         				GestoreNagusia.getGN().erabiltzaileaEzabatu(nan);
+		         				erabiltzaileakErakutsi();
+		         			}
+		         			
 		         			break;
 		         		default:
 		         			System.err.println("Acción desconocida: " + action);
