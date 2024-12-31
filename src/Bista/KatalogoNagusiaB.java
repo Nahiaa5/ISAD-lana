@@ -102,19 +102,19 @@ public class KatalogoNagusiaB extends JFrame //implements Observer
 
 	            String izena = filmJson.getString("izenburua");
 	            double puntuazioa = filmJson.getDouble("puntuazioa");
-	            
-	            JButton infoBtn=new JButton("Xehetasunak");
+				
+				String izenbPuntu=String.format("%s (%.2f)",izena,puntuazioa);
+				
+				JButton infoBtn=new JButton("Xehetasunak");
 	            infoBtn.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						new FilmXehetasunakB(izena);
 					}
 				});
-	            
 	            JPanel filmaP=new JPanel();
 				filmaP.setLayout(new BorderLayout());
 				
-				String izenbPuntu=String.format("%s (%.2f)",izena,puntuazioa);
 				JLabel filmLabel=new JLabel(izenbPuntu);
 				filmaP.add(filmLabel,BorderLayout.CENTER);	
 				filmaP.add(infoBtn, BorderLayout.EAST);

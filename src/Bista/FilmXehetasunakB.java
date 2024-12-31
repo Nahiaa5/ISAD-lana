@@ -3,6 +3,7 @@ package Bista;
 import javax.swing.*;
 import Eredua.DB_kudeatzailea;
 import Eredua.Film;
+import Kontroladorea.GestoreErabiltzaile;
 import Kontroladorea.GestoreFilm;
 import Kontroladorea.GestoreNagusia;
 
@@ -144,18 +145,23 @@ public class FilmXehetasunakB extends JFrame implements Observer {
     	@Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource().equals(baloratuBtn)) {
-                String NAN = "79136031T"; // De prueba, cambiar cuando se implemente el usuario
-                //
                 String labelText = ((JLabel) panel_2.getComponent(0)).getText();
-                String filmIzena = labelText.substring(labelText.indexOf(":")+2);
+                String filmIzena = labelText.substring(labelText.indexOf(":") + 2);
                 
                 Film film = GestoreNagusia.getGN().bilatuFilmaIzenaz(filmIzena);
                 if(film==null) {
                 	JOptionPane.showMessageDialog(FilmXehetasunakB.this, "Ez da aurkitu filma.", "Errorea", JOptionPane.ERROR_MESSAGE);
                 	return;
                 }
-                PuntuazioPantaila puntuP = new PuntuazioPantaila(film, NAN);
-                puntuP.setVisible(true);
+                String nan = GestoreNagusia.getGN().getSaioaNAN();
+                boolean alokatuta = GestoreNagusia.getGN().erabiltzaileakAlokatuDu(nan, film.getFilmID());
+                if(!alokatuta) {
+                	JOptionPane.showMessageDialog(FilmXehetasunakB.this, "Ez duzu filma hau alokatu, ezin duzu baloratu.", "Errorea", JOptionPane.ERROR_MESSAGE);
+                }else {
+                	PuntuazioPantaila puntuP = new PuntuazioPantaila(film, nan);
+                    puntuP.setVisible(true);
+                }
+                
             } else if (e.getSource().equals(itxiBtn)) {
                 dispose();
             } else if (e.getSource().equals(alokatuBtn)) {

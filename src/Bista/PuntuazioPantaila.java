@@ -36,7 +36,6 @@ public class PuntuazioPantaila extends JFrame{
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private Film film;
 	private String NAN;
-	private DB_kudeatzailea dbK;
 	private Controller controller;
 
 	/**
@@ -45,7 +44,6 @@ public class PuntuazioPantaila extends JFrame{
 	public PuntuazioPantaila(Film film, String NAN) {
 		this.film = film;
 		this.NAN = NAN;
-		this.dbK = dbK;
 		initialize();
 		controller = new Controller();
 	}

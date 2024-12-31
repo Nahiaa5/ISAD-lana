@@ -150,4 +150,10 @@ public class GestoreNagusia extends Observable {
 		Alokairua alokairua = GestoreAlokairu.getGA().alokairuaEgin(erabNAN, film);
 		GestoreErabiltzaile.getGE().alokairuaErabiltzailearenZerrendanGehitu(alokairua);
 	}
+	public boolean erabiltzaileakAlokatuDu(String NAN, int filmID) {
+		return GestoreFilm.getKN().erabiltzaileakAlokatuDu(NAN, filmID);
+	}
+	public String getSaioaNAN() {
+		return GestoreErabiltzaile.getGE().getSaioaNan();
+	}
 }

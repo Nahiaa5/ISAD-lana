@@ -188,6 +188,27 @@ public class GestoreFilm extends Observable {
         return null;
     }
 	
+	public boolean erabiltzaileakAlokatuDu(String nan, int filmID) {
+		Erabiltzaile erab = erabiltzaileaBilatu(nan);
+		if(erab!=null) {
+			for(Alokairua alok: erab.getEgindakoAlokairuak()) {
+				if(alok.getFilm().getFilmID()==filmID) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public Erabiltzaile erabiltzaileaBilatu(String nan) {
+		for(Erabiltzaile erab: GestoreErabiltzaile.getGE().getErabiltzaileak()) {
+			if(erab.getNan().equals(nan)) {
+				return erab;
+			}
+		}
+		return null;
+	}
+	
 	public void kalkulatuPuntuazioak() {
 		for(Film film: filmak) {
 			film.kalkulatuPuntuBb();
@@ -199,13 +220,18 @@ public class GestoreFilm extends Observable {
         if (film == null) {
             throw new IllegalArgumentException("Filma ez da aurkitu");
         }
+        String nan = GestoreErabiltzaile.getGE().getSaioaNan();
+        
+        if(!erabiltzaileakAlokatuDu(nan, filmID)) {
+        	throw new IllegalArgumentException("Ez duzu film hau alokatu, ezin duzu baloratu.");
+        }
 
         List<Puntuazioa> puntuazioak = film.getBalorazioak();
         System.out.println(puntuazioak);
-        Puntuazioa puntu = new Puntuazioa(NAN, filmID, puntuazioa, iruzkina, LocalDate.now());
+        Puntuazioa puntu = new Puntuazioa(nan, filmID, puntuazioa, iruzkina, LocalDate.now());
 
-        if (puntuazioaBadago(NAN, filmID)) {
-            puntuazioak.removeIf(p -> p.getNAN().equals(NAN));
+        if (puntuazioaBadago(nan, filmID)) {
+            puntuazioak.removeIf(p -> p.getNAN().equals(nan));
         }
         puntuazioak.add(puntu);
         System.out.println(puntuazioak);

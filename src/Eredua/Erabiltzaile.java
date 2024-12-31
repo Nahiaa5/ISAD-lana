@@ -48,6 +48,10 @@ public class Erabiltzaile {
 		onartuta = 1;
 	}
 	
+	public List<Alokairua> getEgindakoAlokairuak(){
+		return this.egindakoAlokairuak;
+	}
+	
 	public void gehituAlokairua(Alokairua alokairua) {
 		egindakoAlokairuak.add(alokairua);
 	}
@@ -58,5 +62,5 @@ public class Erabiltzaile {
 		    }
 		 return izena.trim().equalsIgnoreCase(text.trim());
     }
-
+	
 }

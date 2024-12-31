@@ -13,5 +13,8 @@ public class Alokairua {
 		this.hasData = hasData;
 		this.bukData = bukData;
 	}
+	public Film getFilm() {
+		return this.film;
+	}
 	
 }
