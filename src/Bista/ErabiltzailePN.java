@@ -6,6 +6,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import Kontroladorea.GestoreErabiltzaile;
+
 public class ErabiltzailePN extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -13,6 +15,7 @@ public class ErabiltzailePN extends JFrame{
 	private JButton btnKN;
 	private Controller controller;
 	private JButton btnDatuakAldatu;
+	private JButton btnExit;
 
 	/**
 	 * Create the application.
@@ -27,6 +30,7 @@ public class ErabiltzailePN extends JFrame{
         contentPane.add(getBtnKN());
         contentPane.add(getZabaldua());
         contentPane.add(getBtnDatuakAldatu());
+        contentPane.add(getBtnExit());
 
         controller = new Controller();
         setVisible(true);
@@ -61,6 +65,15 @@ public class ErabiltzailePN extends JFrame{
 		}
 		return btnDatuakAldatu;
 	}
+	
+	private JButton getBtnExit() {
+		if (btnExit == null) {
+			btnExit = new JButton("Exit");
+			btnExit.setBounds(354, 10, 72, 21);
+			btnExit.addActionListener(getController());
+		}
+		return btnExit;
+	}
 
 	private Controller getController() {
 		if (controller == null) {
@@ -82,9 +95,15 @@ public class ErabiltzailePN extends JFrame{
             }
             
             if (e.getSource().equals(btnDatuakAldatu)) {
-            	new DatuakAldatu();
+            	new DatuakAldatu(GestoreErabiltzaile.getGE().getSaioaNan());
+            	setVisible(false);
+            }
+            
+            if(e.getSource().equals(btnExit)) {
+            	new PantailaNagusia();
             	setVisible(false);
             }
         }
     }
+	
 }

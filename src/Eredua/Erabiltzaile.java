@@ -44,6 +44,22 @@ public class Erabiltzaile {
 		return this.onartuta;
 	}
 	
+	public void setIzena(String pIzena) {
+		this.izena = pIzena;
+	}
+	
+	public void setAbizena(String pAbizena) {
+		this.abizena = pAbizena;
+	}
+	
+	public void setEmail(String pEmail) {
+		this.email = pEmail;
+	}
+	
+	public void setPasahitza(String pPasahitza) {
+		this.pasahitza = pPasahitza;
+	}
+	
 	public void Onartu() {
 		onartuta = 1;
 	}

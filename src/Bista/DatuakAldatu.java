@@ -6,9 +6,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Kontroladorea.GestoreErabiltzaile;
 import Kontroladorea.GestoreNagusia;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +19,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
-public class DatuakAldatu extends JFrame {
+import java.util.Observer;
+import java.util.Observable;
+import Eredua.*;
+
+public class DatuakAldatu extends JFrame implements Observer {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -31,9 +38,12 @@ public class DatuakAldatu extends JFrame {
 	private JButton btnAldatu;
 	private JButton btnExit;
 	private DatuakAldatuKontroladorea kontroladorea = null;
+	private String nanErabiltzailea;
 
 
-	public DatuakAldatu() {
+	public DatuakAldatu(String pNan) {
+		this.nanErabiltzailea = pNan;
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -52,6 +62,7 @@ public class DatuakAldatu extends JFrame {
 		contentPane.add(getBtnAldatu());
 		contentPane.add(getBtnExit());
 		setVisible(true);
+		GestoreNagusia.getGN().addObserver(this);
 	}
 	private JLabel getLblNewLabel() {
 		if (lblNewLabel == null) {
@@ -121,6 +132,7 @@ public class DatuakAldatu extends JFrame {
 		if (btnAldatu == null) {
 			btnAldatu = new JButton("Aldatu");
 			btnAldatu.setBounds(168, 214, 97, 28);
+			btnAldatu.addActionListener(getSH());
 		}
 		return btnAldatu;
 	}
@@ -128,8 +140,22 @@ public class DatuakAldatu extends JFrame {
 		if (btnExit == null) {
 			btnExit = new JButton("Exit");
 			btnExit.setBounds(365, 10, 71, 21);
+			btnExit.addActionListener(getSH());
 		}
 		return btnExit;
+	}
+	
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		if(arg1 instanceof String) {
+			String mezua = (String) arg1;
+			if(mezua.equals("Hutsik")) {
+				JOptionPane.showMessageDialog(DatuakAldatu.this, "Errorea gertatu da.", "Errorea gertatu da.", JOptionPane.INFORMATION_MESSAGE);
+			}
+			else if (mezua.equals("Sartuta")) {
+				JOptionPane.showMessageDialog(DatuakAldatu.this, "Datuak aldatu dira.", "Datuak aldatu dira.", JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
 	}
 	
 	private DatuakAldatuKontroladorea getSH() {
@@ -147,6 +173,20 @@ public class DatuakAldatu extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
+			if (e.getSource().equals(btnAldatu)) {
+				GestoreNagusia.getGN().erabiltzaileDatuakAldatu(nanErabiltzailea, textFieldIzena.getText(), textFieldAbizena.getText(), textFieldEmail.getText(), textFieldPasahitza.getText());
+			}
+			if (e.getSource().equals(btnExit)) {
+				Erabiltzaile erab = GestoreErabiltzaile.getGE().erabiltzaileaAurkitu(GestoreErabiltzaile.getGE().getSaioaNan());
+				if(erab.getAdmin() == 1) {
+					new ErabKudeatu();
+				}
+				else {
+					new ErabiltzailePN();
+				}
+				dispose();
+			}
+			
 		}
 	}
 }
