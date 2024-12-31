@@ -24,6 +24,7 @@ public class FilmXehetasunakB extends JFrame implements Observer {
     private Controller controller = null;
     private JPanel panel_1;
     private JButton alokatuBtn;
+    private JButton ikusiBtn;
     private JPanel panel_2;
 
     public FilmXehetasunakB(String filmIzena) {
@@ -56,6 +57,10 @@ public class FilmXehetasunakB extends JFrame implements Observer {
         alokatuBtn = new JButton("Alokatu");
         panel_1.add(alokatuBtn);
         alokatuBtn.addActionListener(getController());
+        
+        ikusiBtn = new JButton("Ikusi");
+        panel_1.add(ikusiBtn);
+        ikusiBtn.addActionListener(getController());
        
         itxiBtn=new JButton("Itxi");
         itxiBtn.addActionListener(getController());
@@ -168,6 +173,8 @@ public class FilmXehetasunakB extends JFrame implements Observer {
             	String labelText = ((JLabel) panel_2.getComponent(0)).getText();
                 String filmIzena = labelText.substring(labelText.indexOf(":")+2);
             	GestoreNagusia.getGN().filmaAlokatu(filmIzena);
+            } else if (e.getSource().equals(ikusiBtn)) {
+            	new IkusiPantaila();
             }
         }
     }

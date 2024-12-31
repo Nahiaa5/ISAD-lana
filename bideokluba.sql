@@ -62,6 +62,7 @@ CREATE TABLE `film` (
   `adminNAN` varchar(10) DEFAULT NULL,
   `katalogoan` tinyint(1) NOT NULL DEFAULT 0,
   `puntuazioaBb` double DEFAULT 0,
+  `path` varchar(255),
   PRIMARY KEY (`filmID`),
   FOREIGN KEY (`adminNAN`) REFERENCES `erabiltzaile`(`NAN`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -70,8 +71,8 @@ CREATE TABLE `film` (
 -- Volcado de datos para la tabla `film`
 --
 
-INSERT INTO `film` (`izenburua`, `aktoreak`, `urtea`, `generoa`, `zuzendaria`, `adminNAN`, `katalogoan`, `puntuazioaBb`) VALUES 
-('La la land', 'Ryan Gosling, Emma Stone', '2016', 'Musical', 'Damien Chazelle', '79224675A', 1, 0);
+INSERT INTO `film` (`izenburua`, `aktoreak`, `urtea`, `generoa`, `zuzendaria`, `adminNAN`, `katalogoan`, `puntuazioaBb`, `path`) VALUES 
+('La la land', 'Ryan Gosling, Emma Stone', '2016', 'Musical', 'Damien Chazelle', '79224675A', 1, 0, '/LaLaLand.mp4');
 
 -- --------------------------------------------------------
 

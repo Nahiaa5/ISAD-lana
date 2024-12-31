@@ -149,8 +149,9 @@ public class DB_kudeatzailea {
                 String adminNAN = rs.getString("adminNAN");
                 boolean katalogoan = rs.getInt("katalogoan") == 1;
                 double puntuazioaBb = rs.getDouble("puntuazioaBb");
+                String path = rs.getString("path");
 
-                Film film = new Film(filmID, izenburua, aktoreak, urtea, generoa, zuzendaria, adminNAN, katalogoan, puntuazioaBb);
+                Film film = new Film(filmID, izenburua, aktoreak, urtea, generoa, zuzendaria, adminNAN, katalogoan, puntuazioaBb, path);
                 filmak.add(film);
             }
 

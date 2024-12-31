@@ -88,7 +88,7 @@ public class GestoreFilm extends Observable {
         String adminNAN = null;
         boolean katalogoan = false;
         double puntuazioaBb = 0.0;
-        Film filma = new Film(id, izenburua, aktoreak, urtea, generoa, zuzendaria, adminNAN, katalogoan, puntuazioaBb);
+        Film filma = new Film(id, izenburua, aktoreak, urtea, generoa, zuzendaria, adminNAN, katalogoan, puntuazioaBb, null);
         filmak.add(filma);
         System.out.println(filmak);
 	}
