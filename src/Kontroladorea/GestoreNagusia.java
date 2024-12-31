@@ -143,4 +143,20 @@ public class GestoreNagusia extends Observable {
 		Alokairua alokairua = GestoreAlokairu.getGA().alokairuaEgin(erabNAN, film);
 		GestoreErabiltzaile.getGE().alokairuaErabiltzailearenZerrendanGehitu(alokairua);
 	}
+	
+	public void erabiltzaileDatuakAldatu(String pNan, String pIzena, String pAbizena, String pEmail, String pPasahitza) {
+		Erabiltzaile e = GestoreErabiltzaile.getGE().erabiltzaileaAurkitu(pNan);
+		if(pIzena.isEmpty() || pAbizena.isEmpty() || pEmail.isEmpty() || pPasahitza.isEmpty()) {
+			setChanged();
+			notifyObservers("Hutsik");
+		}
+		else {
+			e.setIzena(pIzena);
+			e.setAbizena(pAbizena);
+			e.setEmail(pEmail);
+			e.setPasahitza(pPasahitza);
+			setChanged();
+			notifyObservers("Sartuta");
+		}
+	}
 }

@@ -37,6 +37,7 @@ public class ErabKudeatu extends JFrame {
 	private JPanel erabPanel;
 	private JLabel emaitzikEz;
 	private ErabKudeatuKontroladorea kontroladorea = null;
+	private JButton btnExit;
 
 	public ErabKudeatu() {
 		initialize();
@@ -63,6 +64,10 @@ public class ErabKudeatu extends JFrame {
 		
 		JScrollPane scrollPane=new JScrollPane(erabPanel);
 		getContentPane().add(bilaketaPanel, BorderLayout.NORTH);
+		
+		btnExit = new JButton("exit");
+		bilaketaPanel.add(btnExit);
+		btnExit.addActionListener(getEK());
 		getContentPane().add(scrollPane,BorderLayout.CENTER);
 		
 		emaitzikEz = new JLabel("Ez da aurkitu erabiltzailerik izen horrekin.");
@@ -139,6 +144,7 @@ public class ErabKudeatu extends JFrame {
 	//---------------------------------------KONTROLADOREA---------------------------------------
 	private class ErabKudeatuKontroladorea implements ActionListener {
 		
+		
 		public ErabKudeatuKontroladorea() {}
 		
 		@Override
@@ -154,25 +160,33 @@ public class ErabKudeatu extends JFrame {
 	            	}
 	         }
 			 
+			 if(e.getSource().equals(btnExit)) {
+				 new AdminPN();
+				 setVisible(false);
+			 }
+			 
 			 String command = e.getActionCommand();
 			 if (command != null) {
 		    	 String[] parts = command.split(":");
-		         String action = parts[0];
-		         String nan = parts[1];
+		    	 if(parts.length > 1) {
+		    		String action = parts[0];
+		    		String nan = parts[1];
 
-		         switch (action) {
-		         	case "aldatu":
-		         		new DatuakAldatu();
-		         		setVisible(false);
-		            break;
+		    		switch (action) {
+		         		case "aldatu":
+		         			new DatuakAldatu(nan);
+		         			setVisible(false);
+		         			break;
 		            
-		            case "ezabatu":
-		                GestoreNagusia.getGN().erabiltzaileaEzabatu(nan);
-		                erabiltzaileakErakutsi();
-		                break;
-		            default:
-		                System.err.println("Acción desconocida: " + action);
-		         }
+		         		case "ezabatu":
+		         			GestoreNagusia.getGN().erabiltzaileaEzabatu(nan);
+		         			erabiltzaileakErakutsi();
+		         			break;
+		         		default:
+		         			System.err.println("Acción desconocida: " + action);
+		    		} 
+		    	 }
+		         
 		     }
 		} 
 	}

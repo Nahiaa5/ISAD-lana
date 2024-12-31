@@ -93,7 +93,10 @@ public class SaioaHasi extends JFrame implements Observer {
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		if(arg1 instanceof String) {
-			JOptionPane.showMessageDialog(SaioaHasi.this, "Ez da aurkitu erabiltzailea.", "Ez da aurkitu erabiltzailea.", JOptionPane.INFORMATION_MESSAGE);
+			String mezua = (String) arg1;
+			if(mezua.equals("Txarto")) {
+				JOptionPane.showMessageDialog(SaioaHasi.this, "Ez da aurkitu erabiltzailea.", "Ez da aurkitu erabiltzailea.", JOptionPane.INFORMATION_MESSAGE);
+			}
 		}
 		else if(arg1 instanceof Erabiltzaile) {
 			Erabiltzaile e = (Erabiltzaile) arg1;

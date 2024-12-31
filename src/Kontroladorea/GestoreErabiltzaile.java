@@ -127,7 +127,7 @@ public class GestoreErabiltzaile {
 		JSONArray zerrenda = new JSONArray();
 		
 		for (Erabiltzaile e : erabiltzaileak) {
-			if (e.izenaTestuarekinKointziditu(text)) {
+			if (e.izenaTestuarekinKointziditu(text) && e.getOnartuta() == 1) {
 				JSONObject object = getInfo(e);
 				zerrenda.put(object);
 			}
@@ -140,4 +140,14 @@ public class GestoreErabiltzaile {
 		Erabiltzaile erab = getErabiltzaileByNAN(saioaNan);
 		erab.gehituAlokairua(alok);
 	}
+	
+	public Erabiltzaile erabiltzaileaAurkitu(String pNan) {
+		for (Erabiltzaile e : erabiltzaileak) {
+			if(e.getNan().equals(pNan)) {
+				return e;
+			}
+		}
+		return null;
+	}
+	
 }

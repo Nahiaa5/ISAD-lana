@@ -98,6 +98,10 @@ public class AdminPN extends JFrame {
 				new FilmEskaeraKudeatu();
 				setVisible(false);
 			}
+			else if(e.getSource().equals(btnExit)) {
+				new PantailaNagusia();
+				setVisible(false);
+			}
 		}
 	}
 }
