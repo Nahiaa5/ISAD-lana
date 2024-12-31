@@ -87,7 +87,7 @@ public class GestoreFilm extends Observable {
         String zuzendaria = filmDatuak.getString("Director");
         String adminNAN = null;
         boolean katalogoan = false;
-        double puntuazioaBb = 0;
+        double puntuazioaBb = 0.0;
         Film filma = new Film(id, izenburua, aktoreak, urtea, generoa, zuzendaria, adminNAN, katalogoan, puntuazioaBb);
         filmak.add(filma);
         System.out.println(filmak);
@@ -159,7 +159,7 @@ public class GestoreFilm extends Observable {
 	                .collect(Collectors.toList());
 
 	        film.setBalorazioak(new ArrayList<>(puntuazioIragaziak));
-	        film.eguneratuPuntuBb(DB_kudeatzailea.getDB());
+	        //film.eguneratuPuntuBb(DB_kudeatzailea.getDB());
 	    }
 
 	    setChanged();
@@ -187,6 +187,12 @@ public class GestoreFilm extends Observable {
         }
         return null;
     }
+	
+	public void kalkulatuPuntuazioak() {
+		for(Film film: filmak) {
+			film.kalkulatuPuntuBb();
+		}
+	}
 	
 	public void gordePuntuazioa(String NAN, int filmID, int puntuazioa, String iruzkina) {
         Film film = bilatuFilma(filmID);

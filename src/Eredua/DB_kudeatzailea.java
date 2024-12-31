@@ -261,39 +261,6 @@ public class DB_kudeatzailea {
         }
     }
 	
-	public double kalkulatuPuntuBb(int filmID) {
-	    double puntuacionMedia = 0.0;
-	    String query = "SELECT AVG(puntuazioa) AS puntuacion_media FROM Puntuazioa WHERE filmID = ?";
-
-	    try (Connection conn = DB_konexioa.getConexion();
-	         PreparedStatement stmt = conn.prepareStatement(query)) {
-
-	        stmt.setInt(1, filmID);
-	        ResultSet rs = stmt.executeQuery();
-
-	        if (rs.next()) {
-	            puntuacionMedia = rs.getDouble("puntuacion_media");
-	        }
-
-	    } catch (SQLException | ClassNotFoundException e) {
-	        e.printStackTrace();
-	    }
-
-	    return puntuacionMedia;
-	}
-	
-	public void eguneratuPuntuBb(int filmID, double puntuBb) {
-		String query="UPDATE Film SET puntuazioaBb = ? WHERE filmID = ?";
-		try(Connection conn = DB_konexioa.getConexion();
-				PreparedStatement stmt = conn.prepareStatement(query)){
-			stmt.setDouble(1, puntuBb);
-			stmt.setInt(2, filmID);
-			stmt.executeUpdate();
-		}catch(SQLException | ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-	
 	public List<Puntuazioa> kargatuPuntuazioak() {
 	    List<Puntuazioa> puntuazioak = new ArrayList<>();
 	    String query = "SELECT * FROM Puntuazioa";  

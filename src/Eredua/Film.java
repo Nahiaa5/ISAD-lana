@@ -135,10 +135,16 @@ public class Film extends Observable{
 		notifyObservers();
     }
    
-    public void eguneratuPuntuBb(DB_kudeatzailea dbK) {
-        double puntuBb = dbK.kalkulatuPuntuBb(this.filmID);
-        setPuntuazioaBb(puntuBb);
-        dbK.eguneratuPuntuBb(this.filmID, puntuBb);
+    public void kalkulatuPuntuBb() {
+        if(balorazioak ==null || balorazioak.isEmpty()){
+        	this.puntuazioaBb=0.0;
+        }else {
+        	double batura = 0.0;
+        	for(Puntuazioa balorazio: balorazioak) {
+        		batura += balorazio.getPuntuazioa();
+        	}
+        	this.puntuazioaBb=batura/balorazioak.size();
+        }
     }
 
 

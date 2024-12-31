@@ -31,6 +31,7 @@ public class GestoreNagusia extends Observable {
 		if(!kargatuDira) {
 			GestoreFilm.getKN().loadFilmak();
 			GestoreFilm.getKN().loadPuntuazioak();
+			GestoreFilm.getKN().kalkulatuPuntuazioak();
 			GestoreErabiltzaile.getGE().loadErabiltzaileak();
 			GestoreAlokairu.getGA().loadAlokairuak();
 			kargatuDira = true;
@@ -126,6 +127,12 @@ public class GestoreNagusia extends Observable {
         setChanged();
         notifyObservers();
     }
+	
+	public void kalkulatuPuntuazioak() {
+		GestoreFilm.getKN().kalkulatuPuntuazioak();
+		setChanged();
+		notifyObservers();
+	}
 
 	public JSONArray bilaketaEgin(String text) {
 		JSONArray json = GestoreFilm.getKN().bilatuFilmKatalogoan(text);

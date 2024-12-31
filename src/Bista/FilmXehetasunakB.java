@@ -86,7 +86,9 @@ public class FilmXehetasunakB extends JFrame implements Observer {
         iruzkinakArea.setEditable(false);
         setVisible(true);
     }
-    
+    public void puntuazioaKalkulatu() {
+    	GestoreNagusia.getGN().kalkulatuPuntuazioak();
+    }
     public void iruzkinakErakutsi() {
     	String filmIzena = getTitle().substring("Xehetasunak - ".length());
         
@@ -116,12 +118,19 @@ public class FilmXehetasunakB extends JFrame implements Observer {
             iruzkinakArea.setText(iruzkinak);
         }
     }
-
+    private boolean eguneratu = false; //esto es raro, pero funciona
     @Override
     public void update(Observable o, Object arg) {
+    	if(eguneratu) {
+    		return;
+    	}
+    	eguneratu=true;
     	if (o instanceof GestoreNagusia) {
-    		iruzkinakErakutsi();
+    			puntuazioaKalkulatu();
+        		iruzkinakErakutsi();
+    		
         }
+    	eguneratu=false;
     }
     
     private Controller getController() {
