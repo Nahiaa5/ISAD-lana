@@ -68,7 +68,7 @@ public class ErabiltzailePN extends JFrame{
 	
 	private JButton getBtnExit() {
 		if (btnExit == null) {
-			btnExit = new JButton("exit");
+			btnExit = new JButton("Exit");
 			btnExit.setBounds(354, 10, 72, 21);
 			btnExit.addActionListener(getController());
 		}

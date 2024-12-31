@@ -64,7 +64,7 @@ public class AdminPN extends JFrame {
 	}
 	private JButton getBtnExit() {
 		if (btnExit == null) {
-			btnExit = new JButton("exit");
+			btnExit = new JButton("Exit");
 			btnExit.setBounds(351, 10, 85, 21);
 			btnExit.addActionListener(getA());
 		}

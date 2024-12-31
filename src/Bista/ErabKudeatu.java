@@ -65,7 +65,7 @@ public class ErabKudeatu extends JFrame {
 		JScrollPane scrollPane=new JScrollPane(erabPanel);
 		getContentPane().add(bilaketaPanel, BorderLayout.NORTH);
 		
-		btnExit = new JButton("exit");
+		btnExit = new JButton("Exit");
 		bilaketaPanel.add(btnExit);
 		btnExit.addActionListener(getEK());
 		getContentPane().add(scrollPane,BorderLayout.CENTER);
