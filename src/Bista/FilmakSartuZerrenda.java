@@ -37,9 +37,7 @@ public class FilmakSartuZerrenda extends JFrame {
 	private JPanel panel_1;
 	private JButton gehitu;
 	private JButton sortu;
-	private FilmakSartuZerrenda fsz;
 	private int ID;
-	private GestoreZerrenda GZ = GestoreZerrenda.getnZZ();
 	private List<JButton> pelikulenBotoiak;
 
 	/**
@@ -90,6 +88,7 @@ public class FilmakSartuZerrenda extends JFrame {
 			System.out.println(botoia.getText());
 		}
 	}
+	
 	public void kenduFilm(String izena) {
 		for (JButton botoia : pelikulenBotoiak) {
 			if (botoia.getText().equals(izena)) {
@@ -165,6 +164,7 @@ public class FilmakSartuZerrenda extends JFrame {
 				JSONObject xehetasunak = KatalogoZabalduaKargatu.getnZK().xehetasunakBilatu(datuak);
 				XehetasunakZ X = new XehetasunakZ(xehetasunak);
 				X.setVisible(true);
+				X.setflag(0);
 				dispose();
 			}
 		}

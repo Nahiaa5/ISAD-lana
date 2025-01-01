@@ -63,4 +63,10 @@ public class GestoreZerrenda {
 		zerrenda.kenduFilma(filma);
 	}
 	
+	public void aldatuXehetasunak(int ID, String izena, Boolean pribazitatea) {
+		FilmZerrenda zerrenda = bilatuZerrenda(ID);
+		zerrenda.setIzena(izena);
+		zerrenda.setPribazitatea(pribazitatea);
+	}
+	
 }

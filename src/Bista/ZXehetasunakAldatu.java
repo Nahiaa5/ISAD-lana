@@ -15,13 +15,11 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import Bista.SortuZerrenda.Controller;
-import Eredua.DB_kudeatzailea;
-import Eredua.Film;
 import Kontroladorea.GestoreZerrenda;
 
-public class SortuZerrenda extends JFrame {
+public class ZXehetasunakAldatu extends JFrame {
 
+	private static ZXehetasunakAldatu nZXA = null;
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
@@ -30,6 +28,7 @@ public class SortuZerrenda extends JFrame {
 	private Controller controller;
 	private JCheckBox publikoa;
 	private JCheckBox pribatua;
+	private int ID;
 	private JButton btnNewButton;
 	private JLabel lblNewLabel_2;
 	private String izena;
@@ -42,7 +41,7 @@ public class SortuZerrenda extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SortuZerrenda frame = new SortuZerrenda();
+					ZXehetasunakAldatu frame = new ZXehetasunakAldatu();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -50,11 +49,18 @@ public class SortuZerrenda extends JFrame {
 			}
 		});
 	}
+	
+	public static ZXehetasunakAldatu getnZXA(){
+		if(nZXA==null) {
+			nZXA=new ZXehetasunakAldatu();
+		}
+		return nZXA;
+	}
 
 	/**
 	 * Create the frame.
 	 */
-	public SortuZerrenda() {
+	public ZXehetasunakAldatu() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -98,8 +104,8 @@ public class SortuZerrenda extends JFrame {
 		contentPane.add(lblNewLabel_2);
 	}
 	
-	public String getIzena() {
-		return this.izena;
+	public void setID(int ID) {
+		this.ID = ID;
 	}
 	
 	public Controller getCont() {
@@ -125,13 +131,11 @@ public class SortuZerrenda extends JFrame {
 						pribazitatea = false;
 					}
 					GestoreZerrenda GZ = GestoreZerrenda.getnZZ();
-					GZ.sortuZerrendaBerria(izena, pribazitatea);
-					int ID = GZ.getKont()-1;
-					FilmKatalogoZabaldua FKZ = FilmKatalogoZabaldua.getPN();
-					FKZ.setFlag (1);
-					FKZ.setID(ID);
-	                FKZ.setVisible(true);
-	                dispose();
+					GZ.aldatuXehetasunak(ID, izena, pribazitatea);
+					ZerrendaXehetasunak ZX = ZerrendaXehetasunak.getnZX();
+					ZX.setID(ID);
+					ZX.setVisible(true);
+					dispose();
 				}
 				
 			}

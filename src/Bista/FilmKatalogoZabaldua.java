@@ -39,8 +39,6 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
 	private JTextField bTextField;
 	private JButton bJButton;
 	private JScrollPane scrollPane;
-	private SortuZerrenda caller;
-	private Boolean caller2 = false;
 	private int ID = -1;
 	private int flag = 0;
 	
@@ -91,14 +89,6 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
 		panel.add(getBilatuTextField());
 		panel.add(getBilatuJButton());
 		
-	}
-	
-	public void setCaller(SortuZerrenda caller) {
-	    this.caller = caller;
-	}
-	
-	public void setCaller2(Boolean caller) {
-	    this.caller2 = caller;
 	}
 	
 	public void setID (int id) {

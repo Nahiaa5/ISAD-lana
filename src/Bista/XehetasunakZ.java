@@ -25,17 +25,14 @@ public class XehetasunakZ extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	public static XehetasunakZ xehetasunak;
-    private JButton baloratuBtn;
     private JButton itxiBtn;
-    private JLabel puntuBbLabel;
     private JTextArea iruzkinakArea;
     private Controller controller = null;
-    private JPanel panel_1;
-    private JButton alokatuBtn;
     private JPanel panel_2;
     private JButton ezabatu;
-    private int ID;
+    private int flag;
     private FilmakSartuZerrenda FSZ = FilmakSartuZerrenda.getFSZ();
+    private ZerrendaPertsonalizatuaB ZPB = ZerrendaPertsonalizatuaB.getnZP();
     private JSONObject datuak;
 
 	/**
@@ -96,8 +93,8 @@ public class XehetasunakZ extends JFrame {
         setVisible(true);
 	}
 
-	public void setID (int ID) {
-		this.ID = ID;
+	public void setflag (int flag) {
+		this.flag = flag;
 	}
 	
 	public Controller getController() {
@@ -115,13 +112,21 @@ public class XehetasunakZ extends JFrame {
 				setVisible(false);
 				FSZ.setVisible(true);
 			} else if (e.getSource().equals(ezabatu)) {
-				String titulua = datuak.getString("Title");
-		        String urtea = datuak.getString("Year");
-		        String izena = titulua + " (" + urtea + ")";
-				System.out.println(izena);
-				FSZ.kenduFilm(izena);
-				FSZ.setVisible(true);
-				//GestoreZerrenda.getZZ().kenduFilmaZerrendaBaten(ID,izena);
+				if (flag == 0) {
+					String titulua = datuak.getString("Title");
+			        String urtea = datuak.getString("Year");
+			        String izena = titulua + " (" + urtea + ")";
+					FSZ.kenduFilm(izena);
+					FSZ.setVisible(true);
+					//GestoreZerrenda.getZZ().kenduFilmaZerrendaBaten(ID,izena);
+				} else if (flag == 1) {
+					String titulua = datuak.getString("Title");
+			        String urtea = datuak.getString("Year");
+			        String izena = titulua + " (" + urtea + ")";
+					ZPB.kenduFilm(izena);
+					ZPB.setVisible(true);
+					//GestoreZerrenda.getZZ().kenduFilmaZerrendaBaten(ID,izena);
+				}
 			}
 		}
 	}

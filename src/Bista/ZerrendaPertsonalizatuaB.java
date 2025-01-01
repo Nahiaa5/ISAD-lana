@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -38,7 +39,8 @@ public class ZerrendaPertsonalizatuaB extends JFrame {
 	private JButton xehetasunak;
 	private GestoreZerrenda GZ = GestoreZerrenda.getnZZ();
 	private int ID;
-
+	private List<JButton> pelikulenBotoiak;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -65,6 +67,7 @@ public class ZerrendaPertsonalizatuaB extends JFrame {
 	 * Create the frame.
 	 */
 	public ZerrendaPertsonalizatuaB() {
+		pelikulenBotoiak = new ArrayList<>();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -110,6 +113,7 @@ public class ZerrendaPertsonalizatuaB extends JFrame {
 		for (String izena : izenak) {
 			JButton button = new JButton();
 	        panel.add(button);
+	        pelikulenBotoiak.add(button);
 	        button.setAlignmentX(Component.CENTER_ALIGNMENT);
 	        button.setMaximumSize(new Dimension(Integer.MAX_VALUE, button.getPreferredSize().height));
 	        button.addActionListener(getCont());
@@ -117,6 +121,16 @@ public class ZerrendaPertsonalizatuaB extends JFrame {
 	        repaint();
 		}
 	}
+	
+	public void kenduFilm(String izena) {
+		for (JButton botoia : pelikulenBotoiak) {
+			if (botoia.getText().equals(izena)) {
+				panel.remove(botoia);
+				pelikulenBotoiak.remove(botoia);
+			}
+		}
+	}
+	
 	public Controller getCont() {
 		if (controller == null) {
 			controller = new Controller();
@@ -132,15 +146,15 @@ public class ZerrendaPertsonalizatuaB extends JFrame {
 			if (e.getSource().equals(gehitu) || e.getSource().equals(kendu) || e.getSource().equals(xehetasunak)) {
 				if (e.getSource().equals(gehitu)) {
 					FilmKatalogoZabaldua FKZ = FilmKatalogoZabaldua.getPN();
-					FKZ.setCaller2(true);
+					FKZ.setFlag(2);
 	                FKZ.setVisible(true);
 	                dispose();
 				}
 				if (e.getSource().equals(xehetasunak)) {
-					FilmKatalogoZabaldua FKZ = FilmKatalogoZabaldua.getPN();
-					FKZ.setCaller2(true);
-	                FKZ.setVisible(true);
-	                dispose();
+					ZerrendaXehetasunak ZX = ZerrendaXehetasunak.getnZX();
+					ZX.setID(ID);
+					ZX.setVisible(true);
+					dispose();
 				}
 			} else {
 				JButton botoia = (JButton) e.getSource();
@@ -148,6 +162,8 @@ public class ZerrendaPertsonalizatuaB extends JFrame {
 				JSONObject xehetasunak = KatalogoZabalduaKargatu.getnZK().xehetasunakBilatu(datuak);
 				XehetasunakZ X = new XehetasunakZ(xehetasunak);
 				X.setVisible(true);
+				X.setflag(1);
+				dispose();
 			}
 		}
 	}

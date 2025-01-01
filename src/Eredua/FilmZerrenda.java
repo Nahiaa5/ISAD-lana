@@ -33,6 +33,18 @@ public class FilmZerrenda {
 		return this.izena;
 	}
 	
+	public void setIzena(String izena) {
+		this.izena = izena;
+	}
+	
+	public Boolean getPribazitatea() {
+		return this.pribazitatea;
+	}
+	
+	public void setPribazitatea(Boolean pribazitatea) {
+		this.pribazitatea = pribazitatea;
+	}
+	
 	public void sartuFilma(Film filma) {
 		FilmZerrenda.add(filma);
 	}
