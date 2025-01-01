@@ -3,6 +3,8 @@ package Bista;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -38,6 +40,7 @@ public class FilmakSartuZerrenda extends JFrame {
 	private FilmakSartuZerrenda fsz;
 	private int ID;
 	private GestoreZerrenda GZ = GestoreZerrenda.getnZZ();
+	private List<JButton> pelikulenBotoiak;
 
 	/**
 	 * Launch the application.
@@ -70,20 +73,38 @@ public class FilmakSartuZerrenda extends JFrame {
 		this.izena.setText(izena);
 	}
 	
-	public void sartuFilma(String datuak) {
-        JButton button = new JButton(datuak);
+	public void sartuFilma(String izena) {
+        JButton button = new JButton(izena);
         panel.add(button);
+        pelikulenBotoiak.add(button);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setMaximumSize(new Dimension(Integer.MAX_VALUE, button.getPreferredSize().height));
         button.addActionListener(getCont());
         revalidate();
         repaint();
     }
-
+	
+	public void print()
+	{
+		for (JButton botoia : pelikulenBotoiak) {
+			System.out.println(botoia.getText());
+		}
+	}
+	public void kenduFilm(String izena) {
+		for (JButton botoia : pelikulenBotoiak) {
+			if (botoia.getText().equals(izena)) {
+				panel.remove(botoia);
+				pelikulenBotoiak.remove(botoia);
+			}
+		}
+	}
+	
 	/**
 	 * Create the frame.
 	 */
 	public FilmakSartuZerrenda() {
+		pelikulenBotoiak = new ArrayList<>();
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -144,6 +165,7 @@ public class FilmakSartuZerrenda extends JFrame {
 				JSONObject xehetasunak = KatalogoZabalduaKargatu.getnZK().xehetasunakBilatu(datuak);
 				XehetasunakZ X = new XehetasunakZ(xehetasunak);
 				X.setVisible(true);
+				dispose();
 			}
 		}
 	}

@@ -19,6 +19,7 @@ import javax.swing.border.EmptyBorder;
 import org.json.JSONObject;
 
 import Eredua.KatalogoZabalduaKargatu;
+import Kontroladorea.GestoreZerrenda;
 
 public class XehetasunakZ extends JFrame {
 
@@ -32,6 +33,10 @@ public class XehetasunakZ extends JFrame {
     private JPanel panel_1;
     private JButton alokatuBtn;
     private JPanel panel_2;
+    private JButton ezabatu;
+    private int ID;
+    private FilmakSartuZerrenda FSZ = FilmakSartuZerrenda.getFSZ();
+    private JSONObject datuak;
 
 	/**
 	 * Launch the application.
@@ -54,13 +59,18 @@ public class XehetasunakZ extends JFrame {
 	 * Create the frame.
 	 */
 	public XehetasunakZ(JSONObject xehetasunak) {
+		datuak = xehetasunak;
 		JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JScrollPane scrollPane=new JScrollPane();
         panel.add(scrollPane);
 
-        itxiBtn=new JButton("Itxi");
+        itxiBtn=new JButton("Bueltatu");
         itxiBtn.addActionListener(getController());
+        
+        ezabatu = new JButton("Ezabatu");
+        ezabatu.addActionListener(getController());
+        panel.add(ezabatu);
         panel.add(itxiBtn);
         
         getContentPane().add(panel, BorderLayout.SOUTH);
@@ -86,6 +96,10 @@ public class XehetasunakZ extends JFrame {
         setVisible(true);
 	}
 
+	public void setID (int ID) {
+		this.ID = ID;
+	}
+	
 	public Controller getController() {
 		if (controller == null) {
 			controller = new Controller();
@@ -99,6 +113,15 @@ public class XehetasunakZ extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource().equals(itxiBtn)) {
 				setVisible(false);
+				FSZ.setVisible(true);
+			} else if (e.getSource().equals(ezabatu)) {
+				String titulua = datuak.getString("Title");
+		        String urtea = datuak.getString("Year");
+		        String izena = titulua + " (" + urtea + ")";
+				System.out.println(izena);
+				FSZ.kenduFilm(izena);
+				FSZ.setVisible(true);
+				//GestoreZerrenda.getZZ().kenduFilmaZerrendaBaten(ID,izena);
 			}
 		}
 	}

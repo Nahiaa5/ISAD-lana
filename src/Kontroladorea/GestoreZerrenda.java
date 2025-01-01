@@ -56,4 +56,11 @@ public class GestoreZerrenda {
 		zerrenda.sartuFilma(filma);
 	}
 	
+	public void kenduFilmaZerrendaBaten(int ID, String izena) {
+		GestoreFilm GF = GestoreFilm.getKN();
+		Film filma = GF.bilatuIzenarekin(izena);
+		FilmZerrenda zerrenda = bilatuZerrenda(ID);
+		zerrenda.kenduFilma(filma);
+	}
+	
 }
