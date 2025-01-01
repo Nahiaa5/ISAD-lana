@@ -143,7 +143,7 @@ public class DB_kudeatzailea {
                 int filmID = rs.getInt("filmID");
                 String izenburua = rs.getString("izenburua");
                 String aktoreak = rs.getString("aktoreak");
-                int urtea = rs.getInt("urtea");
+                String urtea = rs.getString("urtea");
                 String generoa = rs.getString("generoa");
                 String zuzendaria = rs.getString("zuzendaria");
                 String adminNAN = rs.getString("adminNAN");

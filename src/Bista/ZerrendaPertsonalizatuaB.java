@@ -1,32 +1,32 @@
 package Bista;
 
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import org.json.JSONObject;
 
+import Eredua.FilmZerrenda;
 import Eredua.KatalogoZabalduaKargatu;
 import Kontroladorea.GestoreZerrenda;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
+public class ZerrendaPertsonalizatuaB extends JFrame {
 
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.JButton;
-import javax.swing.BoxLayout;
-import java.awt.FlowLayout;
-import java.awt.Font;
-
-public class FilmakSartuZerrenda extends JFrame {
-
-	public static FilmakSartuZerrenda nFSZ;
+	public static ZerrendaPertsonalizatuaB nZP;
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel izena;
@@ -34,10 +34,10 @@ public class FilmakSartuZerrenda extends JFrame {
 	private Controller controller;
 	private JPanel panel_1;
 	private JButton gehitu;
-	private JButton sortu;
-	private FilmakSartuZerrenda fsz;
-	private int ID;
+	private JButton kendu;
+	private JButton xehetasunak;
 	private GestoreZerrenda GZ = GestoreZerrenda.getnZZ();
+	private int ID;
 
 	/**
 	 * Launch the application.
@@ -46,7 +46,7 @@ public class FilmakSartuZerrenda extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FilmakSartuZerrenda frame = new FilmakSartuZerrenda();
+					ZerrendaPertsonalizatuaB frame = new ZerrendaPertsonalizatuaB();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -54,36 +54,17 @@ public class FilmakSartuZerrenda extends JFrame {
 			}
 		});
 	}
-	
-	public static FilmakSartuZerrenda getFSZ(){
-		if(nFSZ==null) {
-			nFSZ=new FilmakSartuZerrenda();
-		}
-		return nFSZ;
-	}
-	
-	public void setID (int ID) {
-		this.ID = ID;
-	}
-	
-	public void setIzena(String izena) {
-		this.izena.setText(izena);
-	}
-	
-	public void sartuFilma(String datuak) {
-        JButton button = new JButton(datuak);
-        panel.add(button);
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        button.setMaximumSize(new Dimension(Integer.MAX_VALUE, button.getPreferredSize().height));
-        button.addActionListener(getCont());
-        revalidate();
-        repaint();
-    }
 
+	public static ZerrendaPertsonalizatuaB getnZP(){
+		if(nZP==null) {
+			nZP=new ZerrendaPertsonalizatuaB();
+		}
+		return nZP;
+	}
 	/**
 	 * Create the frame.
 	 */
-	public FilmakSartuZerrenda() {
+	public ZerrendaPertsonalizatuaB() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -108,12 +89,34 @@ public class FilmakSartuZerrenda extends JFrame {
 		gehitu.addActionListener(getCont());
 		panel_1.add(gehitu);
 		
-		sortu = new JButton("Sortu Zerrenda");
-		sortu.addActionListener(getCont());
-		sortu.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		panel_1.add(sortu);
+		kendu = new JButton("Film bat kendu");
+		kendu.addActionListener(getCont());
+		kendu.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		panel_1.add(kendu);
+		
+		xehetasunak = new JButton("Xehetasunak aldatu");
+		xehetasunak.addActionListener(getCont());
+		xehetasunak.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		panel_1.add(xehetasunak);
+		filmakSartu(ID);
+	}
+
+	public void setID (int id) {
+		this.ID = ID;
 	}
 	
+	private void filmakSartu(int id) {
+		ArrayList<String> izenak = GZ.bilatuZerrenda(id).filmenIzenak();
+		for (String izena : izenak) {
+			JButton button = new JButton();
+	        panel.add(button);
+	        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+	        button.setMaximumSize(new Dimension(Integer.MAX_VALUE, button.getPreferredSize().height));
+	        button.addActionListener(getCont());
+	        revalidate();
+	        repaint();
+		}
+	}
 	public Controller getCont() {
 		if (controller == null) {
 			controller = new Controller();
@@ -121,22 +124,23 @@ public class FilmakSartuZerrenda extends JFrame {
 		return controller;
 	}
 	
+	
 	public class Controller implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (e.getSource().equals(gehitu) || e.getSource().equals(sortu)) {
+			if (e.getSource().equals(gehitu) || e.getSource().equals(kendu) || e.getSource().equals(xehetasunak)) {
 				if (e.getSource().equals(gehitu)) {
 					FilmKatalogoZabaldua FKZ = FilmKatalogoZabaldua.getPN();
-					FKZ.setFlag(2);
+					FKZ.setCaller2(true);
 	                FKZ.setVisible(true);
 	                dispose();
-				} else if (e.getSource().equals(sortu)){
-					ZerrendaPertsonalizatuaB ZPB = ZerrendaPertsonalizatuaB.getnZP();
-					ZPB.setID(ID);
-					ZPB.setVisible(true);
-					dispose();
-					
+				}
+				if (e.getSource().equals(xehetasunak)) {
+					FilmKatalogoZabaldua FKZ = FilmKatalogoZabaldua.getPN();
+					FKZ.setCaller2(true);
+	                FKZ.setVisible(true);
+	                dispose();
 				}
 			} else {
 				JButton botoia = (JButton) e.getSource();
@@ -147,5 +151,5 @@ public class FilmakSartuZerrenda extends JFrame {
 			}
 		}
 	}
-}
 
+}

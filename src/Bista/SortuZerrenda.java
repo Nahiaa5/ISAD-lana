@@ -16,7 +16,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import Bista.SortuZerrenda.Controller;
+import Eredua.DB_kudeatzailea;
 import Eredua.Film;
+import Kontroladorea.GestoreZerrenda;
 
 public class SortuZerrenda extends JFrame {
 
@@ -54,6 +56,7 @@ public class SortuZerrenda extends JFrame {
 	 * Create the frame.
 	 */
 	public SortuZerrenda() {
+		DB_kudeatzailea.getDB().kargatuFilmak();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -116,9 +119,19 @@ public class SortuZerrenda extends JFrame {
 				if (textField.getText().equals("") || (!publikoa.isSelected() && !pribatua.isSelected())) {
 					lblNewLabel_2.setText("Ez dira eremu guztiak bete");
 				} else {
+					Boolean pribazitatea = null;
 					izena = textField.getText();
+					if (publikoa.isSelected()) {
+						pribazitatea = true;
+					} else if (pribatua.isSelected()) {
+						pribazitatea = false;
+					}
+					GestoreZerrenda GZ = GestoreZerrenda.getnZZ();
+					GZ.sortuZerrendaBerria(izena, pribazitatea);
+					int ID = GZ.getKont()-1;
 					FilmKatalogoZabaldua FKZ = FilmKatalogoZabaldua.getPN();
-					FKZ.setCaller(sortuZerrenda);
+					FKZ.setFlag (1);
+					FKZ.setID(ID);
 	                FKZ.setVisible(true);
 	                dispose();
 				}

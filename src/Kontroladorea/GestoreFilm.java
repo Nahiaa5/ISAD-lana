@@ -56,6 +56,20 @@ public class GestoreFilm extends Observable {
 		return JSONfilm;
 	}
 	
+	public Film bilatuFilma(JSONObject datuak) {
+		for (Film film : filmak) {
+			if (datuak.getString("Title") == film.getIzenburua() &&
+				datuak.getString("Actors") == film.getAktoreak() &&	
+				datuak.getString("Year") == film.getUrtea() &&
+				datuak.getString("Genre") == film.getIzenburua() &&
+				datuak.getString("Director") == film.getIzenburua()
+			) {
+				return film;
+			}
+		}
+		return null;
+	}
+	
 	public JSONArray bilatuFilmKatalogoan(String text) {
 		JSONArray zerrenda = new JSONArray();
 		
@@ -69,7 +83,7 @@ public class GestoreFilm extends Observable {
 		return zerrenda;
 	}
 
-	public boolean badagoFilma(String izena, int urtea) {
+	public boolean badagoFilma(String izena, String urtea) {
 		for (Film filma : filmak) {
 			if (filma.getIzenburua().equalsIgnoreCase(izena) && filma.getUrtea() == urtea) {
 				return true;
@@ -82,7 +96,7 @@ public class GestoreFilm extends Observable {
 		int id = filmak.size()+1;
         String izenburua = filmDatuak.getString("Title");
         String aktoreak = filmDatuak.getString("Actors");
-        int urtea = filmDatuak.getInt("Year");
+        String urtea = filmDatuak.getString("Year");
         String generoa = filmDatuak.getString("Genre");
         String zuzendaria = filmDatuak.getString("Director");
         String adminNAN = null;

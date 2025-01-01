@@ -66,7 +66,16 @@ public class KatalogoZabalduaKargatu extends Observable{
 		}
 	}
 	
-	public void xehetasunakBilatu(String informazioa) {
+	public void xehetasunakErakutsi(String informazioa) {
+			datuak = xehetasunakBilatu(informazioa);
+	        KZ_XehetasunakIkusi xehetasunak = new KZ_XehetasunakIkusi();
+	        this.addObserver(xehetasunak);
+	        setChanged();
+	        notifyObservers(datuak);
+	        xehetasunak.setVisible(true);       
+	}
+	
+	public JSONObject xehetasunakBilatu(String informazioa) {
 		String[] zatiak = informazioa.split(" \\(");
         String izenburua = zatiak[0].trim();
         String year = zatiak[1].replace(")", "").trim();
@@ -89,20 +98,16 @@ public class KatalogoZabalduaKargatu extends Observable{
 			in.close();
 
 	        datuak = new JSONObject(respuesta.toString());
-	        KZ_XehetasunakIkusi xehetasunak = new KZ_XehetasunakIkusi();
-	        this.addObserver(xehetasunak);
-	        setChanged();
-	        notifyObservers(datuak);
-	        xehetasunak.setVisible(true);       
 	        
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return datuak;
 	}
 	
 	public void bidaliEskaera() {
 		String izenburua = datuak.getString("Title");
-		Integer urtea = datuak.getInt("Year");
+		String urtea = datuak.getString("Year");
 		if (GestoreFilm.getKN().badagoFilma(izenburua, urtea)) {
             setChanged();
             notifyObservers(false);

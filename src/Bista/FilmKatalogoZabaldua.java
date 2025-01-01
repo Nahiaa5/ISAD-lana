@@ -12,7 +12,10 @@ import javax.swing.border.EmptyBorder;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import Eredua.FilmZerrenda;
 import Eredua.KatalogoZabalduaKargatu;
+import Kontroladorea.GestoreZerrenda;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -28,6 +31,8 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
 
 	private static final long serialVersionUID = 1L;
 	private static FilmKatalogoZabaldua nFKZ;
+	GestoreZerrenda GZ = GestoreZerrenda.getnZZ();
+	FilmakSartuZerrenda FSZ = FilmakSartuZerrenda.getFSZ();
 	private JPanel contentPane;
 	private JPanel panel1;
 	private Controller controller;
@@ -35,6 +40,10 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
 	private JButton bJButton;
 	private JScrollPane scrollPane;
 	private SortuZerrenda caller;
+	private Boolean caller2 = false;
+	private int ID = -1;
+	private int flag = 0;
+	
 
 	/**
 	 * Launch the application.
@@ -86,6 +95,18 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
 	
 	public void setCaller(SortuZerrenda caller) {
 	    this.caller = caller;
+	}
+	
+	public void setCaller2(Boolean caller) {
+	    this.caller2 = caller;
+	}
+	
+	public void setID (int id) {
+		this.ID = id;
+	}
+	
+	public void setFlag (int flag) {
+		this.flag = flag;
 	}
 	
 	private JTextField getBilatuTextField() {
@@ -143,13 +164,29 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
 			else {
 				JButton botoia = (JButton) e.getSource();
 				String datuak = botoia.getText();
-				KatalogoZabalduaKargatu.getnZK().xehetasunakBilatu(datuak);
-				if (caller != null) {
-					FilmakSartuZerrenda FSZ = FilmakSartuZerrenda.getFSZ(caller.getIzena());
-					FSZ.sartuFilma(datuak);
-					FSZ.setVisible(true);
-		            dispose();
-		        }
+				switch (flag) {
+				
+					case 0:
+						KatalogoZabalduaKargatu.getnZK().xehetasunakErakutsi(datuak);
+						break;
+					case 1:
+						String izena = GZ.bilatuZerrenda(ID).getIzena();
+						FSZ.setIzena(izena);
+						FSZ.sartuFilma(datuak);
+						GZ.sartuFilmaZerrendaBaten(ID, datuak);
+						FSZ.setVisible(true);
+						flag = 0;
+						dispose();
+						break;
+					case 2:
+						FSZ.sartuFilma(datuak);
+						GZ.sartuFilmaZerrendaBaten(ID, datuak);
+						FSZ.setVisible(true);
+						flag = 0;
+			            dispose();
+			            break;
+				}
+				FSZ.setID(ID);
 			}
 		}
 	}

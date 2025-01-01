@@ -11,7 +11,7 @@ public class Film extends Observable{
     private int filmID;
     private String izenburua; 
     private String aktoreak; 
-    private int urtea; 
+    private String urtea; 
     private String generoa; 
     private String zuzendaria; 
     private String adminNAN; 
@@ -20,7 +20,7 @@ public class Film extends Observable{
     private List<Puntuazioa> balorazioak;
     private String path;
     
-    public Film(int filmID, String izenburua, String aktoreak, int urtea, String generoa, String zuzendaria, String adminNAN, boolean katalogoan, double puntuazioaBb, String path) {
+    public Film(int filmID, String izenburua, String aktoreak, String urtea, String generoa, String zuzendaria, String adminNAN, boolean katalogoan, double puntuazioaBb, String path) {
         this.filmID = filmID;
         this.izenburua = izenburua;
         this.aktoreak = aktoreak;
@@ -64,11 +64,11 @@ public class Film extends Observable{
         this.aktoreak = aktoreak;
     }
 
-    public int getUrtea() {
+    public String getUrtea() {
         return urtea;
     }
 
-    public void setUrtea(int urtea) {
+    public void setUrtea(String urtea) {
         this.urtea = urtea;
     }
 
