@@ -93,7 +93,13 @@ public class GestoreFilm extends Observable {
 	}
 	
 	public void addFilma(JSONObject filmDatuak) {
-		int id = filmak.size()+1;
+		//Zerrendan ez dagoen ID bat ezarri
+		int id = 0;
+		for(Film filma : filmak) {
+			if(filma.getFilmID()>=id) {
+				id = filma.getFilmID() + 1;
+			}
+		}
         String izenburua = filmDatuak.getString("Title");
         String aktoreak = filmDatuak.getString("Actors");
         String urtea = filmDatuak.getString("Year");
