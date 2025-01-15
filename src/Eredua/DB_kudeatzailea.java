@@ -227,24 +227,6 @@ public class DB_kudeatzailea {
 
         return puntuazioak;
     }
-	
-	public boolean puntuazioaExistitzenDa(String NAN, int filmID) {
-	    String query = "SELECT COUNT(*) FROM Puntuazioa WHERE NAN = ? AND filmID = ?";
-	    try (Connection conn = DB_konexioa.getConexion();
-	         PreparedStatement stmt = conn.prepareStatement(query)) {
-
-	        stmt.setString(1, NAN);
-	        stmt.setInt(2, filmID);
-	        try (ResultSet rs = stmt.executeQuery()) {
-	            if (rs.next()) {
-	                return rs.getInt(1) > 0;
-	            }
-	        }
-	    } catch (SQLException | ClassNotFoundException e) {
-	        e.printStackTrace();
-	    }
-	    return false;
-	}
 
 	public void gordePuntuazioa(Puntuazioa puntuazioa) {
         String query = "INSERT INTO Puntuazioa (NAN, filmID, puntuazioa, iruzkina, data) VALUES (?, ?, ?, ?, ?)";

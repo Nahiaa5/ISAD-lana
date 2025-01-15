@@ -234,28 +234,16 @@ public class GestoreFilm extends Observable {
 			film.kalkulatuPuntuBb();
 		}
 	}
-	
-	public void gordePuntuazioa(String NAN, int filmID, int puntuazioa, String iruzkina) {
-        Film film = bilatuFilma(filmID);
-        if (film == null) {
-            throw new IllegalArgumentException("Filma ez da aurkitu");
-        }
-        String nan = GestoreErabiltzaile.getGE().getSaioaNan();
-        
-        if(!erabiltzaileakAlokatuDu(nan, filmID)) {
-        	throw new IllegalArgumentException("Ez duzu film hau alokatu, ezin duzu baloratu.");
-        }
 
-        List<Puntuazioa> puntuazioak = film.getBalorazioak();
-        System.out.println(puntuazioak);
-        Puntuazioa puntu = new Puntuazioa(nan, filmID, puntuazioa, iruzkina, LocalDate.now());
-
-        if (puntuazioaBadago(nan, filmID)) {
-            puntuazioak.removeIf(p -> p.getNAN().equals(nan));
-        }
-        puntuazioak.add(puntu);
-        System.out.println(puntuazioak);
-        setChanged();
-        notifyObservers();
-    }
+	public void gordePuntuazioaFilman(Puntuazioa pPuntuazio,int filmID) {
+		for(Film film: filmak) {
+			if(film.filmaDa(filmID)) {
+				film.gehituPuntuazioa(pPuntuazio);
+				setChanged();
+				notifyObservers();
+				return;
+			}
+		}
+		throw new IllegalArgumentException("Ez da aurkitu filma ID horrekin");
+	}
 }

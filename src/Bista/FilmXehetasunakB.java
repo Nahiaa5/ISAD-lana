@@ -119,7 +119,7 @@ public class FilmXehetasunakB extends JFrame implements Observer {
             label5.setText("Zuzendaria: " + xehetasunak.getString("zuzendaria"));
             
             puntuBbLabel.setText("Batez besteko Puntuazioa: " + xehetasunak.getDouble("puntuazioaBb"));
-            
+                        
             String iruzkinak = String.join("\n", film.getIruzkinak());
             iruzkinakArea.setText(iruzkinak);
         }

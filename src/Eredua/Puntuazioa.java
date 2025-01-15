@@ -49,6 +49,14 @@ public class Puntuazioa {
     	return this.data;
     }
     
+    public boolean puntuazioaDa(String pNAN, int pFilmID) {
+    	if(this.NAN.equals(pNAN) && this.filmID==pFilmID) {
+    		return true;
+    	}else {
+    		return false;
+    	}
+    }
+    
     @Override
     public String toString() {
         return "Puntuazioa{" +

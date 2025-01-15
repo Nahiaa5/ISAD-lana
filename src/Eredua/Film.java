@@ -121,6 +121,14 @@ public class Film extends Observable{
     	this.balorazioak=pBalorazioak;
     }
     
+    public boolean filmaDa(int pFilmID) {
+    	if(this.filmID==pFilmID) {
+    		return true;
+    	}else {
+    		return false;
+    	}
+    }
+    
     public List<String> getIruzkinak(){
     	List<String> iruzkinak = new ArrayList<>();
     	for(Puntuazioa p: this.balorazioak) {
@@ -136,7 +144,11 @@ public class Film extends Observable{
 		setChanged();
 		notifyObservers();
     }
-   
+    
+    public void gehituPuntuazioa(Puntuazioa pPuntuazio) {
+    	this.balorazioak.add(pPuntuazio);
+    }
+    
     public void kalkulatuPuntuBb() {
         if(balorazioak ==null || balorazioak.isEmpty()){
         	this.puntuazioaBb=0.0;

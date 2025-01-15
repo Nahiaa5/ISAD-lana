@@ -1,5 +1,6 @@
 package Kontroladorea;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -30,6 +31,7 @@ public class GestoreNagusia extends Observable {
 	public void datuakKargatu() {
 		if(!kargatuDira) {
 			GestoreFilm.getKN().loadFilmak();
+			GestorePuntuazio.getGP().loadBalorazioak();
 			GestoreFilm.getKN().loadPuntuazioak();
 			GestoreFilm.getKN().kalkulatuPuntuazioak();
 			GestoreErabiltzaile.getGE().loadErabiltzaileak();
@@ -122,9 +124,11 @@ public class GestoreNagusia extends Observable {
 		return film;
 	}
 	
-	public void gordePuntuazioa(String NAN, int filmID, int puntuazioa, String iruzkina) {
-        GestoreFilm.getKN().gordePuntuazioa(NAN, filmID, puntuazioa, iruzkina);
-        setChanged();
+	public void gordePuntuazioa(String NAN, int filmID, int puntuazioa, String iruzkina, LocalDate data) {
+		Puntuazioa p=new Puntuazioa(NAN, filmID, puntuazioa, iruzkina, data);
+		GestorePuntuazio.getGP().gordePuntuazioa(p);
+		GestoreFilm.getKN().gordePuntuazioaFilman(p, filmID);
+		setChanged();
         notifyObservers();
     }
 	

@@ -118,7 +118,7 @@ public class PuntuazioPantaila extends JFrame{
                     JOptionPane.showMessageDialog(PuntuazioPantaila.this, "Idatzi iruzkina bat.", "Errorea", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                GestoreNagusia.getGN().gordePuntuazioa(NAN, film.getFilmID(), puntuazioa, iruzkina);
+                GestoreNagusia.getGN().gordePuntuazioa(NAN, film.getFilmID(), puntuazioa, iruzkina, LocalDate.now());
 
                 JOptionPane.showMessageDialog(PuntuazioPantaila.this, "Puntuazioa gorde da.", "Arrakasta", JOptionPane.INFORMATION_MESSAGE);
                 dispose(); 
