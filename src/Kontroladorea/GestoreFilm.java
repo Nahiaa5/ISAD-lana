@@ -84,8 +84,11 @@ public class GestoreFilm extends Observable {
 	}
 
 	public boolean badagoFilma(String izena, String urtea) {
+		System.out.println("entra");
 		for (Film filma : filmak) {
-			if (filma.getIzenburua().equalsIgnoreCase(izena) && filma.getUrtea() == urtea) {
+			if (filma.getIzenburua().equalsIgnoreCase(izena) && filma.getUrtea().contains(urtea)) { 
+			//Para mirar el año usa contains porque por alguna razon al pasarlo desde la DB, donde es un valor tipo year, se pasa como Año-mes-dia
+				System.out.println("yaesta");
 				return true;
 			}
 		}

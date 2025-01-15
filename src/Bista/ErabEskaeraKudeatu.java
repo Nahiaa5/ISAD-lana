@@ -35,6 +35,7 @@ public class ErabEskaeraKudeatu extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel erabPanel;
 	private JLabel emaitzikEz;
+	private JButton eJButton;
 	private EskKudeatuKontroladorea kontroladorea = null;
 
 	public ErabEskaeraKudeatu() {
@@ -53,8 +54,12 @@ public class ErabEskaeraKudeatu extends JFrame {
 		
 		JScrollPane scrollPane=new JScrollPane(erabPanel);
 		getContentPane().add(scrollPane,BorderLayout.CENTER);
-		
 	    getContentPane().add(getEmaitzikEz(), BorderLayout.SOUTH);
+	    
+	    JPanel panel = new JPanel();
+	    panel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
+	    getContentPane().add(panel,BorderLayout.NORTH);
+	    panel.add(getExitJButton());
 	}
 	
 	private JLabel getEmaitzikEz() {
@@ -64,6 +69,14 @@ public class ErabEskaeraKudeatu extends JFrame {
 			emaitzikEz.setVisible(false);  
 		}
 		return emaitzikEz;
+	}
+	
+	private JButton getExitJButton() {
+		if (eJButton == null) {
+			eJButton = new JButton("Exit");
+			eJButton.addActionListener(getEK());
+		}
+		return eJButton;
 	}
 	
 	public void eskaerakErakutsi() {
@@ -138,7 +151,11 @@ public class ErabEskaeraKudeatu extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String command = e.getActionCommand();
-	        if (command != null) {
+			if (e.getSource().equals(eJButton)) {
+				new AdminPN();
+				setVisible(false);
+			}
+			else if (command != null) {
 	            String[] parts = command.split(":");
 	            String action = parts[0];
 	            String nan = parts[1];

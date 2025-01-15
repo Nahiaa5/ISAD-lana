@@ -92,6 +92,7 @@ public class ErabiltzailePN extends JFrame{
             if (e.getSource().equals(zabaldua)) {
                 FilmKatalogoZabaldua FKZ = FilmKatalogoZabaldua.getPN();
                 FKZ.setVisible(true);
+                setVisible(false);
             }
             
             if (e.getSource().equals(btnDatuakAldatu)) {

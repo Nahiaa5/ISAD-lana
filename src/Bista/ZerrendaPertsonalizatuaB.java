@@ -21,8 +21,7 @@ import javax.swing.border.EmptyBorder;
 
 import org.json.JSONObject;
 
-import Eredua.FilmZerrenda;
-import Eredua.KatalogoZabalduaKargatu;
+import Kontroladorea.GestoreKatalogoZabaldua;
 import Kontroladorea.GestoreZerrenda;
 
 public class ZerrendaPertsonalizatuaB extends JFrame {
@@ -159,7 +158,7 @@ public class ZerrendaPertsonalizatuaB extends JFrame {
 			} else {
 				JButton botoia = (JButton) e.getSource();
 				String datuak = botoia.getText();
-				JSONObject xehetasunak = KatalogoZabalduaKargatu.getnZK().xehetasunakBilatu(datuak);
+				JSONObject xehetasunak = GestoreKatalogoZabaldua.getnZK().xehetasunakBilatu(datuak);
 				XehetasunakZ X = new XehetasunakZ(xehetasunak);
 				X.setVisible(true);
 				X.setflag(1);

@@ -91,15 +91,15 @@ public class GestoreNagusia extends Observable {
 	}
 	
 	public void KZFilmakBilatu(String izena) {
-		KatalogoZabalduaKargatu.getnZK().FilmakBilatu(izena);
+		GestoreKatalogoZabaldua.getnZK().FilmakBilatu(izena);
 	}
 	
 	public void KZXehetasunakBilatu(String izena) {
-		KatalogoZabalduaKargatu.getnZK().xehetasunakBilatu(izena);
+		GestoreKatalogoZabaldua.getnZK().xehetasunakBilatu(izena);
 	}
 	
 	public void KZBidaliEskaera() {
-		KatalogoZabalduaKargatu.getnZK().bidaliEskaera();
+		GestoreKatalogoZabaldua.getnZK().bidaliEskaera();
 	}
 	
 	public JSONArray getFilmEskaerak() {

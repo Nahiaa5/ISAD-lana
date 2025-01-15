@@ -19,7 +19,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import Bista.FilmKatalogoZabaldua.Controller;
-import Eredua.KatalogoZabalduaKargatu;
 import Kontroladorea.GestoreFilm;
 import Kontroladorea.GestoreNagusia;
 import java.awt.event.KeyAdapter;
