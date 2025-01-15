@@ -60,7 +60,7 @@ public class GestoreFilm extends Observable {
 		for (Film film : filmak) {
 			if (datuak.getString("Title") == film.getIzenburua() &&
 				datuak.getString("Actors") == film.getAktoreak() &&	
-				datuak.getString("Year") == film.getUrtea() &&
+				datuak.getString("Year").equals(film.getUrtea()) &&
 				datuak.getString("Genre") == film.getIzenburua() &&
 				datuak.getString("Director") == film.getIzenburua()
 			) {

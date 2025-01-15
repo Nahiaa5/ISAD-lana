@@ -34,6 +34,7 @@ public class KatalogoNagusiaB extends JFrame //implements Observer
 	private JTextField bilaketa;
 	private JButton bilatuBtn;
 	private JButton ordenatuBtn;
+	private JButton exitBtn;
 	private JPanel filmPanel;
 	private JLabel emaitzikEz;
 	private Controller controller = null;
@@ -64,6 +65,7 @@ public class KatalogoNagusiaB extends JFrame //implements Observer
 		bilatuBtn.addActionListener(getController());
 		bilaketa.addKeyListener(getController());
 		ordenatuBtn.addActionListener(getController());
+
 		
 		bilaketaPanel.add(bilaketa);
 		bilaketaPanel.add(bilatuBtn);
@@ -150,6 +152,10 @@ public class KatalogoNagusiaB extends JFrame //implements Observer
             	}
             } else if (e.getSource().equals(ordenatuBtn)) {
                 GestoreFilm.getKN().ordenatuPuntuazioz();
+            }else if(e.getSource().equals(exitBtn)) {
+            	/*new ErabiltzailePN();
+            	setVisible(false);*/
+            	
             }
         }
 

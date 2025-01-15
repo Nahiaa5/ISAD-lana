@@ -65,7 +65,7 @@ public class PuntuazioPantaila extends JFrame{
 		//Botoiak 1-5
 		for(int i=1;i<=5; i++) {
 			JRadioButton radioButton = new JRadioButton(String.valueOf(i));
-            radioButton.setActionCommand(String.valueOf(i)); // Establecer el comando de acción
+            radioButton.setActionCommand(String.valueOf(i)); 
             buttonGroup.add(radioButton);
             panel.add(radioButton);
             radioButton.addActionListener(getController());

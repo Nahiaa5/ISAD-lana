@@ -76,7 +76,7 @@ public class FilmXehetasunakB extends JFrame implements Observer {
         panel_2.add(label);
         JLabel label_1 = new JLabel("Aktoreak: " + xehetasunak.getString("aktoreak"));
         panel_2.add(label_1);
-        JLabel label_2 = new JLabel("Urtea: " + xehetasunak.getInt("urtea"));
+        JLabel label_2 = new JLabel("Urtea: " + xehetasunak.getString("urtea"));
         panel_2.add(label_2);
         JLabel label_3 = new JLabel("Generoa: " + xehetasunak.getString("generoa"));
         panel_2.add(label_3);
@@ -110,7 +110,7 @@ public class FilmXehetasunakB extends JFrame implements Observer {
             label2.setText("Aktoreak: " + xehetasunak.getString("aktoreak"));
             
             JLabel label3 = (JLabel) panel_2.getComponent(2);
-            label3.setText("Urtea: " + xehetasunak.getInt("urtea"));
+            label3.setText("Urtea: " + xehetasunak.getString("urtea"));
             
             JLabel label4 = (JLabel) panel_2.getComponent(3);
             label4.setText("Generoa: " + xehetasunak.getString("generoa"));
@@ -124,6 +124,7 @@ public class FilmXehetasunakB extends JFrame implements Observer {
             iruzkinakArea.setText(iruzkinak);
         }
     }
+    
     private boolean eguneratu = false; //esto es raro, pero funciona
     @Override
     public void update(Observable o, Object arg) {
