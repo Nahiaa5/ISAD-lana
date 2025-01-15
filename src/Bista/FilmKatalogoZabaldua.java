@@ -36,6 +36,7 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
 	private Controller controller;
 	private JTextField bTextField;
 	private JButton bJButton;
+	private JButton eJButton;
 	private JScrollPane scrollPane;
 	private int ID = -1;
 	private int flag = 0;
@@ -86,6 +87,7 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
 		
 		panel.add(getBilatuTextField());
 		panel.add(getBilatuJButton());
+		panel.add(getExitJButton());
 		
 	}
 	
@@ -111,6 +113,13 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
 			bJButton.addActionListener(getCont());
 		}
 		return bJButton;
+	}
+	private JButton getExitJButton() {
+		if (eJButton == null) {
+			eJButton = new JButton("Exit");
+			eJButton.addActionListener(getCont());
+		}
+		return eJButton;
 	}
     private void addNewButton(String datuak) {
         JButton button = new JButton(datuak);
@@ -148,6 +157,11 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource().equals(bJButton) || e.getSource().equals(bTextField)) {
 				GestoreKatalogoZabaldua.getnZK().FilmakBilatu(getBilatuTextField().getText());
+			}
+			
+			else if (e.getSource().equals(eJButton)){
+				new ErabiltzailePN();
+				setVisible(false);
 			}
 			else {
 				JButton botoia = (JButton) e.getSource();

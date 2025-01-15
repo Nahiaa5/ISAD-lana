@@ -16,6 +16,8 @@ import javax.swing.border.EmptyBorder;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import Kontroladorea.GestoreKatalogoZabaldua;
 import Kontroladorea.GestoreNagusia;
 
 @SuppressWarnings("deprecation")
@@ -101,21 +103,31 @@ public class KZ_XehetasunakIkusi extends JDialog implements Observer {
 		}
 	}
 	
+	public void ezabatu() {
+		GestoreKatalogoZabaldua.getnZK().deleteObserver(this);
+		dispose();
+	}
+	
 	public Controller getCont() {
 		if (controller == null) {
 			controller = new Controller();
 		}
 		return controller;
 	}
+	
+	//---------------------------------------KONTROLADOREA---------------------------------------
+
+	
 	public class Controller implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource().equals(itxi)) {
-				setVisible(false);
+				ezabatu();
 			}
 			else if (e.getSource().equals(eskatu)) {
 				GestoreNagusia.getGN().KZBidaliEskaera();
+				ezabatu();
 			}
 		}
 	}
