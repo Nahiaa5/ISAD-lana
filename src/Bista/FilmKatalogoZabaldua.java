@@ -11,9 +11,7 @@ import javax.swing.border.EmptyBorder;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import Eredua.FilmZerrenda;
-import Eredua.KatalogoZabalduaKargatu;
+import Kontroladorea.GestoreKatalogoZabaldua;
 import Kontroladorea.GestoreZerrenda;
 
 import java.awt.BorderLayout;
@@ -70,7 +68,7 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
 	}
 	private FilmKatalogoZabaldua() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		KatalogoZabalduaKargatu.getnZK().addObserver(this);
+		GestoreKatalogoZabaldua.getnZK().addObserver(this);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -149,7 +147,7 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource().equals(bJButton) || e.getSource().equals(bTextField)) {
-				KatalogoZabalduaKargatu.getnZK().FilmakBilatu(getBilatuTextField().getText());
+				GestoreKatalogoZabaldua.getnZK().FilmakBilatu(getBilatuTextField().getText());
 			}
 			else {
 				JButton botoia = (JButton) e.getSource();
@@ -157,7 +155,7 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
 				switch (flag) {
 				
 					case 0:
-						KatalogoZabalduaKargatu.getnZK().xehetasunakErakutsi(datuak);
+						GestoreKatalogoZabaldua.getnZK().xehetasunakErakutsi(datuak);
 						break;
 					case 1:
 						String izena = GZ.bilatuZerrenda(ID).getIzena();

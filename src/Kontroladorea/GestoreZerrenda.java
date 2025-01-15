@@ -9,7 +9,6 @@ import org.json.JSONObject;
 import Bista.FilmKatalogoZabaldua;
 import Eredua.Film;
 import Eredua.FilmZerrenda;
-import Eredua.KatalogoZabalduaKargatu;
 
 public class GestoreZerrenda {
 	private static GestoreZerrenda nZZ;
@@ -49,7 +48,7 @@ public class GestoreZerrenda {
 	
 	public void sartuFilmaZerrendaBaten(int ID, String datuak) {
 		GestoreFilm GF = GestoreFilm.getKN();
-		KatalogoZabalduaKargatu KZK = KatalogoZabalduaKargatu.getnZK();
+		GestoreKatalogoZabaldua KZK = GestoreKatalogoZabaldua.getnZK();
 		JSONObject xehetasunak = KZK.xehetasunakBilatu(datuak);
 		Film filma = GF.bilatuFilma(xehetasunak);
 		FilmZerrenda zerrenda = bilatuZerrenda(ID);

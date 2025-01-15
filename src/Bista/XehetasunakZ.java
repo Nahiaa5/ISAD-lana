@@ -17,8 +17,6 @@ import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
 import org.json.JSONObject;
-
-import Eredua.KatalogoZabalduaKargatu;
 import Kontroladorea.GestoreZerrenda;
 
 public class XehetasunakZ extends JFrame {

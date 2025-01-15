@@ -1,14 +1,9 @@
-package Eredua;
+package Kontroladorea;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Observable;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -16,16 +11,16 @@ import Bista.KZ_XehetasunakIkusi;
 import Kontroladorea.GestoreFilm;
 
 @SuppressWarnings("deprecation")
-public class KatalogoZabalduaKargatu extends Observable{
-	private static KatalogoZabalduaKargatu nKZK;
+public class GestoreKatalogoZabaldua extends Observable{
+	private static GestoreKatalogoZabaldua nKZK;
 	private JSONObject datuak;
 	
-	private KatalogoZabalduaKargatu(){
+	private GestoreKatalogoZabaldua(){
 	}
 	
-	public static KatalogoZabalduaKargatu getnZK(){
+	public static GestoreKatalogoZabaldua getnZK(){
 		if(nKZK==null) {
-			nKZK=new KatalogoZabalduaKargatu();
+			nKZK=new GestoreKatalogoZabaldua();
 		}
 		return nKZK;
 	}

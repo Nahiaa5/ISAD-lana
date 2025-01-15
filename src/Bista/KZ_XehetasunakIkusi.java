@@ -16,8 +16,6 @@ import javax.swing.border.EmptyBorder;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import Eredua.KatalogoZabalduaKargatu;
 import Kontroladorea.GestoreNagusia;
 
 @SuppressWarnings("deprecation")

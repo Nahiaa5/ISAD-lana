@@ -12,8 +12,8 @@ import javax.swing.border.EmptyBorder;
 
 import org.json.JSONObject;
 
-import Eredua.KatalogoZabalduaKargatu;
 import Kontroladorea.GestoreZerrenda;
+import Kontroladorea.GestoreKatalogoZabaldua;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -161,7 +161,7 @@ public class FilmakSartuZerrenda extends JFrame {
 			} else {
 				JButton botoia = (JButton) e.getSource();
 				String datuak = botoia.getText();
-				JSONObject xehetasunak = KatalogoZabalduaKargatu.getnZK().xehetasunakBilatu(datuak);
+				JSONObject xehetasunak = GestoreKatalogoZabaldua.getnZK().xehetasunakBilatu(datuak);
 				XehetasunakZ X = new XehetasunakZ(xehetasunak);
 				X.setVisible(true);
 				X.setflag(0);
