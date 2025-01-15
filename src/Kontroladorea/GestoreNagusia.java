@@ -144,11 +144,15 @@ public class GestoreNagusia extends Observable {
 		return erabiltzaileak;
 	}
 	
-	public void filmaAlokatu(String filmIzena) {
-		String erabNAN = GestoreErabiltzaile.getGE().getSaioaNan();
+	public boolean filmaAlokatu(String filmIzena) {
 		Film film = GestoreFilm.getKN().bilatuIzenarekin(filmIzena);
-		Alokairua alokairua = GestoreAlokairu.getGA().alokairuaEgin(erabNAN, film);
-		GestoreErabiltzaile.getGE().alokairuaErabiltzailearenZerrendanGehitu(alokairua);
+		String erabNAN = GestoreErabiltzaile.getGE().getSaioaNan();
+		boolean alokatutaJada = GestoreErabiltzaile.getGE().alokatutaDaukaJada(erabNAN, film);
+		if (!alokatutaJada) {
+			Alokairua alokairua = GestoreAlokairu.getGA().alokairuaEgin(erabNAN, film);
+			GestoreErabiltzaile.getGE().alokairuaErabiltzailearenZerrendanGehitu(alokairua);
+		}
+		return !alokatutaJada;
 	}
 	public boolean erabiltzaileakAlokatuDu(String NAN, int filmID) {
 		return GestoreFilm.getKN().erabiltzaileakAlokatuDu(NAN, filmID);
@@ -157,7 +161,7 @@ public class GestoreNagusia extends Observable {
 		return GestoreErabiltzaile.getGE().getSaioaNan();
 	}
 	public void erabiltzaileDatuakAldatu(String pNan, String pIzena, String pAbizena, String pEmail, String pPasahitza) {
-		Erabiltzaile e = GestoreErabiltzaile.getGE().erabiltzaileaAurkitu(pNan);
+		Erabiltzaile e = GestoreErabiltzaile.getGE().getErabiltzaileByNAN(pNan);
 		if(pIzena.isEmpty() || pAbizena.isEmpty() || pEmail.isEmpty() || pPasahitza.isEmpty()) {
 			setChanged();
 			notifyObservers("Hutsik");

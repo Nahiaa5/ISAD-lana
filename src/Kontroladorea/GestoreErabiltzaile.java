@@ -141,13 +141,9 @@ public class GestoreErabiltzaile {
 		erab.gehituAlokairua(alok);
 	}
 	
-	public Erabiltzaile erabiltzaileaAurkitu(String pNan) {
-		for (Erabiltzaile e : erabiltzaileak) {
-			if(e.getNan().equals(pNan)) {
-				return e;
-			}
-		}
-		return null;
+	public boolean alokatutaDaukaJada(String erabNAN, Film film) {
+		Erabiltzaile erab = getErabiltzaileByNAN(erabNAN);
+		return erab.filmaAlokatutaDauka(film);
 	}
 	
 }

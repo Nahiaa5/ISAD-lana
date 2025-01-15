@@ -173,7 +173,12 @@ public class FilmXehetasunakB extends JFrame implements Observer {
             } else if (e.getSource().equals(alokatuBtn)) {
             	String labelText = ((JLabel) panel_2.getComponent(0)).getText();
                 String filmIzena = labelText.substring(labelText.indexOf(":")+2);
-            	GestoreNagusia.getGN().filmaAlokatu(filmIzena);
+            	boolean alokatuta = GestoreNagusia.getGN().filmaAlokatu(filmIzena);
+            	if (!alokatuta) {
+            		JOptionPane.showMessageDialog(FilmXehetasunakB.this, "Filma jada alokatuta daukazu. Ikusi nahi baduzu, 'ikusi' botoia sakatu.", "Errorea", JOptionPane.ERROR_MESSAGE);
+            	} else {
+            		JOptionPane.showMessageDialog(FilmXehetasunakB.this, "Filma alokatu da. Ikusi nahi baduzu, 'ikusi' botoia sakatu.", "Alokatuta", JOptionPane.INFORMATION_MESSAGE);
+            	}
             } else if (e.getSource().equals(ikusiBtn)) {
             	new IkusiPantaila();
             }

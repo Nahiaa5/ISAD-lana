@@ -177,7 +177,7 @@ public class DatuakAldatu extends JFrame implements Observer {
 				GestoreNagusia.getGN().erabiltzaileDatuakAldatu(nanErabiltzailea, textFieldIzena.getText(), textFieldAbizena.getText(), textFieldEmail.getText(), textFieldPasahitza.getText());
 			}
 			if (e.getSource().equals(btnExit)) {
-				Erabiltzaile erab = GestoreErabiltzaile.getGE().erabiltzaileaAurkitu(GestoreErabiltzaile.getGE().getSaioaNan());
+				Erabiltzaile erab = GestoreErabiltzaile.getGE().getErabiltzaileByNAN(GestoreErabiltzaile.getGE().getSaioaNan());
 				if(erab.getAdmin() == 1) {
 					new ErabKudeatu();
 				}

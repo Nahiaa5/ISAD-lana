@@ -89,21 +89,41 @@ public class DB_kudeatzailea {
 	}
 	
 	public void alokairuaGorde(String erabNAN, int filmID, LocalDate hasData, LocalDate bukData) {
-		String query = "INSERT INTO Alokairua (erabiltzaileNAN, filmID, hasData, bukData) VALUES (?, ?, ?, ?)";
-		
-		try (Connection conn = DB_konexioa.getConexion();
-		     PreparedStatement stmt = conn.prepareStatement(query)) {
+	    String checkQuery = "SELECT COUNT(*) FROM HasData WHERE data = ?";
+	    String insertHasDataQuery = "INSERT INTO HasData (data) VALUES (?)";
+	    String insertAlokairuaQuery = "INSERT INTO Alokairua (erabiltzaileNAN, filmID, hasData, bukData) VALUES (?, ?, ?, ?)";
 
-		        stmt.setString(1, erabNAN);
-		        stmt.setInt(2, filmID);
-		        stmt.setDate(3, java.sql.Date.valueOf(hasData));
-		        stmt.setDate(4, java.sql.Date.valueOf(bukData));
+	    try (Connection conn = DB_konexioa.getConexion()) {
+	        // HasData-n erregistroa jada existitzen den egiaztatu
+	        boolean exists;
+	        try (PreparedStatement checkStmt = conn.prepareStatement(checkQuery)) {
+	            checkStmt.setDate(1, java.sql.Date.valueOf(hasData));
+	            try (ResultSet rs = checkStmt.executeQuery()) {
+	                rs.next();
+	                exists = rs.getInt(1) > 0;
+	            }
+	        }
 
-		        stmt.executeUpdate();
+	        // HasData-n balioa gordetzen du soilik ez bada jada existitzen
+	        if (!exists) {
+	            try (PreparedStatement insertHasDataStmt = conn.prepareStatement(insertHasDataQuery)) {
+	                insertHasDataStmt.setDate(1, java.sql.Date.valueOf(hasData));
+	                insertHasDataStmt.executeUpdate();
+	            }
+	        }
 
-		    } catch (SQLException | ClassNotFoundException e) {
-		        e.printStackTrace();
-		    }
+	        // Alokairua gorde datu-basean
+	        try (PreparedStatement insertAlokairuaStmt = conn.prepareStatement(insertAlokairuaQuery)) {
+	            insertAlokairuaStmt.setString(1, erabNAN);
+	            insertAlokairuaStmt.setInt(2, filmID);
+	            insertAlokairuaStmt.setDate(3, java.sql.Date.valueOf(hasData));
+	            insertAlokairuaStmt.setDate(4, java.sql.Date.valueOf(bukData));
+	            insertAlokairuaStmt.executeUpdate();
+	        }
+
+	    } catch (SQLException | ClassNotFoundException e) {
+	        e.printStackTrace();
+	    }
 	}
 	
 	public boolean erabiltzaileBerriaSartu(String pNAN, String pIzena, String pAbizena, String pEmail, String pPasahitza) {

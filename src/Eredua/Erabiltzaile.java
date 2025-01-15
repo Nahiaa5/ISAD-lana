@@ -79,4 +79,13 @@ public class Erabiltzaile {
 		 return izena.trim().equalsIgnoreCase(text.trim());
     }
 	
+	public boolean filmaAlokatutaDauka(Film film) {
+	    for (Alokairua alok : egindakoAlokairuak) {
+	        if (alok.filmaKointziditu(film) && alok.alokairuaAktiboDago()) {
+	           return true;
+	        }
+	    }
+	    return false;
+	}
+	
 }
