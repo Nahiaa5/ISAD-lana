@@ -93,9 +93,15 @@ public class FilmXehetasunakB extends JFrame implements Observer {
         iruzkinakArea.setEditable(false);
         setVisible(true);
     }
+    
     public void puntuazioaKalkulatu() {
-    	GestoreNagusia.getGN().kalkulatuPuntuazioak();
+    	JLabel izenburuaLabel = (JLabel) panel_2.getComponent(0); 
+        String izenburua = izenburuaLabel.getText().replace("Izenburua: ", "").trim();
+        JLabel urteaLabel = (JLabel) panel_2.getComponent(2); 
+        String urtea = urteaLabel.getText().replace("Urtea: ", "").trim();
+    	GestoreNagusia.getGN().kalkulatuPuntuazioaBb(izenburua, urtea);
     }
+    
     public void iruzkinakErakutsi() {
     	String filmIzena = getTitle().substring("Xehetasunak - ".length());
         

@@ -138,6 +138,13 @@ public class GestoreNagusia extends Observable {
 		setChanged();
 		notifyObservers();
 	}
+	
+	public void kalkulatuPuntuazioaBb(String izenburua, String urtea) {
+		Film f=GestoreFilm.getKN().bilatuIzenaDatarekin(izenburua, urtea);
+		f.kalkulatuPuntuBb();
+		setChanged();
+		notifyObservers();
+	}
 
 	public JSONArray bilaketaEgin(String text) {
 		JSONArray json = GestoreFilm.getKN().bilatuFilmKatalogoan(text);

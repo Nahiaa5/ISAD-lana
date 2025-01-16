@@ -137,6 +137,15 @@ public class GestoreFilm extends Observable {
 	    return null;
 	}
 	
+	public Film bilatuIzenaDatarekin(String filmIzena, String data) {
+		for (Film film : filmak) {
+	        if (film.getIzenburua().equalsIgnoreCase(filmIzena) && film.getUrtea().equals(data)) {
+	            return film;
+	        }
+	    }
+	    return null;
+	}
+	
 	public JSONObject getFilmXehetasunak(String filmIzena) {
 		Film film = bilatuIzenarekin(filmIzena);
 		
