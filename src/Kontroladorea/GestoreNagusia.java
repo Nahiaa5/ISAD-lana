@@ -115,7 +115,7 @@ public class GestoreNagusia extends Observable {
 		GestoreFilm.getKN().filmaEzabatu(izena);
 	}
 	
-	public void ordenatuFilmaPuntuazioz() {
+	public void ordenatuFilmakPuntuazioz() {
 		GestoreFilm.getKN().ordenatuPuntuazioz();
 	}
 	

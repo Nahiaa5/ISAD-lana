@@ -161,7 +161,7 @@ public class KatalogoNagusiaB extends JFrame //implements Observer
             		katalogoaErakutsi();
             	}
             } else if (e.getSource().equals(ordenatuBtn)) {
-                GestoreNagusia.getGN().ordenatuFilmaPuntuazioz();
+                GestoreNagusia.getGN().ordenatuFilmakPuntuazioz();
                 katalogoaErakutsi();
             }else if(e.getSource().equals(exitBtn)) {
             	//Falta hacerlo
