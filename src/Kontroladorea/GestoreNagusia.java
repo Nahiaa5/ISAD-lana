@@ -50,7 +50,7 @@ public class GestoreNagusia extends Observable {
 	
 	public void getErabiltzaile(String pNan, String pPas) {
 		Erabiltzaile e = GestoreErabiltzaile.getGE().erabiltzaileaBilatu(pNan, pPas);
-		if (e == null) {
+		if (e == null || e.getOnartuta()==0) {
 			setChanged();
 			notifyObservers("Txarto");
 		}
