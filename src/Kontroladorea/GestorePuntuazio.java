@@ -31,7 +31,6 @@ public class GestorePuntuazio {
 	}
 	
 	public boolean badagoPuntuazioa(String NAN, int filmID) {
-		System.out.println("a");
 		for(Puntuazioa p: balorazioak) {
 			if(p.puntuazioaDa(NAN, filmID)) {
 				return true;

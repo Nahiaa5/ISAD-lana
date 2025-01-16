@@ -137,14 +137,6 @@ public class Film extends Observable{
     	return iruzkinak;
     }
     
-    public void gordeIruzkinak(DB_kudeatzailea pDBK){
-    	for(Puntuazioa p: this.balorazioak) {
-    		pDBK.gordePuntuazioa(p);
-    	}
-		setChanged();
-		notifyObservers();
-    }
-    
     public void gehituPuntuazioa(Puntuazioa pPuntuazio) {
     	this.balorazioak.add(pPuntuazio);
     }
@@ -160,7 +152,6 @@ public class Film extends Observable{
         	this.puntuazioaBb=batura/balorazioak.size();
         }
     }
-
 
     @Override
     public String toString() {

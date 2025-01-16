@@ -182,6 +182,18 @@ public class DB_kudeatzailea {
         return filmak;
     }
 	
+	public void gordePuntuazioBb(int filmID, double puntuazioaBb) {
+		String query="UPDATE Film SET puntuazioaBb = ? WHERE filmID = ?";
+		try(Connection conn = DB_konexioa.getConexion();
+				PreparedStatement stmt = conn.prepareStatement(query)){
+			stmt.setDouble(1, puntuazioaBb);
+			stmt.setInt(2, filmID);
+			stmt.executeUpdate();
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public List<String> iruzkinakKargatu(int filmID) {
         List<String> comments = new ArrayList<>();
         String query = "SELECT iruzkina FROM Puntuazioa WHERE filmID = ?";
@@ -203,30 +215,7 @@ public class DB_kudeatzailea {
         return comments;
     }
 	
-	public List<Puntuazioa> kargatuPuntuazioak(int filmID) {
-        List<Puntuazioa> puntuazioak = new ArrayList<>();
-        String query = "SELECT * FROM Puntuazioa WHERE filmID = ?";
-
-        try (Connection conn = DB_konexioa.getConexion();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            stmt.setInt(1, filmID);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                String NAN = rs.getString("NAN");
-                int puntuazioa = rs.getInt("puntuazioa");
-                String iruzkina = rs.getString("iruzkina");
-                LocalDate data = rs.getDate("data").toLocalDate();
-                puntuazioak.add(new Puntuazioa(NAN, filmID, puntuazioa, iruzkina, data));
-            }
-
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return puntuazioak;
-    }
+	
 
 	public void gordePuntuazioa(Puntuazioa puntuazioa) {
         String query = "INSERT INTO Puntuazioa (NAN, filmID, puntuazioa, iruzkina, data) VALUES (?, ?, ?, ?, ?)";

@@ -235,7 +235,10 @@ public class GestoreFilm extends Observable {
 	public void kalkulatuPuntuazioak() {
 		for(Film film: filmak) {
 			film.kalkulatuPuntuBb();
+			DB_kudeatzailea.getDB().gordePuntuazioBb(film.getFilmID(), film.getPuntuazioaBb());
 		}
+		setChanged();
+		notifyObservers();
 	}
 
 	public void gordePuntuazioaFilman(Puntuazioa pPuntuazio,int filmID) {
