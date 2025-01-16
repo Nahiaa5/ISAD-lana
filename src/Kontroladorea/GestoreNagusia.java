@@ -82,10 +82,12 @@ public class GestoreNagusia extends Observable {
 	
 	public void erabiltzaileaOnartu(String nan) {
 		GestoreErabiltzaile.getGE().erabiltzaileaOnartu(nan);
+		DB_kudeatzailea.getDB().erabiltzaileaOnartu(nan);
 	}
 	
 	public void erabiltzaileaEzabatu(String nan) {
 		GestoreErabiltzaile.getGE().erabiltzaileaEzabatu(nan);
+		DB_kudeatzailea.getDB().erabiltzaileaEzabatu(nan);
 	}
 	
 	public void KZFilmakBilatu(String izena) {

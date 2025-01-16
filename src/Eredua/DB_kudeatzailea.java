@@ -325,5 +325,30 @@ public class DB_kudeatzailea {
 			e.printStackTrace();	
 		}
 	}
+	
+	public void erabiltzaileaOnartu(String nan) {
+		String query = "Update erabiltzaile SET onartuta = ? WHERE NAN = ?";
+		try {
+			Connection conn = DB_konexioa.getConexion();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, 1);
+            stmt.setString(2, nan);
+            stmt.executeUpdate();
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();	
+		}
+	}
+	
+	public void erabiltzaileaEzabatu(String nan) {
+		String query = "DELETE FROM erabiltzaile WHERE NAN = ?";
+		try {
+			Connection conn = DB_konexioa.getConexion();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, nan);
+            stmt.executeUpdate();
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();	
+		}
+	}
 
 }
