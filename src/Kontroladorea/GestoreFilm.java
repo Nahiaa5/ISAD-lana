@@ -112,6 +112,7 @@ public class GestoreFilm extends Observable {
         boolean katalogoan = false;
         double puntuazioaBb = 0.0;
         Film filma = new Film(id, izenburua, aktoreak, urtea, generoa, zuzendaria, adminNAN, katalogoan, puntuazioaBb, null);
+        DB_kudeatzailea.getDB().gordeFilma(id, izenburua, aktoreak, urtea, generoa, zuzendaria, adminNAN, null);
         filmak.add(filma);
         System.out.println(filmak);
 	}
@@ -166,11 +167,14 @@ public class GestoreFilm extends Observable {
 	public void filmaOnartu(String izena) {
 		Film filma = bilatuIzenarekin(izena);
 		filma.onartu();
+		String adminNAN = GestoreErabiltzaile.getGE().getSaioaNan();
+		DB_kudeatzailea.getDB().filmaOnartu(filma.getFilmID(), adminNAN);
 	}
 	
 	public void filmaEzabatu(String izena) {
 		Film filma = bilatuIzenarekin(izena);
 		filmak.remove(filma);
+		DB_kudeatzailea.getDB().filmaEzabatu(izena);
 	}
 	
 	public void loadPuntuazioak() {
