@@ -6,7 +6,6 @@ import Eredua.Film;
 import Kontroladorea.GestoreErabiltzaile;
 import Kontroladorea.GestoreFilm;
 import Kontroladorea.GestoreNagusia;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.awt.*;
@@ -183,7 +182,7 @@ public class FilmXehetasunakB extends JFrame implements Observer {
             		JOptionPane.showMessageDialog(FilmXehetasunakB.this, "Filma alokatu da. Ikusi nahi baduzu, 'ikusi' botoia sakatu.", "Alokatuta", JOptionPane.INFORMATION_MESSAGE);
             	}
             } else if (e.getSource().equals(ikusiBtn)) {
-            	new IkusiPantaila();
+            	//VideoScreen.showVideo("/resources/LaLaLand.mp4");
             }
         }
     }
