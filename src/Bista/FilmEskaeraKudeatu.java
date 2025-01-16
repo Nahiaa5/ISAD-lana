@@ -33,6 +33,7 @@ public class FilmEskaeraKudeatu extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private JPanel filmPanel;
 	private JLabel emaitzikEz;
+	private JButton eJButton;
 	private EskKudeatuKontroladorea kontroladorea = null;
 
 	public FilmEskaeraKudeatu() {
@@ -51,8 +52,12 @@ public class FilmEskaeraKudeatu extends JFrame{
 		
 		JScrollPane scrollPane=new JScrollPane(filmPanel);
 		getContentPane().add(scrollPane,BorderLayout.CENTER);
-		
 	    getContentPane().add(getEmaitzikEz(), BorderLayout.SOUTH);
+	    
+	    JPanel panel = new JPanel();
+	    panel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
+	    getContentPane().add(panel,BorderLayout.NORTH);
+	    panel.add(getExitJButton());
 	}
 	
 	private JLabel getEmaitzikEz() {
@@ -62,6 +67,14 @@ public class FilmEskaeraKudeatu extends JFrame{
 			emaitzikEz.setVisible(false);  
 		}
 		return emaitzikEz;
+	}
+	
+	private JButton getExitJButton() {
+		if (eJButton == null) {
+			eJButton = new JButton("Exit");
+			eJButton.addActionListener(getEK());
+		}
+		return eJButton;
 	}
 	
 	public void eskaerakErakutsi() {
@@ -83,7 +96,7 @@ public class FilmEskaeraKudeatu extends JFrame{
 	            JSONObject filmJson = emaitza.getJSONObject(i);
 
 	            String izena = filmJson.getString("izenburua");
-	            Integer urtea = filmJson.getInt("urtea");
+	            String urtea = filmJson.getString("urtea");
 	            
 	            JButton onartuBtn=new JButton("✔");
 	            onartuBtn.setAlignmentY(Component.CENTER_ALIGNMENT);
@@ -152,7 +165,11 @@ public class FilmEskaeraKudeatu extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String command = e.getActionCommand();
-	        if (command != null) {
+			if (e.getSource().equals(eJButton)) {
+				new AdminPN();
+				setVisible(false);
+			}
+			else if (command != null) {
 	            String[] parts = command.split(":");
 	            String action = parts[0];
 	            String izena = parts[1];

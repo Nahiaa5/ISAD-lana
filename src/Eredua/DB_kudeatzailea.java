@@ -163,7 +163,7 @@ public class DB_kudeatzailea {
                 int filmID = rs.getInt("filmID");
                 String izenburua = rs.getString("izenburua");
                 String aktoreak = rs.getString("aktoreak");
-                String urtea = rs.getString("urtea");
+                String urtea = rs.getString("urtea").substring(0, 4);
                 String generoa = rs.getString("generoa");
                 String zuzendaria = rs.getString("zuzendaria");
                 String adminNAN = rs.getString("adminNAN");
@@ -276,6 +276,54 @@ public class DB_kudeatzailea {
 	    }
 
 	    return puntuazioak;
+	}
+	
+	public void gordeFilma(int id, String izenburua, String aktoreak, String urtea, String generoa, String zuzendaria, String adminNAN, String path) {
+		String query = "INSERT INTO film (filmID, izenburua, aktoreak, urtea, generoa, zuzendaria, adminNAN, katalogoan, puntuazioaBb, path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		try {
+			Connection conn = DB_konexioa.getConexion();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1,id);
+            stmt.setString(2, izenburua);
+            stmt.setString(3, aktoreak);
+            stmt.setString(4, urtea);
+            stmt.setString(5, generoa);
+            stmt.setString(6, zuzendaria);
+            stmt.setString(7, adminNAN);
+            stmt.setInt(8, 0);
+            stmt.setDouble(9, 0.0);
+            stmt.setString(10, path);
+            stmt.executeUpdate();
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();	
+		}
+	}
+	
+	public void filmaOnartu(int filmID, String adminNAN) {
+		String query = "UPDATE film SET katalogoan = ?, adminNAN = ? WHERE filmID = ?";
+		try {
+			Connection conn = DB_konexioa.getConexion();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1,1);
+            stmt.setString(2, adminNAN);
+            stmt.setInt(3, filmID);
+            stmt.executeUpdate();
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();	
+		}
+	}
+	
+	public void filmaEzabatu(String izena) { //Esto en verdad es solo para las eskaerak
+		String query = "DELETE FROM film WHERE katalogoan = ? AND izenburua = ?";
+		try {
+			Connection conn = DB_konexioa.getConexion();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, 0);
+            stmt.setString(2, izena);
+            stmt.executeUpdate();
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();	
+		}
 	}
 
 }
