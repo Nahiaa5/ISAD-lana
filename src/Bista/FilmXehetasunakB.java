@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.util.Observer;
 import java.util.Observable;
 
@@ -118,7 +119,8 @@ public class FilmXehetasunakB extends JFrame implements Observer {
             JLabel label5 = (JLabel) panel_2.getComponent(4);
             label5.setText("Zuzendaria: " + xehetasunak.getString("zuzendaria"));
             
-            puntuBbLabel.setText("Batez besteko Puntuazioa: " + xehetasunak.getDouble("puntuazioaBb"));
+            DecimalFormat df = new DecimalFormat("#.00");
+            puntuBbLabel.setText("Batez besteko Puntuazioa: " + df.format(xehetasunak.getDouble("puntuazioaBb")));
                         
             String iruzkinak = String.join("\n", film.getIruzkinak());
             iruzkinakArea.setText(iruzkinak);
