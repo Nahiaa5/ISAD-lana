@@ -94,14 +94,6 @@ public class FilmXehetasunakB extends JFrame implements Observer {
         setVisible(true);
     }
     
-    public void puntuazioaKalkulatu() {
-    	JLabel izenburuaLabel = (JLabel) panel_2.getComponent(0); 
-        String izenburua = izenburuaLabel.getText().replace("Izenburua: ", "").trim();
-        JLabel urteaLabel = (JLabel) panel_2.getComponent(2); 
-        String urtea = urteaLabel.getText().replace("Urtea: ", "").trim();
-    	GestoreNagusia.getGN().kalkulatuPuntuazioaBb(izenburua, urtea);
-    }
-    
     public void iruzkinakErakutsi() {
     	String filmIzena = getTitle().substring("Xehetasunak - ".length());
         
@@ -131,6 +123,14 @@ public class FilmXehetasunakB extends JFrame implements Observer {
             String iruzkinak = String.join("\n", film.getIruzkinak());
             iruzkinakArea.setText(iruzkinak);
         }
+    }
+    
+    public void puntuazioaKalkulatu() {
+    	JLabel izenburuaLabel = (JLabel) panel_2.getComponent(0); 
+        String izenburua = izenburuaLabel.getText().replace("Izenburua: ", "").trim();
+        JLabel urteaLabel = (JLabel) panel_2.getComponent(2); 
+        String urtea = urteaLabel.getText().replace("Urtea: ", "").trim();
+    	GestoreNagusia.getGN().kalkulatuPuntuazioaBb(izenburua, urtea);
     }
     
     private boolean eguneratu = false; //esto es raro, pero funciona

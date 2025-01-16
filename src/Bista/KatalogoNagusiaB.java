@@ -53,7 +53,6 @@ public class KatalogoNagusiaB extends JFrame //implements Observer
 	 * Create the application.
 	 */
 	public KatalogoNagusiaB() {
-		//katalogo.addObserver(this);
 		initialize();
 		katalogoaErakutsi();
 		setVisible(true);
@@ -162,7 +161,7 @@ public class KatalogoNagusiaB extends JFrame //implements Observer
             		katalogoaErakutsi();
             	}
             } else if (e.getSource().equals(ordenatuBtn)) {
-                GestoreFilm.getKN().ordenatuPuntuazioz();
+                GestoreNagusia.getGN().ordenatuFilmaPuntuazioz();
                 katalogoaErakutsi();
             }else if(e.getSource().equals(exitBtn)) {
             	//Falta hacerlo

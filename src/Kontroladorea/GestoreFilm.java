@@ -221,15 +221,6 @@ public class GestoreFilm extends Observable {
         }
         return null;
     }
-	
-	public void kalkulatuPuntuazioak() {
-		for(Film film: filmak) {
-			film.kalkulatuPuntuBb();
-			DB_kudeatzailea.getDB().gordePuntuazioBb(film.getFilmID(), film.getPuntuazioaBb());
-		}
-		setChanged();
-		notifyObservers();
-	}
 
 	public void gordePuntuazioaFilman(Puntuazioa pPuntuazio,int filmID) {
 		for(Film film: filmak) {

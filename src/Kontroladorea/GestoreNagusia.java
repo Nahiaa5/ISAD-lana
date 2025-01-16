@@ -133,12 +133,6 @@ public class GestoreNagusia extends Observable {
         notifyObservers();
     }
 	
-	public void kalkulatuPuntuazioak() {
-		GestoreFilm.getKN().kalkulatuPuntuazioak();
-		setChanged();
-		notifyObservers();
-	}
-	
 	public void kalkulatuPuntuazioaBb(String izenburua, String urtea) {
 		Film f=GestoreFilm.getKN().bilatuIzenaDatarekin(izenburua, urtea);
 		f.kalkulatuPuntuBb();
