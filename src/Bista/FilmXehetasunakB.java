@@ -171,6 +171,7 @@ public class FilmXehetasunakB extends JFrame implements Observer {
                 }
                 
             } else if (e.getSource().equals(itxiBtn)) {
+            	KatalogoNagusiaB.getKNB().katalogoaErakutsi();
                 dispose();
             } else if (e.getSource().equals(alokatuBtn)) {
             	String labelText = ((JLabel) panel_2.getComponent(0)).getText();

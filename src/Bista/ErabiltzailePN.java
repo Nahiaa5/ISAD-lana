@@ -87,6 +87,7 @@ public class ErabiltzailePN extends JFrame{
         public void actionPerformed(ActionEvent e) {
             if (e.getSource().equals(btnKN)) {
                 new KatalogoNagusiaB();
+                setVisible(false);
             }
 
             if (e.getSource().equals(zabaldua)) {

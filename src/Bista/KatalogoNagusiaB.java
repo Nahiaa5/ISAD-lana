@@ -1,6 +1,8 @@
 package Bista;
 
 import Kontroladorea.GestoreNagusia;
+import Kontroladorea.GestorePuntuazio;
+
 import org.json.JSONArray;
 
 import java.awt.BorderLayout;
@@ -30,6 +32,7 @@ import org.json.JSONObject;
 
 public class KatalogoNagusiaB extends JFrame //implements Observer 
 {
+	private static KatalogoNagusiaB nKNB=null;
 	private static final long serialVersionUID = 1L;
 	private JTextField bilaketa;
 	private JButton bilatuBtn;
@@ -38,7 +41,14 @@ public class KatalogoNagusiaB extends JFrame //implements Observer
 	private JPanel filmPanel;
 	private JLabel emaitzikEz;
 	private Controller controller = null;
-
+	
+	public static KatalogoNagusiaB getKNB() {
+		if(nKNB==null) {
+			nKNB=new KatalogoNagusiaB();
+			
+		}
+		return nKNB;
+	}
 	/**
 	 * Create the application.
 	 */
@@ -87,6 +97,7 @@ public class KatalogoNagusiaB extends JFrame //implements Observer
 	public void katalogoaErakutsi() {
 		JSONArray emaitza = GestoreNagusia.getGN().getInfoKatalogokoFilmGuztiak();
 		eguneratuZerrenda(emaitza);
+        setVisible(true);
 	}
 	
 	public void eguneratuZerrenda(JSONArray zerrenda) {
@@ -112,6 +123,7 @@ public class KatalogoNagusiaB extends JFrame //implements Observer
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						new FilmXehetasunakB(izena);
+		                setVisible(false);
 					}
 				});
 	            JPanel filmaP=new JPanel();
@@ -152,6 +164,7 @@ public class KatalogoNagusiaB extends JFrame //implements Observer
             	}
             } else if (e.getSource().equals(ordenatuBtn)) {
                 GestoreFilm.getKN().ordenatuPuntuazioz();
+                katalogoaErakutsi();
             }else if(e.getSource().equals(exitBtn)) {
             	/*new ErabiltzailePN();
             	setVisible(false);*/
