@@ -182,9 +182,7 @@ public class GestoreFilm extends Observable {
 	                .collect(Collectors.toList());
 
 	        film.setBalorazioak(new ArrayList<>(puntuazioIragaziak));
-	        //film.eguneratuPuntuBb(DB_kudeatzailea.getDB());
 	    }
-
 	    setChanged();
 	    notifyObservers();
 	}
@@ -210,27 +208,6 @@ public class GestoreFilm extends Observable {
         }
         return null;
     }
-	
-	public boolean erabiltzaileakAlokatuDu(String nan, int filmID) {
-		Erabiltzaile erab = erabiltzaileaBilatu(nan);
-		if(erab!=null) {
-			for(Alokairua alok: erab.getEgindakoAlokairuak()) {
-				if(alok.getFilm().getFilmID()==filmID) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-	
-	public Erabiltzaile erabiltzaileaBilatu(String nan) {
-		for(Erabiltzaile erab: GestoreErabiltzaile.getGE().getErabiltzaileak()) {
-			if(erab.getNan().equals(nan)) {
-				return erab;
-			}
-		}
-		return null;
-	}
 	
 	public void kalkulatuPuntuazioak() {
 		for(Film film: filmak) {

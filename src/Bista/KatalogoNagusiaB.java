@@ -76,7 +76,6 @@ public class KatalogoNagusiaB extends JFrame //implements Observer
 		bilaketa.addKeyListener(getController());
 		ordenatuBtn.addActionListener(getController());
 
-		
 		bilaketaPanel.add(bilaketa);
 		bilaketaPanel.add(bilatuBtn);
 		bilaketaPanel.add(ordenatuBtn);
@@ -166,9 +165,7 @@ public class KatalogoNagusiaB extends JFrame //implements Observer
                 GestoreFilm.getKN().ordenatuPuntuazioz();
                 katalogoaErakutsi();
             }else if(e.getSource().equals(exitBtn)) {
-            	/*new ErabiltzailePN();
-            	setVisible(false);*/
-            	
+            	//Falta hacerlo
             }
         }
 

@@ -123,6 +123,7 @@ public class GestoreNagusia extends Observable {
 	}
 	
 	public void gordePuntuazioa(String NAN, int filmID, int puntu, String iruzkina, LocalDate data) {
+		
 		Puntuazioa p=new Puntuazioa(NAN, filmID, puntu, iruzkina, data);
 		GestorePuntuazio.getGP().gordePuntuazioa(p);
 		GestoreFilm.getKN().gordePuntuazioaFilman(p, filmID);
@@ -156,9 +157,20 @@ public class GestoreNagusia extends Observable {
 		}
 		return !alokatutaJada;
 	}
+	
 	public boolean erabiltzaileakAlokatuDu(String NAN, int filmID) {
-		return GestoreFilm.getKN().erabiltzaileakAlokatuDu(NAN, filmID);
+		Erabiltzaile erab = GestoreErabiltzaile.getGE().getErabiltzaileByNAN(NAN);
+
+		if(erab!=null) {
+			for(Alokairua alok: erab.getEgindakoAlokairuak()) {
+				if(alok.getFilm().getFilmID()==filmID) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
+	
 	public String getSaioaNAN() {
 		return GestoreErabiltzaile.getGE().getSaioaNan();
 	}
