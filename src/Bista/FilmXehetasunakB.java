@@ -195,7 +195,11 @@ public class FilmXehetasunakB extends JFrame implements Observer {
                 if (alokairuaDauka) {
                 	String bideoPath = GestoreNagusia.getGN().filmaPantailaratu(filmIzena);        
                     if (bideoPath != null) {
-                    	new PantailaIkusi(bideoPath);
+                    	try {
+                    		new PantailaIkusi(bideoPath);
+                    	} catch (IllegalStateException e1) {
+                    		JOptionPane.showMessageDialog(FilmXehetasunakB.this, "Ez daukazu VLC instalatuta edo ez dago espero den direktorioan. Direktorioa hau izan behar da: C:\\Program Files\\VideoLAN\\VLC", "Errorea", JOptionPane.ERROR_MESSAGE);
+                    	}
                     } else {
                     	//Film-aren path null da
                     	JOptionPane.showMessageDialog(FilmXehetasunakB.this, "Filma ez dago eskuragarri.", "Errorea", JOptionPane.ERROR_MESSAGE);

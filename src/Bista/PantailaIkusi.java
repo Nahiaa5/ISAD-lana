@@ -4,14 +4,20 @@ import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 
 public class PantailaIkusi extends JFrame {
     private static final long serialVersionUID = 1L;
     private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
 
-    public PantailaIkusi(String pathBideoa) {
+    public PantailaIkusi(String pathBideoa) throws IllegalStateException {
     	super();
-    	System.setProperty("jna.library.path", "C:\\Program Files\\VideoLAN\\VLC");
+    	String vlcPath = "C:\\Program Files\\VideoLAN\\VLC";
+    	System.setProperty("jna.library.path", vlcPath);
+    	
+    	if (!vlcInstalatutaDago(vlcPath)) {
+            throw new IllegalStateException();
+        }
     	
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(800, 600);
@@ -47,5 +53,10 @@ public class PantailaIkusi extends JFrame {
             mediaPlayerComponent.mediaPlayer().controls().stop(); // Gelditu
         }
         mediaPlayerComponent.release(); // Askatu
+    }
+    
+    private static boolean vlcInstalatutaDago(String vlcPath) {
+        File vlcFolder = new File(vlcPath);
+        return vlcFolder.exists() && vlcFolder.isDirectory();
     }
 }
