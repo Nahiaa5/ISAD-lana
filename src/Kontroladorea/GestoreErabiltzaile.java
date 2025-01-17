@@ -144,6 +144,5 @@ public class GestoreErabiltzaile {
 	public boolean alokatutaDaukaJada(String erabNAN, Film film) {
 		Erabiltzaile erab = getErabiltzaileByNAN(erabNAN);
 		return erab.filmaAlokatutaDauka(film);
-	}
-	
+	}	
 }

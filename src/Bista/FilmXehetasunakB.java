@@ -188,7 +188,26 @@ public class FilmXehetasunakB extends JFrame implements Observer {
             		JOptionPane.showMessageDialog(FilmXehetasunakB.this, "Filma alokatu da. Ikusi nahi baduzu, 'ikusi' botoia sakatu.", "Alokatuta", JOptionPane.INFORMATION_MESSAGE);
             	}
             } else if (e.getSource().equals(ikusiBtn)) {
-            	//VideoScreen.showVideo("/resources/LaLaLand.mp4");
+            	String labelText = ((JLabel) panel_2.getComponent(0)).getText();
+                String filmIzena = labelText.substring(labelText.indexOf(":")+2);               
+            	
+            	boolean alokairuaDauka = GestoreNagusia.getGN().alokairuaDauka(filmIzena);
+                if (alokairuaDauka) {
+                	String bideoPath = GestoreNagusia.getGN().filmaPantailaratu(filmIzena);        
+                    if (bideoPath != null) {
+                    	try {
+                    		new PantailaIkusi(bideoPath);
+                    	} catch (IllegalStateException e1) {
+                    		JOptionPane.showMessageDialog(FilmXehetasunakB.this, "Ez daukazu VLC instalatuta edo ez dago espero den direktorioan. Direktorioa hau izan behar da: C:\\Program Files\\VideoLAN\\VLC", "Errorea", JOptionPane.ERROR_MESSAGE);
+                    	}
+                    } else {
+                    	//Film-aren path null da
+                    	JOptionPane.showMessageDialog(FilmXehetasunakB.this, "Filma ez dago eskuragarri.", "Errorea", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                	//Erabiltzaileak ez dauka alokairu aktiborik film honetarako
+                	JOptionPane.showMessageDialog(FilmXehetasunakB.this, "Ez daukazu alokairu aktiborik film honetarako.", "Errorea", JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
     }

@@ -127,7 +127,6 @@ public class GestoreFilm extends Observable {
 		notifyObservers();
 	}
 	
-//-------------------------------REVISADO
 	public Film bilatuIzenarekin(String filmIzena) {
 	    for (Film film : filmak) {
 	        if (film.getIzenburua().equalsIgnoreCase(filmIzena)) {
@@ -232,5 +231,9 @@ public class GestoreFilm extends Observable {
 			}
 		}
 		throw new IllegalArgumentException("Ez da aurkitu filma ID horrekin");
+	}
+	
+	public String getFilmarenPath(Film film) {
+		return film.getPath();
 	}
 }
