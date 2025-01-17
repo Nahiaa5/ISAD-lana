@@ -139,7 +139,7 @@ public class SaioaHasi extends JFrame implements Observer {
 			// TODO Auto-generated method stub
 			if (e.getSource().equals(btnSaioaHasi)) {
 				Erabiltzaile a = GestoreErabiltzaile.getGE().erabiltzaileaBilatu(textFieldNan.getText(), textFieldPas.getText());
-				if (a == null) {
+				if (a != null) {
 					pantailakAukeratu(a);
 				} else {
 					System.out.println("Erabiltzailea edo Pasahitza ez dira zuzena");
