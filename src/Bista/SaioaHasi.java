@@ -13,6 +13,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+
+import Kontroladorea.GestoreErabiltzaile;
 import Kontroladorea.GestoreNagusia;
 import java.util.Observer;
 import java.util.Observable;
@@ -106,11 +108,15 @@ public class SaioaHasi extends JFrame implements Observer {
 	
 	public void pantailakAukeratu(Erabiltzaile e) {
 		if(e.getAdmin() == 0) {
-			new ErabiltzailePN();
+			ErabiltzailePN E = new ErabiltzailePN();
+			E.SetNAN(textFieldNan.getText());
+			E.setVisible(true);
 			setVisible(false);
 		}
 		else {
-			new AdminPN();
+			AdminPN A = new AdminPN();
+			A.setName(textFieldNan.getText());
+			A.setVisible(true);
 			setVisible(false);
 		}
 		
@@ -132,7 +138,12 @@ public class SaioaHasi extends JFrame implements Observer {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			if (e.getSource().equals(btnSaioaHasi)) {
-				GestoreNagusia.getGN().getErabiltzaile(textFieldNan.getText(), textFieldPas.getText());
+				Erabiltzaile a = GestoreErabiltzaile.getGE().erabiltzaileaBilatu(textFieldNan.getText(), textFieldPas.getText());
+				if (a == null) {
+					pantailakAukeratu(a);
+				} else {
+					System.out.println("Erabiltzailea edo Pasahitza ez dira zuzena");
+				}
 			}
 		}
 	}

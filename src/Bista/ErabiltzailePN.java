@@ -16,6 +16,8 @@ public class ErabiltzailePN extends JFrame{
 	private Controller controller;
 	private JButton btnDatuakAldatu;
 	private JButton btnExit;
+	private JButton btnNireZerrendakIkusi;
+	private String NAN;
 
 	/**
 	 * Create the application.
@@ -31,6 +33,7 @@ public class ErabiltzailePN extends JFrame{
         contentPane.add(getZabaldua());
         contentPane.add(getBtnDatuakAldatu());
         contentPane.add(getBtnExit());
+        contentPane.add(getbtnNireZerrendakIkusi());
 
         controller = new Controller();
         setVisible(true);
@@ -75,6 +78,18 @@ public class ErabiltzailePN extends JFrame{
 		return btnExit;
 	}
 
+	private JButton getbtnNireZerrendakIkusi() {
+		if (btnNireZerrendakIkusi == null) {
+			btnNireZerrendakIkusi = new JButton("Nire zerrendak ikusi");
+	        btnNireZerrendakIkusi.setBounds(250, 155, 150, 30);
+	        btnNireZerrendakIkusi.addActionListener(getController());
+		}
+		return btnNireZerrendakIkusi;
+	}
+	
+	public void SetNAN(String NAN) {
+		this.NAN = NAN;
+	}
 	private Controller getController() {
 		if (controller == null) {
 			controller = new Controller();
@@ -101,11 +116,15 @@ public class ErabiltzailePN extends JFrame{
             	setVisible(false);
             }
             
+            if (e.getSource().equals(btnNireZerrendakIkusi)) {
+            	ErabiltzaileZerrendak.getEZ(NAN);
+            	setVisible(false);
+            }
+            
             if(e.getSource().equals(btnExit)) {
             	new PantailaNagusia();
             	setVisible(false);
             }
         }
     }
-	
 }

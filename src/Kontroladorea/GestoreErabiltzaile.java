@@ -53,6 +53,17 @@ public class GestoreErabiltzaile {
 		return aurkituta;
 	}
 	
+	public Erabiltzaile erabiltzaileaBilatuNAN(String pNAN) {
+		Erabiltzaile aurkituta = null;
+		for (Erabiltzaile e: erabiltzaileak) {
+			if(e.getNan().equals(pNAN)){
+				aurkituta = e;
+			}	
+		}
+		
+		return aurkituta;
+	}
+	
 	public void gehituErabiltzailea(Erabiltzaile e) {
 		this.erabiltzaileak.add(e);
 	}

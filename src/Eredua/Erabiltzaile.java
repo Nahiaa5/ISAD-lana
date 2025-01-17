@@ -12,6 +12,7 @@ public class Erabiltzaile {
 	private int admin;
 	private int onartuta;
 	private List<Alokairua> egindakoAlokairuak;
+	private List<FilmZerrenda> filmZerrendak;
 	
 	public Erabiltzaile(String pNan, String pIzena,String pAbizena, String pEmail, String pPasahitza, int pAdmin, int pOnartuta) {
 		nan = pNan;
@@ -22,6 +23,7 @@ public class Erabiltzaile {
 		admin = pAdmin;
 		onartuta = pOnartuta;
 		egindakoAlokairuak = new ArrayList<Alokairua>();
+		filmZerrendak = new ArrayList<FilmZerrenda>();
 	}
 	
 	public String getNan() {
@@ -70,6 +72,10 @@ public class Erabiltzaile {
 	
 	public void gehituAlokairua(Alokairua alokairua) {
 		egindakoAlokairuak.add(alokairua);
+	}
+	
+	public List<FilmZerrenda> getZerrendak(){
+		return this.filmZerrendak;
 	}
 
 	public boolean izenaTestuarekinKointziditu(String text) {
