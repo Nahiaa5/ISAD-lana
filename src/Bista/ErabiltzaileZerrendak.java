@@ -25,12 +25,12 @@ public class ErabiltzaileZerrendak extends JFrame {
 	private static ErabiltzaileZerrendak EZ;
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JLabel izena;
+	private JLabel titulua;
 	private JPanel panel;
 	private JPanel panel_1;
-	private JButton ezabatu;
 	private JButton sortu;
 	private Controller controller;
+	private String NAN;
 
 	/**
 	 * Launch the application.
@@ -67,9 +67,10 @@ public class ErabiltzaileZerrendak extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		izena = new JLabel("Titulua");
-		izena.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(izena, BorderLayout.NORTH);
+		String izena = GestoreErabiltzaile.getGE().erabiltzaileaBilatuNAN(NAN).getIzena();
+		titulua = new JLabel(izena +" dituen Zerrendak");
+		titulua.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(titulua, BorderLayout.NORTH);
 		
 		panel = new JPanel();
 		contentPane.add(panel, BorderLayout.CENTER);
@@ -83,11 +84,7 @@ public class ErabiltzaileZerrendak extends JFrame {
 		sortu.addActionListener(getCont());
 		panel_1.add(sortu);
 		
-		ezabatu = new JButton("Zerrenda Ezabatu");
-		ezabatu.addActionListener(getCont());
-		ezabatu.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		panel_1.add(ezabatu);
-		
+		this.NAN = NAN;
 		getZerrendak(NAN);
 	}
 	
@@ -118,10 +115,10 @@ public class ErabiltzaileZerrendak extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource().equals(sortu)) {
-				
-			}
-			if (e.getSource().equals(ezabatu)) {
-							
+				SortuZerrenda s = new SortuZerrenda();
+				s.SetNAN(NAN);
+			} else {
+				String zerrendarenIzena = ((JButton) e.getSource()).getText();
 			}
 		}
 	}

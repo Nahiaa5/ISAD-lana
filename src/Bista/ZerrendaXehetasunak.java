@@ -117,9 +117,8 @@ public class ZerrendaXehetasunak extends JFrame {
 			if (e.getActionCommand().equals(aldatu)) {
 				
 			} else if (e.getActionCommand().equals(btnBueltatu)) {
-				ZerrendaPertsonalizatuaB ZPB = ZerrendaPertsonalizatuaB.getnZP();
-				ZPB.setID(ID);
-				ZPB.setVisible(true);
+				//ZerrendaPertsonalizatuaB ZPB = ZerrendaPertsonalizatuaB.getnZP();
+				//ZPB.setVisible(true);
 				dispose();
 			}
 		}

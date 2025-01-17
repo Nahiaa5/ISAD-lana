@@ -42,7 +42,7 @@ public class ZerrendaPertsonalizatuaB extends JFrame {
 	
 	/**
 	 * Launch the application.
-	 */
+	 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -55,17 +55,17 @@ public class ZerrendaPertsonalizatuaB extends JFrame {
 			}
 		});
 	}
-
-	public static ZerrendaPertsonalizatuaB getnZP(){
+*/
+	public static ZerrendaPertsonalizatuaB getnZP(int iD){
 		if(nZP==null) {
-			nZP=new ZerrendaPertsonalizatuaB();
+			nZP=new ZerrendaPertsonalizatuaB(iD);
 		}
 		return nZP;
 	}
 	/**
 	 * Create the frame.
 	 */
-	public ZerrendaPertsonalizatuaB() {
+	public ZerrendaPertsonalizatuaB(int ID) {
 		pelikulenBotoiak = new ArrayList<>();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -100,11 +100,9 @@ public class ZerrendaPertsonalizatuaB extends JFrame {
 		xehetasunak.addActionListener(getCont());
 		xehetasunak.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		panel_1.add(xehetasunak);
-		filmakSartu(ID);
-	}
-
-	public void setID (int id) {
+		
 		this.ID = ID;
+		filmakSartu(ID);
 	}
 	
 	private void filmakSartu(int id) {

@@ -7,6 +7,7 @@ import java.util.List;
 import org.json.JSONObject;
 
 import Bista.FilmKatalogoZabaldua;
+import Eredua.Erabiltzaile;
 import Eredua.Film;
 import Eredua.FilmZerrenda;
 
@@ -31,10 +32,21 @@ public class GestoreZerrenda {
 		return kont;
 	}
 	
-	public void sortuZerrendaBerria(String izena, Boolean pribazitatea ) {
-		FilmZerrenda berria = new FilmZerrenda(kont,izena, pribazitatea);
-		zerrenda.add(berria);
-		kont++;
+	public boolean sortuZerrendaBerria(String izena, Boolean pribazitatea, String NAN) {
+		boolean aurkituta = false;
+		Erabiltzaile e = GestoreErabiltzaile.getGE().erabiltzaileaBilatuNAN(NAN);
+		for (FilmZerrenda f : e.getZerrendak()) {
+			if (f.getIzena().equals(izena)) {
+				aurkituta = true;
+			}
+		}
+		if (aurkituta == false) {
+			FilmZerrenda berria = new FilmZerrenda(kont,izena, pribazitatea);
+			zerrenda.add(berria);
+			kont++;
+			e.ZerrendanSartu(berria);
+		}
+		return aurkituta;
 	}
 	
 	public FilmZerrenda bilatuZerrenda(int ZerrendaID) {
@@ -46,10 +58,10 @@ public class GestoreZerrenda {
 		return null;
 	}
 	
-	public void sartuFilmaZerrendaBaten(int ID, String datuak) {
+	public void sartuFilmaZerrendaBaten(int ID, String izena) {
 		GestoreFilm GF = GestoreFilm.getKN();
 		GestoreKatalogoZabaldua KZK = GestoreKatalogoZabaldua.getnZK();
-		JSONObject xehetasunak = KZK.xehetasunakBilatu(datuak);
+		JSONObject xehetasunak = KZK.xehetasunakBilatu(izena);
 		Film filma = GF.bilatuFilma(xehetasunak);
 		FilmZerrenda zerrenda = bilatuZerrenda(ID);
 		zerrenda.sartuFilma(filma);

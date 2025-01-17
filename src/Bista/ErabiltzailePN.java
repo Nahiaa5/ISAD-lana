@@ -90,6 +90,7 @@ public class ErabiltzailePN extends JFrame{
 	public void SetNAN(String NAN) {
 		this.NAN = NAN;
 	}
+	
 	private Controller getController() {
 		if (controller == null) {
 			controller = new Controller();
