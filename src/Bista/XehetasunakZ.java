@@ -30,7 +30,6 @@ public class XehetasunakZ extends JFrame {
     private JButton ezabatu;
     private int flag;
     private FilmakSartuZerrenda FSZ = FilmakSartuZerrenda.getFSZ();
-    private ZerrendaPertsonalizatuaB ZPB = ZerrendaPertsonalizatuaB.getnZP();
     private JSONObject datuak;
 
 	/**
@@ -121,8 +120,8 @@ public class XehetasunakZ extends JFrame {
 					String titulua = datuak.getString("Title");
 			        String urtea = datuak.getString("Year");
 			        String izena = titulua + " (" + urtea + ")";
-					ZPB.kenduFilm(izena);
-					ZPB.setVisible(true);
+					//ZPB.kenduFilm(izena);
+					//ZPB.setVisible(true);
 					//GestoreZerrenda.getZZ().kenduFilmaZerrendaBaten(ID,izena);
 				}
 			}

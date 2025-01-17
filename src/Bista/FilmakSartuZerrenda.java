@@ -12,7 +12,9 @@ import javax.swing.border.EmptyBorder;
 
 import org.json.JSONObject;
 
+import Eredua.Film;
 import Kontroladorea.GestoreZerrenda;
+import Kontroladorea.GestoreFilm;
 import Kontroladorea.GestoreKatalogoZabaldua;
 
 import java.awt.BorderLayout;
@@ -152,8 +154,10 @@ public class FilmakSartuZerrenda extends JFrame {
 	                FKZ.setVisible(true);
 	                dispose();
 				} else if (e.getSource().equals(sortu)){
-					ZerrendaPertsonalizatuaB ZPB = ZerrendaPertsonalizatuaB.getnZP();
-					ZPB.setID(ID);
+					for (JButton b : pelikulenBotoiak) {
+						GestoreZerrenda.getnZZ().sartuFilmaZerrendaBaten(ID, b.getText());
+					}
+					ZerrendaPertsonalizatuaB ZPB = new ZerrendaPertsonalizatuaB(ID);
 					ZPB.setVisible(true);
 					dispose();
 					

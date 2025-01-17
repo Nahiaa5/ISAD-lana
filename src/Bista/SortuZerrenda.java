@@ -34,6 +34,7 @@ public class SortuZerrenda extends JFrame {
 	private JLabel lblNewLabel_2;
 	private String izena;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private String NAN;
 
 	/**
 	 * Launch the application.
@@ -102,6 +103,10 @@ public class SortuZerrenda extends JFrame {
 		return this.izena;
 	}
 	
+	public void SetNAN(String NAN) {
+		this.NAN = NAN;
+	}
+	
 	public Controller getCont() {
 		if (controller == null) {
 			controller = new Controller();
@@ -125,13 +130,18 @@ public class SortuZerrenda extends JFrame {
 						pribazitatea = false;
 					}
 					GestoreZerrenda GZ = GestoreZerrenda.getnZZ();
-					GZ.sortuZerrendaBerria(izena, pribazitatea);
-					int ID = GZ.getKont()-1;
-					FilmKatalogoZabaldua FKZ = FilmKatalogoZabaldua.getPN();
-					FKZ.setFlag (1);
-					FKZ.setID(ID);
-	                FKZ.setVisible(true);
-	                dispose();
+					boolean b = GZ.sortuZerrendaBerria(izena, pribazitatea, NAN);
+					if (b) {
+						lblNewLabel_2.setText("Jadanik badago izen hori duen zerrenda bat.");
+					} else {
+						int ID = GZ.getKont()-1;
+						FilmKatalogoZabaldua FKZ = FilmKatalogoZabaldua.getPN();
+						FKZ.setFlag (1);
+						FKZ.setID(ID);
+		                FKZ.setVisible(true);
+		                dispose();
+					}
+					
 				}
 				
 			}

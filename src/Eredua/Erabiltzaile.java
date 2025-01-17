@@ -78,6 +78,10 @@ public class Erabiltzaile {
 		return this.filmZerrendak;
 	}
 
+	public void ZerrendanSartu(FilmZerrenda z) {
+		filmZerrendak.add(z);
+	}
+	
 	public boolean izenaTestuarekinKointziditu(String text) {
 		 if (izena == null || text == null) {
 		        return false; 
