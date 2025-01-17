@@ -30,7 +30,7 @@ import Eredua.Film;
 import Kontroladorea.GestoreFilm;
 import org.json.JSONObject;
 
-public class KatalogoNagusiaB extends JFrame //implements Observer 
+public class KatalogoNagusiaB extends JFrame 
 {
 	private static KatalogoNagusiaB nKNB=null;
 	private static final long serialVersionUID = 1L;
@@ -145,8 +145,6 @@ public class KatalogoNagusiaB extends JFrame //implements Observer
         }
         return controller;
     }
-
-//-------------------------------GESTORE NAGUSIA-------------------------------
 	
     private class Controller extends KeyAdapter implements ActionListener {
     	

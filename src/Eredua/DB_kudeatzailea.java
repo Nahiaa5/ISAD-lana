@@ -12,7 +12,7 @@ import Kontroladorea.*;
 public class DB_kudeatzailea {
 	
 	private static DB_kudeatzailea nDB=null;
-	
+	private static boolean inTestMode=false; //Flag para las pruebas
 	private DB_kudeatzailea() {}
 	
 	public static DB_kudeatzailea getDB() {
@@ -21,6 +21,10 @@ public class DB_kudeatzailea {
 			
 		}
 		return nDB;
+	}
+	
+	public static void setTestMode(boolean enabled) {
+		inTestMode=enabled;
 	}
 	
 	public List<Erabiltzaile> kargatuErabiltzaileak(){
@@ -218,6 +222,9 @@ public class DB_kudeatzailea {
 	
 
 	public void gordePuntuazioa(Puntuazioa puntuazioa) {
+		if(inTestMode) {
+			throw new UnsupportedOperationException("Proba modua: DB ez da erabiliko");
+		}
         String query = "INSERT INTO Puntuazioa (NAN, filmID, puntuazioa, iruzkina, data) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = DB_konexioa.getConexion();

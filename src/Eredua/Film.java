@@ -121,6 +121,10 @@ public class Film extends Observable{
     	this.balorazioak=pBalorazioak;
     }
     
+    public String getPath() {
+    	return this.path;
+    }
+    
     public boolean filmaDa(int pFilmID) {
     	if(this.filmID==pFilmID) {
     		return true;

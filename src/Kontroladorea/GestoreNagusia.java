@@ -180,6 +180,7 @@ public class GestoreNagusia extends Observable {
 	public String getSaioaNAN() {
 		return GestoreErabiltzaile.getGE().getSaioaNan();
 	}
+	
 	public void erabiltzaileDatuakAldatu(String pNan, String pIzena, String pAbizena, String pEmail, String pPasahitza) {
 		Erabiltzaile e = GestoreErabiltzaile.getGE().getErabiltzaileByNAN(pNan);
 		if(pIzena.isEmpty() || pAbizena.isEmpty() || pEmail.isEmpty() || pPasahitza.isEmpty()) {
@@ -194,5 +195,16 @@ public class GestoreNagusia extends Observable {
 			setChanged();
 			notifyObservers("Sartuta");
 		}
+	}
+	
+	public boolean alokairuaDauka(String filmIzena) {
+		Film film = GestoreFilm.getKN().bilatuIzenarekin(filmIzena);
+		String erabNAN = GestoreErabiltzaile.getGE().getSaioaNan();
+		return GestoreErabiltzaile.getGE().alokatutaDaukaJada(erabNAN, film);
+	}
+	
+	public String filmaPantailaratu(String filmIzena) {
+		Film film = GestoreFilm.getKN().bilatuIzenarekin(filmIzena);
+		return GestoreFilm.getKN().getFilmarenPath(film);
 	}
 }
