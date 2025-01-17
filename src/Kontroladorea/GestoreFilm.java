@@ -174,8 +174,8 @@ public class GestoreFilm extends Observable {
 	
 	public void filmaOnartu(String izena) {
 		Film filma = bilatuIzenarekin(izena);
-		filma.onartu();
 		String adminNAN = GestoreErabiltzaile.getGE().getSaioaNan();
+		filma.onartu(adminNAN);
 		DB_kudeatzailea.getDB().filmaOnartu(filma.getFilmID(), adminNAN);
 	}
 	

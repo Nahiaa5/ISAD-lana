@@ -12,6 +12,7 @@ import javax.swing.border.EmptyBorder;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import Kontroladorea.GestoreKatalogoZabaldua;
+import Kontroladorea.GestoreNagusia;
 import Kontroladorea.GestoreZerrenda;
 
 import java.awt.BorderLayout;
@@ -156,7 +157,7 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource().equals(bJButton) || e.getSource().equals(bTextField)) {
-				GestoreKatalogoZabaldua.getnZK().FilmakBilatu(getBilatuTextField().getText());
+				GestoreNagusia.getGN().KZFilmakBilatu(getBilatuTextField().getText());
 			}
 			
 			else if (e.getSource().equals(eJButton)){
@@ -166,10 +167,12 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
 			else {
 				JButton botoia = (JButton) e.getSource();
 				String datuak = botoia.getText();
+				GestoreNagusia.getGN().KZXehetasunakBilatu(datuak);
 				switch (flag) {
 				
 					case 0:
-						GestoreKatalogoZabaldua.getnZK().xehetasunakErakutsi(datuak);
+						//No quito esto por si acaso, pero como que lo llama otra vez
+						//GestoreKatalogoZabaldua.getnZK().xehetasunakErakutsi(datuak);
 						break;
 					case 1:
 						String izena = GZ.bilatuZerrenda(ID).getIzena();

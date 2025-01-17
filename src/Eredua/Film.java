@@ -172,8 +172,8 @@ public class Film extends Observable{
                 '}';
     }
     
-    public void onartu() {
+    public void onartu(String pAdminNAN) {
     	katalogoan = true;
-    	adminNAN=GestoreErabiltzaile.getGE().getSaioaNan();
+    	adminNAN=pAdminNAN;
     }
 }
