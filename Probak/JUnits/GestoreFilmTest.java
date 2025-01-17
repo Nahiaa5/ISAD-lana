@@ -2,12 +2,14 @@ package JUnits;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import Eredua.Film;
+import Eredua.Puntuazioa;
 import Kontroladorea.GestoreFilm;
 
 class GestoreFilmTest {
@@ -40,12 +42,26 @@ class GestoreFilmTest {
 
 	@Test
 	void testBilatuIzenaDatarekin() {
-		fail("Not yet implemented");
+		Film aurkitua=gestoreFilm.bilatuIzenaDatarekin("Interstellar", "2014");
+		assertNotNull(aurkitua);
+		assertEquals(film2, aurkitua);
+		
+		Film ezAurkitua=gestoreFilm.bilatuIzenaDatarekin("Avatar", "2016");
+		assertNull(ezAurkitua);
 	}
 
 	@Test
 	void testGordePuntuazioaFilman() {
-		fail("Not yet implemented");
+		Puntuazioa p=new Puntuazioa("12345678Z", 1, 5, "Zoragarria", LocalDate.now());
+		gestoreFilm.gordePuntuazioaFilman(p, 1);
+		assertEquals(1, film1.getBalorazioak().size());
+		assertEquals(p, film1.getBalorazioak().get(0));
+		
+		try {
+            gestoreFilm.gordePuntuazioaFilman(p, 8); 
+            fail("Salbuespena filmID okerragatik.");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Ez da aurkitu filma ID horrekin", e.getMessage());
+        }
 	}
-
 }
