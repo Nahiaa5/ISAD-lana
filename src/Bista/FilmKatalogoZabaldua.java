@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -26,12 +27,11 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 @SuppressWarnings("deprecation")
-public class FilmKatalogoZabaldua extends JFrame implements Observer {
+public class FilmKatalogoZabaldua extends JFrame{
 
 	private static final long serialVersionUID = 1L;
 	private static FilmKatalogoZabaldua nFKZ;
 	GestoreZerrenda GZ = GestoreZerrenda.getnZZ();
-	FilmakSartuZerrenda FSZ = FilmakSartuZerrenda.getFSZ();
 	private JPanel contentPane;
 	private JPanel panel1;
 	private Controller controller;
@@ -70,7 +70,6 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
 	}
 	private FilmKatalogoZabaldua() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		GestoreKatalogoZabaldua.getnZK().addObserver(this);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -131,21 +130,29 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
         revalidate();
         repaint();
     }
-	@Override
-	public void update(Observable o, Object arg) {
-		if (arg.getClass().equals(JSONArray.class)) {
-			JSONArray filmak = (JSONArray) arg;
-			panel1.removeAll();
-			panel1.revalidate();
-			panel1.repaint();
-			for (int i = 0; i < filmak.length(); i++) {
-				JSONObject movie = filmak.getJSONObject(i);
-	            String title = movie.getString("Title");
-	            String year = movie.getString("Year");
-	            addNewButton(title + " (" + year + ")");
-			}
-		}
-	}
+        
+    public void filmakErakutsi(String izena) {
+    	JSONArray filmak = GestoreNagusia.getGN().KZFilmakBilatu(izena);
+    	if (filmak != null) {
+    		panel1.removeAll();
+    		panel1.revalidate();
+    		panel1.repaint();
+    		for (int i = 0; i < filmak.length(); i++) {
+    			JSONObject movie = filmak.getJSONObject(i);
+                String title = movie.getString("Title");
+                String year = movie.getString("Year");
+                addNewButton(title + " (" + year + ")");
+    		}
+    	}
+    	else {
+    		panel1.removeAll();
+    		panel1.revalidate();
+    		panel1.repaint();
+    		JLabel emaitzikEz = new JLabel("Ez da aurkitu filma.");
+    		panel1.add(emaitzikEz);
+    	}
+    }
+    
 	public Controller getCont() {
 		if (controller == null) {
 			controller = new Controller();
@@ -157,7 +164,7 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource().equals(bJButton) || e.getSource().equals(bTextField)) {
-				GestoreNagusia.getGN().KZFilmakBilatu(getBilatuTextField().getText());
+				filmakErakutsi(getBilatuTextField().getText());
 			}
 			
 			else if (e.getSource().equals(eJButton)){
@@ -167,37 +174,8 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
 			else {
 				JButton botoia = (JButton) e.getSource();
 				String datuak = botoia.getText();
-				switch (flag) {
-				
-					case 0:
-						GestoreNagusia.getGN().KZXehetasunakErakutsi(datuak);
-						break;
-					case 1:
-						String izena = GZ.bilatuZerrenda(ID).getIzena();
-						FSZ.setIzena(izena);
-						Boolean b = GZ.sartuFilmaZerrendaBaten(ID, datuak);
-						if (b) {
-							FSZ.sartuFilma(datuak);
-						}
-						FSZ.setVisible(true);
-						flag = 0;
-						setVisible(false);
-						break;
-					case 2:
-						Boolean b1 = GZ.sartuFilmaZerrendaBaten(ID, datuak);
-						if (b1) {
-							FSZ.sartuFilma(datuak);
-						}
-						FSZ.setVisible(true);
-						flag = 0;
-						setVisible(false);
-						break;
-						
-				}
-				FSZ.setID(ID);
+				new KZ_XehetasunakIkusi(datuak);
 			}
 		}
 	}
-	
-	
 }

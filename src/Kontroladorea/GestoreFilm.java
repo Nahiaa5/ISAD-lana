@@ -27,6 +27,16 @@ public class GestoreFilm extends Observable {
 		return nKN;
 	}
 	
+	public ArrayList<Film> bilatuFilmakKat(String izena) {
+	    ArrayList<Film> ema = new ArrayList<>();
+	    for (Film f : filmak) {
+	        if (f.getIzenburua().toLowerCase().contains(izena.toLowerCase())) {
+	            ema.add(f);
+	        }
+	    }
+	    return ema;
+	}
+	
 	public List<Film> getFilmak(){
 		return this.filmak;
 	}

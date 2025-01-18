@@ -27,6 +27,14 @@ public class GestoreZerrenda {
 		return nZZ;
 	}
 	
+	public void loadZerrenda() {
+		this.zerrenda = DB_kudeatzailea.getDB().kargatuFilmZerrendak();
+	}
+	
+	public void kargatuZerrenda(FilmZerrenda f) {
+		zerrenda.add(f);
+	}
+	
 	public int sortuZerrendaBerria(String izena, Boolean pribazitatea, String NAN) {
 		boolean aurkituta = false;
 		int ID = -1;
@@ -37,12 +45,23 @@ public class GestoreZerrenda {
 			}
 		}
 		if (aurkituta == false) {
-			ID = DB_kudeatzailea.getDB().sortuZerrendaBerria(izena, pribazitatea);
-			FilmZerrenda berria = new FilmZerrenda(ID,izena, pribazitatea);
+			ID = DB_kudeatzailea.getDB().sortuZerrendaBerria(izena, pribazitatea, NAN);
+			FilmZerrenda berria = new FilmZerrenda(ID, izena, pribazitatea, NAN);
 			zerrenda.add(berria);
 			e.ZerrendanSartu(berria);
 		}
 		return ID;
+	}
+	
+	public void ezabatuZerrenda (int ID , String NAN) {
+		Erabiltzaile e = GestoreErabiltzaile.getGE().erabiltzaileaBilatuNAN(NAN);
+		Iterator<FilmZerrenda> iter = e.getZerrendak().iterator();
+	    while (iter.hasNext()) {
+	    	FilmZerrenda b = iter.next();
+	    	if (b.getID() == ID) {
+	    		iter.remove();
+	        }
+	    }
 	}
 	
 	public FilmZerrenda bilatuZerrenda(int ZerrendaID) {
@@ -57,24 +76,32 @@ public class GestoreZerrenda {
 	public boolean sartuFilmaZerrendaBaten(int ID, String izena) {
 		boolean sartuta = false;
 		GestoreFilm GF = GestoreFilm.getKN();
-		GestoreKatalogoZabaldua KZK = GestoreKatalogoZabaldua.getnZK();
-		JSONObject xehetasunak = KZK.xehetasunakBilatu(izena);
-		Film filma = GF.bilatuFilma(xehetasunak);
+		int start = izena.lastIndexOf("(") + 1;
+        int end = izena.lastIndexOf(")");
+        String urtea = izena.substring(start, end).trim();
+        String titulua = izena.substring(0, izena.lastIndexOf("(")).trim();
+		Film filma = GF.bilatuIzenaDatarekin(titulua, urtea);
 		if (filma == null) {
 			System.out.println("Filma ez dago");
 		} else {
 			FilmZerrenda zerrenda = bilatuZerrenda(ID);
-			zerrenda.sartuFilma(filma);
-			DB_kudeatzailea.getDB().ErlazioaFilmZerrendak(ID, filma.getFilmID());
-			sartuta = true;
+			boolean b = zerrenda.sartuFilma(filma);
+			if (!b) {
+				DB_kudeatzailea.getDB().ErlazioaFilmZerrendak(ID, filma.getFilmID());
+				sartuta = true;
+			}
 		}
 		return sartuta;
 	}
 	
 	public void kenduFilmaZerrendaBaten(int ID, String izena) {
-		JSONObject xehetasunak = GestoreKatalogoZabaldua.getnZK().xehetasunakBilatu(izena);
+		GestoreFilm GF = GestoreFilm.getKN();
 		FilmZerrenda zerrenda = bilatuZerrenda(ID);
-		Film filma = GestoreFilm.getKN().bilatuFilma(xehetasunak);
+		int start = izena.lastIndexOf("(") + 1;
+        int end = izena.lastIndexOf(")");
+        String urtea = izena.substring(start, end).trim();
+        String titulua = izena.substring(0, izena.lastIndexOf("(")).trim();
+		Film filma = GF.bilatuIzenaDatarekin(titulua, urtea);
 		DB_kudeatzailea.getDB().kenduFilmaZerrendatik(ID, filma.getFilmID());
 		zerrenda.kenduFilma(filma);
 			
@@ -97,5 +124,11 @@ public class GestoreZerrenda {
 	    return ema;
 	}
 
+	public void print() {
+		for (FilmZerrenda f : zerrenda) {
+			System.out.println(f.getID());
+			System.out.println(f.getIzena());
+		}
+	}
 	
 }

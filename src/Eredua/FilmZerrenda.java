@@ -14,14 +14,15 @@ public class FilmZerrenda {
 	private int ZerrendaID;
 	private String izena;
 	private boolean pribazitatea;
-	//private Erabiltzaile jabea;
+	private String erabiltzaileNAN;
 	private List<Film> FilmZerrenda;
 	private Iterator iter;
 	
-	public FilmZerrenda(int ID, String izena, boolean pribazitatea ) {
+	public FilmZerrenda(int ID, String izena, boolean pribazitatea, String NAN) {
 		this.ZerrendaID = ID;
 		this.izena = izena;
 		this.pribazitatea = pribazitatea;
+		this.erabiltzaileNAN = NAN;
 		this.FilmZerrenda = new ArrayList<Film>();
 	}
 	
@@ -45,8 +46,18 @@ public class FilmZerrenda {
 		this.pribazitatea = pribazitatea;
 	}
 	
-	public void sartuFilma(Film filma) {
-		FilmZerrenda.add(filma);
+	public boolean sartuFilma(Film filma) {
+		boolean badago = false;
+		for (Film f : FilmZerrenda) {
+			if (f.equals(filma)) {
+				badago = true;
+			}
+		}
+		if (badago == false) {
+			FilmZerrenda.add(filma);
+		}
+		
+		return badago;
 	}
 	
 	public Film bilatuFilma(int index) {

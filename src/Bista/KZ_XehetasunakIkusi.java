@@ -21,7 +21,7 @@ import Kontroladorea.GestoreKatalogoZabaldua;
 import Kontroladorea.GestoreNagusia;
 
 @SuppressWarnings("deprecation")
-public class KZ_XehetasunakIkusi extends JDialog implements Observer {
+public class KZ_XehetasunakIkusi extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
@@ -30,23 +30,13 @@ public class KZ_XehetasunakIkusi extends JDialog implements Observer {
 	private Controller controller;
 	private JTextArea testua;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			KZ_XehetasunakIkusi dialog = new KZ_XehetasunakIkusi();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public KZ_XehetasunakIkusi(String datuak) {
+		GestoreNagusia.getGN().KZXehetasunakBilatu(datuak);
+		initialize();
+		datuakErakutsi(datuak);
+		setVisible(true);
 	}
-
-	/**
-	 * Create the dialog.
-	 */
-	public KZ_XehetasunakIkusi() {
+	public void initialize() {
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		FlowLayout fl_contentPanel = new FlowLayout();
@@ -62,8 +52,8 @@ public class KZ_XehetasunakIkusi extends JDialog implements Observer {
 		buttonPane.add(getEButton());
 		getRootPane().setDefaultButton(getEButton()); //Esto la verdad no se que hace, lo ha creado el windowBuilder
 		buttonPane.add(getIButton());
-		
 	}
+	
 	public JButton getEButton() {
 		if (eskatu == null) {
 			eskatu = new JButton("Eskatu");
@@ -85,26 +75,29 @@ public class KZ_XehetasunakIkusi extends JDialog implements Observer {
 		return testua;
 	}
 
-	@Override
-	public void update(Observable o, Object arg) {
-		if(arg.getClass().equals(JSONObject.class)) {
-			JSONObject datuak = (JSONObject) arg;
-			getTestua().setText("Izenburua: " + datuak.getString("Title") +
-								"\nUrtea: " + datuak.getString("Year") + 
-								"\nGeneroa: " + datuak.getString("Genre") +
-								"\nAktoreak: " + datuak.getString("Actors") +
-								"\nZuzendaria: " + datuak.getString("Director"));
-			testua.setEditable(false); // Desactiva la edición
-			testua.setFocusable(false); // Evita que el usuario lo seleccione con el cursor
-			testua.setOpaque(false);
+	public void datuakErakutsi(String izenUrte) {
+		JSONObject datuak = GestoreNagusia.getGN().KZXehetasunakBilatu(izenUrte);
+		getTestua().setText("Izenburua: " + datuak.getString("Title") +
+							"\nUrtea: " + datuak.getString("Year") + 
+							"\nGeneroa: " + datuak.getString("Genre") +
+							"\nAktoreak: " + datuak.getString("Actors") +
+							"\nZuzendaria: " + datuak.getString("Director"));
+		testua.setEditable(false); // Desactiva la edición
+		testua.setFocusable(false); // Evita que el usuario lo seleccione con el cursor
+		testua.setOpaque(false);
+	}
+	
+	public void bidaliEskaera() {
+		Boolean bidaliDa = GestoreNagusia.getGN().KZBidaliEskaera();
+		if (bidaliDa) {
+			JOptionPane.showMessageDialog(this, "Filma katalogoan gehitu da");
 		}
-		else if(arg.getClass().equals(Boolean.class)) {
+		else {
 			JOptionPane.showMessageDialog(this, "Filma badago katalogoan edo eskatuta");
 		}
 	}
 	
 	public void ezabatu() {
-		GestoreKatalogoZabaldua.getnZK().deleteObserver(this);
 		dispose();
 	}
 	
@@ -126,7 +119,7 @@ public class KZ_XehetasunakIkusi extends JDialog implements Observer {
 				ezabatu();
 			}
 			else if (e.getSource().equals(eskatu)) {
-				GestoreNagusia.getGN().KZBidaliEskaera();
+				bidaliEskaera();
 				ezabatu();
 			}
 		}

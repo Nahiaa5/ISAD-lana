@@ -34,6 +34,7 @@ public class GestoreNagusia extends Observable {
 			GestoreFilm.getKN().loadPuntuazioak();
 			GestoreErabiltzaile.getGE().loadErabiltzaileak();
 			GestoreAlokairu.getGA().loadAlokairuak();
+			GestoreZerrenda.getnZZ().loadZerrenda();
 			kargatuDira = true;
 		}
 	}
@@ -90,20 +91,23 @@ public class GestoreNagusia extends Observable {
 		DB_kudeatzailea.getDB().erabiltzaileaEzabatu(nan);
 	}
 	
-	public void KZFilmakBilatu(String izena) {
-		GestoreKatalogoZabaldua.getnZK().FilmakBilatu(izena);
+	public JSONArray KZFilmakBilatu(String izena) {
+		JSONArray filmak = GestoreKatalogoZabaldua.getnZK().FilmakBilatu(izena);
+		return filmak;
 	}
 	
-	public void KZXehetasunakBilatu(String izena) {
-		GestoreKatalogoZabaldua.getnZK().xehetasunakBilatu(izena);
+	public JSONObject KZXehetasunakBilatu(String izena) {
+		JSONObject datuak = GestoreKatalogoZabaldua.getnZK().xehetasunakErakutsi(izena);
+		return datuak;
 	}
 	
 	public void KZXehetasunakErakutsi(String izena) {
 		GestoreKatalogoZabaldua.getnZK().xehetasunakErakutsi(izena);
 	}
 	
-	public void KZBidaliEskaera() {
-		GestoreKatalogoZabaldua.getnZK().bidaliEskaera();
+	public Boolean KZBidaliEskaera() {
+		Boolean bidalita = GestoreKatalogoZabaldua.getnZK().bidaliEskaera();
+		return bidalita;
 	}
 	
 	public JSONArray getFilmEskaerak() {

@@ -2,6 +2,7 @@ package Eredua;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Erabiltzaile {
 	private String nan;
@@ -42,16 +43,16 @@ public class Erabiltzaile {
 		return this.izena;
 	}
 	
+	public int getOnartuta() {
+		return this.onartuta;
+	}
+	
 	public String getAbizena() {
 		return this.abizena;
 	}
 	
 	public String getEmail() {
 		return this.email;
-	}
-	
-	public int getOnartuta() {
-		return this.onartuta;
 	}
 	
 	public void setIzena(String pIzena) {

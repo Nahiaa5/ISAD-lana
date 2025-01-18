@@ -1,6 +1,7 @@
 package Main;
 
 import Bista.PantailaNagusia;
+import Kontroladorea.GestoreZerrenda;
 
 public class main {
 

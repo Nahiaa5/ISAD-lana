@@ -144,10 +144,11 @@ public class ZerrendaPertsonalizatuaB extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource().equals(gehitu) || e.getSource().equals(kendu) || e.getSource().equals(xehetasunak) || e.getSource().equals(btnExit)) {
 				if (e.getSource().equals(gehitu)) {
-					FilmKatalogoZabaldua FKZ = FilmKatalogoZabaldua.getPN();
-					FKZ.setFlag(2);
-	                FKZ.setVisible(true);
-	                setVisible(false);
+					FilmKat FK = new FilmKat();
+					FK.setFlag (1);
+					FK.setID(ID);
+	                FK.setVisible(true);
+	                dispose();
 				}
 				if (e.getSource().equals(xehetasunak)) {
 					ZerrendaXehetasunak ZX = new ZerrendaXehetasunak(ID);

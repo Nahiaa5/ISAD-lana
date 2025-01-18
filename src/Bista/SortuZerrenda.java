@@ -134,10 +134,10 @@ public class SortuZerrenda extends JFrame {
 					if (ID == -1) {
 						lblNewLabel_2.setText("Jadanik badago izen hori duen zerrenda bat.");
 					} else {
-						FilmKatalogoZabaldua FKZ = FilmKatalogoZabaldua.getPN();
-						FKZ.setFlag (1);
-						FKZ.setID(ID);
-		                FKZ.setVisible(true);
+						FilmKat FK = new FilmKat();
+						FK.setFlag (1);
+						FK.setID(ID);
+		                FK.setVisible(true);
 		                dispose();
 					}
 					

@@ -13,6 +13,7 @@ import javax.swing.border.EmptyBorder;
 import org.json.JSONObject;
 
 import Eredua.Film;
+import Eredua.FilmZerrenda;
 import Kontroladorea.GestoreZerrenda;
 import Kontroladorea.GestoreFilm;
 import Kontroladorea.GestoreKatalogoZabaldua;
@@ -42,28 +43,6 @@ public class FilmakSartuZerrenda extends JFrame {
 	private int ID;
 	private List<JButton> pelikulenBotoiak;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FilmakSartuZerrenda frame = new FilmakSartuZerrenda();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
-	public static FilmakSartuZerrenda getFSZ(){
-		if(nFSZ==null) {
-			nFSZ=new FilmakSartuZerrenda();
-		}
-		return nFSZ;
-	}
 	
 	public void setID (int ID) {
 		this.ID = ID;
@@ -94,7 +73,7 @@ public class FilmakSartuZerrenda extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FilmakSartuZerrenda() {
+	public FilmakSartuZerrenda(int id) {
 		pelikulenBotoiak = new ArrayList<>();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -125,6 +104,23 @@ public class FilmakSartuZerrenda extends JFrame {
 		sortu.addActionListener(getCont());
 		sortu.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		panel_1.add(sortu);
+		
+		this.ID = id;
+		filmakSartu(id);
+	}
+	
+	private void filmakSartu(int id) {
+		FilmZerrenda z = GestoreZerrenda.getnZZ().bilatuZerrenda(id);
+		ArrayList<String> izenak = z.filmenIzenak();
+		for (String izena : izenak) {
+			JButton button = new JButton(izena);
+	        panel.add(button);
+	        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+	        button.setMaximumSize(new Dimension(Integer.MAX_VALUE, button.getPreferredSize().height));
+	        button.addActionListener(getCont());
+	        revalidate();
+	        repaint();
+		}
 	}
 	
 	public Controller getCont() {
@@ -140,9 +136,10 @@ public class FilmakSartuZerrenda extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource().equals(gehitu) || e.getSource().equals(sortu)) {
 				if (e.getSource().equals(gehitu)) {
-					FilmKatalogoZabaldua FKZ = FilmKatalogoZabaldua.getPN();
-					FKZ.setFlag(2);
-	                FKZ.setVisible(true);
+					FilmKat FK = new FilmKat();
+					FK.setID(ID);
+					FK.setFlag (1);
+	                FK.setVisible(true);
 	                dispose();
 				} else if (e.getSource().equals(sortu)){
 					ZerrendaPertsonalizatuaB ZPB = new ZerrendaPertsonalizatuaB(ID);
