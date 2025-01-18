@@ -46,8 +46,6 @@ public class GestoreZerrenda {
 		}
 		if (aurkituta == false) {
 			ID = DB_kudeatzailea.getDB().sortuZerrendaBerria(izena, pribazitatea, NAN);
-			System.out.println(ID);
-			System.out.println(NAN);
 			FilmZerrenda berria = new FilmZerrenda(ID, izena, pribazitatea, NAN);
 			zerrenda.add(berria);
 			e.ZerrendanSartu(berria);
@@ -68,8 +66,6 @@ public class GestoreZerrenda {
 	
 	public FilmZerrenda bilatuZerrenda(int ZerrendaID) {
 		for (FilmZerrenda bilatzailea : zerrenda){
-			System.out.println(ZerrendaID);
-			System.out.println(bilatzailea.getID());
 			if (bilatzailea.getID() == ZerrendaID) {
 				return bilatzailea;
 			}
