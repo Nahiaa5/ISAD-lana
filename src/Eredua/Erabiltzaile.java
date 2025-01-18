@@ -42,6 +42,14 @@ public class Erabiltzaile {
 		return this.izena;
 	}
 	
+	public String getAbizena() {
+		return this.abizena;
+	}
+	
+	public String getEmail() {
+		return this.email;
+	}
+	
 	public int getOnartuta() {
 		return this.onartuta;
 	}
