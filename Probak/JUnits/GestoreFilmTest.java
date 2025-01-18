@@ -3,14 +3,19 @@ package JUnits;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import Eredua.Film;
 import Eredua.Puntuazioa;
 import Kontroladorea.GestoreFilm;
+import Kontroladorea.GestoreNagusia;
 
 class GestoreFilmTest {
 	private GestoreFilm gestoreFilm;
@@ -28,6 +33,24 @@ class GestoreFilmTest {
         gestoreFilm.getFilmak().add(film1);
         gestoreFilm.getFilmak().add(film2);
         gestoreFilm.getFilmak().add(film3);
+    }
+    
+    public boolean berdinakDira(JSONArray array1, JSONArray array2) {
+        if (array1.length() != array2.length()) {
+            return false;
+        }
+        Set<String> set1 = jsonArrayToSet(array1);
+        Set<String> set2 = jsonArrayToSet(array2);
+        return set1.equals(set2);
+    }
+
+    private Set<String> jsonArrayToSet(JSONArray jsonArray) {
+        Set<String> set = new HashSet<>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            set.add(jsonObject.toString());
+        }
+        return set;
     }
 
 	@Test
@@ -63,5 +86,65 @@ class GestoreFilmTest {
         } catch (IllegalArgumentException e) {
             assertEquals("Ez da aurkitu filma ID horrekin", e.getMessage());
         }
+	}
+	
+	@Test
+	void testGetInfoKatalogokoFilmGuztiak() {
+		//JSONArray honek katalogoan ditugun film guztien izenak eta puntuazioak gordetzen ditu
+		JSONArray emaitza = gestoreFilm.getInfoKatalogokoFilmGuztiak();
+		//JSONArray bat sortu, gaineko metodoak itzuli beharko lukeenaren egitura bera duena
+		JSONArray esperotakoa = new JSONArray();
+        JSONObject film1 = new JSONObject();
+        film1.put("izenburua", "La la land");
+        film1.put("puntuazioa", 4.00);
+        esperotakoa.put(film1);
+
+        JSONObject film2 = new JSONObject();
+        film2.put("izenburua", "Interstellar");
+        film2.put("puntuazioa", 2.50);
+        esperotakoa.put(film2);
+        
+        JSONObject film3 = new JSONObject();
+        film3.put("izenburua", "A Minecraft Movie");
+        film3.put("puntuazioa", 3.33);
+        esperotakoa.put(film3);
+        //emaitza eta esperotakoa konparatu, emaitzak egitura egokia duen egiaztatzeko
+        assertTrue(berdinakDira(esperotakoa, emaitza));
+	}
+	
+	@Test
+	void testBilatuFilmKatalogoan() {
+		//JSONArray honek katalogoan ditugun eta emandako String-a tituluan nonbait duten filmen izenak eta puntuazioak gordetzen ditu
+		//Interstellar ez da honetan agertuko, bere titulua ez datorrelako bat emandako String-arekin
+		JSONArray emaitza = gestoreFilm.bilatuFilmKatalogoan("a ");
+		//JSONArray bat sortu, gaineko metodoak itzuli beharko lukeenaren egitura bera duena
+		JSONArray esperotakoa = new JSONArray();
+        JSONObject film1 = new JSONObject();
+        film1.put("izenburua", "La la land");
+        film1.put("puntuazioa", 4.00);
+        esperotakoa.put(film1);
+        JSONObject film2 = new JSONObject();
+        film2.put("izenburua", "A Minecraft Movie");
+        film2.put("puntuazioa", 3.33);
+        esperotakoa.put(film2);
+        //emaitza eta esperotakoa konparatu, emaitzak egitura egokia duen egiaztatzeko
+        assertTrue(berdinakDira(esperotakoa, emaitza));
+	}
+	
+	@Test
+	void testBilatuIzenarekin() {
+		//Filma existitzen da
+		Film film = gestoreFilm.bilatuIzenarekin("La la land");
+		assertEquals(film, film1);
+		//Filma ez da existitzen, beraz null izan beharko da emaitza
+		film = gestoreFilm.bilatuIzenarekin("Titanic");
+		assertNull(film);
+	}
+	
+	@Test
+	void getFilmarenPath() {
+		//Metodoak filmaren path lortu eta itzuli behar du, asertzioan espero den emaitza jasotakoarekin konparatzen da
+		String path = gestoreFilm.getFilmarenPath(film1);
+		assertEquals(path, "resources/LaLaLand.mp4");
 	}
 }
