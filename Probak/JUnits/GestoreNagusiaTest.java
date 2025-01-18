@@ -6,9 +6,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import Eredua.Film;
-import Kontroladorea.GestoreFilm;
-import Kontroladorea.GestoreNagusia;
+import Eredua.*;
+import Kontroladorea.*;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,6 +17,8 @@ import java.util.HashSet;
 class GestoreNagusiaTest {
 	private GestoreFilm gestoreFilm;
     private Film film1, film2;
+    private GestoreErabiltzaile gestoreErabiltzaile;
+    private Erabiltzaile erab;
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -29,6 +30,14 @@ class GestoreNagusiaTest {
         
         gestoreFilm.getFilmak().add(film1);
         gestoreFilm.getFilmak().add(film2);
+        
+        gestoreErabiltzaile = GestoreErabiltzaile.getGE();
+        gestoreErabiltzaile.getErabiltzaileak().clear();
+        
+        erab = new Erabiltzaile("12345678Z", "Manolito", "Fernandez", "manolito@gmail.com", "1234", 0, 1);
+        
+        gestoreErabiltzaile.getErabiltzaileak().add(erab);
+        gestoreErabiltzaile.setSaioaNan("12345678Z");
 	}
 
 	@AfterEach
@@ -55,7 +64,7 @@ class GestoreNagusiaTest {
 
 	@Test
 	void testGetInfoKatalogokoFilmGuztiak() {
-		//JSONArray honek filmen izenak eta puntuazioak gordetzen ditu
+		//JSONArray honek katalogoan ditugun film guztien izenak eta puntuazioak gordetzen ditu
 		JSONArray emaitza = GestoreNagusia.getGN().getInfoKatalogokoFilmGuztiak();
 		//JSONArray bat sortu, gaineko metodoak itzuli beharko lukeenaren egitura bera duena
 		JSONArray esperotakoa = new JSONArray();
@@ -72,6 +81,55 @@ class GestoreNagusiaTest {
         assertTrue(berdinakDira(esperotakoa, emaitza));
 	}
 	
+	@Test
+	void testBilaketaEgin() {
+		//JSONArray honek katalogoan ditugun eta emandako String-a tituluan nonbait duten filmen izenak eta puntuazioak gordetzen ditu
+		//Interstellar honetan ez da agertuko, bere titulua ez datorrelako bat emandako String-arekin
+		JSONArray emaitza = GestoreNagusia.getGN().bilaketaEgin("La la land");
+		//JSONArray bat sortu, gaineko metodoak itzuli beharko lukeenaren egitura bera duena
+		JSONArray esperotakoa = new JSONArray();
+        JSONObject film1 = new JSONObject();
+        film1.put("izenburua", "La la land");
+        film1.put("puntuazioa", 4.00);
+        esperotakoa.put(film1);
+        //emaitza eta esperotakoa konparatu, emaitzak egitura egokia duen egiaztatzeko
+        assertTrue(berdinakDira(esperotakoa, emaitza));
+	}
 	
+	@Test
+	void testFilmaAlokatu() {
+		//PROBA HAU XAMPP-en MYSQL MODULOA PIZTUTA IZAN GABE EGITEN BADA, ERROREA AGERTUKO DA KONEXIO FALTAGATIK, HALA ERE METODOAK OBJEKTUEKIN ONDO LAN EGITEN DUELA IKUSI DAITEKE AZPIKO ASERTZIOEKIN
+		//XAMPP MODULOA PIZTEN BADA PROBA EGITEKO ETA '12345678Z' NAN-A DUEN ERABILTZAILEAK ALOKAIRU AKTIBOREN BAT BADAUKA DATU-BASEAREN ARABERA FILM HORRENTZAKO, BESTE ERRORE BAT AGERTUKO DA, FOREIGN KEY BALDINTZAREN ERAGINEZ
+		
+		//DATU-BASEAREKIN KONEXIOA ONDO DAGOELA ETA GUZTI PROBATU NAHI BADA, '12345678Z' NAN-A DUEN ERABILTZAILEAK FILM HONENTZAKO ETA HURRENGO METODOAN ERABILTZEN DENARENTZAKO ALOKAIRU AKTIBORIK EZ DUELA EGIAZTATU BEHAR DA
+		
+		//Erabiltzaileak ez dauka filma ez dauka aurretik alokatuta
+		boolean emaitza = GestoreNagusia.getGN().filmaAlokatu("La la land");
+		assertTrue(emaitza);
+		//Alokairua egitean erabiltzailearen zerrendan gordetzen da beraz, hutsik egoteari uzten dio
+		assertTrue(!erab.getEgindakoAlokairuak().isEmpty());
+		//Erabiltzaileak filma aurretik alokatuta dauka
+		boolean emaitza1 = GestoreNagusia.getGN().filmaAlokatu("La la land");
+		assertFalse(emaitza1);
+	}
+	
+	@Test
+	void testAlokairuaDauka() {
+		//Erabiltzaileak ez dauka alokairua film horretarako
+		boolean emaitza = GestoreNagusia.getGN().alokairuaDauka("Interstellar");
+		assertFalse(emaitza);
+		//Filma alokatu
+		GestoreNagusia.getGN().filmaAlokatu("Interstellar");
+		//Erabiltzaileak alokairua dauka film horretarako
+		emaitza = GestoreNagusia.getGN().alokairuaDauka("Interstellar");
+		assertTrue(emaitza);
+	}
+	
+	@Test
+	void filmaPantailaratu() {
+		//Metodoak filmaren path lortu eta itzuli behar du, asertzioan espero den emaitza jasotakoarekin konparatzen da
+		String path = GestoreNagusia.getGN().filmaPantailaratu("La la land");
+		assertEquals(path, "resources/LaLaLand.mp4");
+	}
 
 }
