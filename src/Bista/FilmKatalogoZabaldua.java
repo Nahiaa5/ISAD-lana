@@ -174,34 +174,8 @@ public class FilmKatalogoZabaldua extends JFrame{
 			else {
 				JButton botoia = (JButton) e.getSource();
 				String datuak = botoia.getText();
-				switch (flag) {
-				
-					case 0:
-						new KZ_XehetasunakIkusi(datuak);
-						break;
-					case 1:
-						FilmakSartuZerrenda FSZ = new FilmakSartuZerrenda(ID);
-						String izena = GZ.bilatuZerrenda(ID).getIzena();
-						FSZ.setIzena(izena);
-						Boolean b = GZ.sartuFilmaZerrendaBaten(ID, datuak);
-						if (b) {
-							FSZ.sartuFilma(datuak);
-						}
-						FSZ.setID(ID);
-						FSZ.setVisible(true);
-						setVisible(false);
-						break;
-					case 2:
-						GZ.sartuFilmaZerrendaBaten(ID, datuak);
-						ZerrendaPertsonalizatuaB ZPB = new ZerrendaPertsonalizatuaB(ID);
-						ZPB.setVisible(true);
-						dispose();
-						break;
-						
-				}
+				new KZ_XehetasunakIkusi(datuak);
 			}
 		}
 	}
-	
-	
 }
