@@ -91,9 +91,6 @@ public class ErabEskaeraKudeatu extends JFrame {
 		} else {
 			getEmaitzikEz().setVisible(false);
 			
-// Parte de esto lo mismo tambien podria hacerse con observers, asi en vez de llamar a este metodo cada vez que se pulse
-// un boton podria administrarse eso mismo mediante observers, da un poco igual, funciona igualmente
-			
 			for (int i = 0; i < emaitza.length(); i++) {
 	            JSONObject erabJson = emaitza.getJSONObject(i);
 

@@ -158,8 +158,7 @@ public class GestoreErabiltzaile {
 		return erab.filmaAlokatutaDauka(film);
 	}
 	
-	public void erabiltzailearenDatuakDBEguneratu(String pIzena, String pAbizena, String pEmail, String pPasahitza) {
-		String saioaNan = getSaioaNan();
-		DB_kudeatzailea.getDB().erabiltzaileDatuakEguneratu(saioaNan, pIzena, pAbizena, pEmail, pPasahitza);
+	public void erabiltzailearenDatuakDBEguneratu(String pNan, String pIzena, String pAbizena, String pEmail, String pPasahitza) {
+		DB_kudeatzailea.getDB().erabiltzaileDatuakEguneratu(pNan, pIzena, pAbizena, pEmail, pPasahitza);
 	}
 }

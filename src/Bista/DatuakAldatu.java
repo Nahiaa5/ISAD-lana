@@ -158,6 +158,10 @@ public class DatuakAldatu extends JFrame implements Observer {
 		}
 	}
 	
+	public void observerEzabatu() {
+		GestoreNagusia.getGN().deleteObserver(this);
+	}
+	
 	private DatuakAldatuKontroladorea getSH() {
 		if (kontroladorea == null) {
 			kontroladorea = new DatuakAldatuKontroladorea ();
@@ -184,6 +188,7 @@ public class DatuakAldatu extends JFrame implements Observer {
 				else {
 					new ErabiltzailePN();
 				}
+				observerEzabatu();
 				dispose();
 			}
 			
