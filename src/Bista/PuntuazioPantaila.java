@@ -1,13 +1,9 @@
 package Bista;
 
-import java.awt.EventQueue;
-
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import java.awt.FlowLayout;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,9 +13,7 @@ import java.time.LocalDate;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
-import Eredua.DB_kudeatzailea;
 import Eredua.Film;
-import Eredua.Puntuazioa;
 import Kontroladorea.GestoreNagusia;
 
 import javax.swing.border.EtchedBorder;
@@ -115,7 +109,7 @@ public class PuntuazioPantaila extends JFrame{
                 String iruzkina = textAreaComentario.getText();
 
                 if (iruzkina.isEmpty()) {
-                    JOptionPane.showMessageDialog(PuntuazioPantaila.this, "Idatzi iruzkina bat.", "Errorea", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(PuntuazioPantaila.this, "Idatzi iruzkin bat.", "Errorea", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 GestoreNagusia.getGN().gordePuntuazioa(NAN, film.getFilmID(), puntuazioa, iruzkina, LocalDate.now());

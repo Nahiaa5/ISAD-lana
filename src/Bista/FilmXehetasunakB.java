@@ -13,6 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.util.Observer;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Observable;
 
 public class FilmXehetasunakB extends JFrame implements Observer {
@@ -118,9 +120,12 @@ public class FilmXehetasunakB extends JFrame implements Observer {
             
             DecimalFormat df = new DecimalFormat("#.00");
             puntuBbLabel.setText("Batez besteko Puntuazioa: " + df.format(xehetasunak.getDouble("puntuazioaBb")));
-                        
-            String iruzkinak = String.join("\n", film.getIruzkinak());
-            iruzkinakArea.setText(iruzkinak);
+            
+            ArrayList<String> iruzkinak = (ArrayList<String>) film.getIruzkinak();
+            Collections.reverse(iruzkinak);
+            
+            String iruzkinakOrdenatuta = String.join("\n", film.getIruzkinak());
+            iruzkinakArea.setText(iruzkinakOrdenatuta);
         }
     }
     
