@@ -195,7 +195,7 @@ public class GestoreNagusia extends Observable {
 			e.setAbizena(pAbizena);
 			e.setEmail(pEmail);
 			e.setPasahitza(pPasahitza);
-			GestoreErabiltzaile.getGE().erabiltzailearenDatuakDBEguneratu(pIzena, pAbizena, pEmail, pPasahitza);
+			GestoreErabiltzaile.getGE().erabiltzailearenDatuakDBEguneratu(pNan, pIzena, pAbizena, pEmail, pPasahitza);
 			setChanged();
 			notifyObservers("Sartuta");
 		}

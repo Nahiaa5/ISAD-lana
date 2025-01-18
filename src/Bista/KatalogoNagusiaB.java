@@ -70,14 +70,17 @@ public class KatalogoNagusiaB extends JFrame
 		bilaketa=new JTextField(20);
 		bilatuBtn=new JButton("Bilatu");
 		ordenatuBtn=new JButton("Ordenatu");
+		exitBtn=new JButton("Itxi");
 		
 		bilatuBtn.addActionListener(getController());
 		bilaketa.addKeyListener(getController());
 		ordenatuBtn.addActionListener(getController());
+		exitBtn.addActionListener(getController());
 
 		bilaketaPanel.add(bilaketa);
 		bilaketaPanel.add(bilatuBtn);
 		bilaketaPanel.add(ordenatuBtn);
+		bilaketaPanel.add(exitBtn);
 		
 		filmPanel=new JPanel();
 		filmPanel.setLayout(new BoxLayout(filmPanel, BoxLayout.Y_AXIS));
@@ -162,7 +165,7 @@ public class KatalogoNagusiaB extends JFrame
                 GestoreNagusia.getGN().ordenatuFilmakPuntuazioz();
                 katalogoaErakutsi();
             }else if(e.getSource().equals(exitBtn)) {
-            	//Falta hacerlo
+            	setVisible(false);
             }
         }
 
