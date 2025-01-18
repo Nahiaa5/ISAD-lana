@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.sql.Statement;
 import java.util.List;
 import Kontroladorea.*;
 
@@ -153,8 +154,102 @@ public class DB_kudeatzailea {
 	    
 	    return ondo;
 	}
-		
 	
+	public int sortuZerrendaBerria(String pIzena, boolean pPribazitatea) {
+	    String queryLista = "INSERT INTO filmZerrenda (izena, pribazitatea) VALUES (?, ?)";
+	    int zerrendaID = -1;
+
+	    try (Connection conn = DB_konexioa.getConexion();
+	         PreparedStatement stmtLista = conn.prepareStatement(queryLista, Statement.RETURN_GENERATED_KEYS)) {
+
+	        stmtLista.setString(1, pIzena);
+	        stmtLista.setBoolean(2, pPribazitatea);
+
+	        // Ejecutar la consulta
+	        int rowsAffected = stmtLista.executeUpdate();
+	        if (rowsAffected > 0) {
+	            ResultSet generatedKeys = stmtLista.getGeneratedKeys();
+	            if (generatedKeys.next()) {
+	                zerrendaID = generatedKeys.getInt(1); 
+	            }
+	        }
+
+	    } catch (SQLException | ClassNotFoundException e) {
+	        e.printStackTrace();
+	    }
+
+	    return zerrendaID;
+	}
+
+	public boolean ErlazioaFilmZerrendak(int pZerrendaID, int pFilmID) {
+		String queryRelacion = "INSERT INTO FilmaZerrendan (ZerrendaID, FilmID) VALUES (?, ?)";
+	    boolean ondo = false;
+
+	    try (Connection conn = DB_konexioa.getConexion();
+	         PreparedStatement stmtRelacion = conn.prepareStatement(queryRelacion)) {
+
+	        stmtRelacion.setInt(1, pZerrendaID);
+	        stmtRelacion.setInt(2, pFilmID);
+
+	        int rowsAffected = stmtRelacion.executeUpdate();
+	        if (rowsAffected > 0) {
+	            ondo = true;
+	        }
+
+	    } catch (SQLException | ClassNotFoundException e) {
+	        e.printStackTrace();
+	    }
+
+	    return ondo;
+	}
+
+	public boolean kenduFilmaZerrendatik (int pZerrendaID, int pFilmID) {
+	    String queryEliminar = "DELETE FROM filmazerrendan WHERE ZerrendaID = ? AND FilmID = ?";
+	    boolean ondo = false;
+
+	    try (Connection conn = DB_konexioa.getConexion();
+	         PreparedStatement stmtEliminar = conn.prepareStatement(queryEliminar)) {
+
+	        stmtEliminar.setInt(1, pZerrendaID);
+	        stmtEliminar.setInt(2, pFilmID);
+
+	        // Ejecutar la consulta
+	        int rowsAffected = stmtEliminar.executeUpdate();
+	        if (rowsAffected > 0) {
+	            ondo = true; 
+	        }
+
+	    } catch (SQLException | ClassNotFoundException e) {
+	        e.printStackTrace();
+	    }
+
+	    return ondo;
+	}
+	
+	public boolean xehetasunakAldatuZerrenda(int pZerrendaID, String pNuevoNombre, boolean pNuevaPrivacidad) {
+	    String queryActualizar = "UPDATE FilmZerrenda SET izena = ?, pribazitatea = ? WHERE ZerrendaID = ?";
+	    boolean ondo = false;
+
+	    try (Connection conn = DB_konexioa.getConexion();
+	         PreparedStatement stmtActualizar = conn.prepareStatement(queryActualizar)) {
+
+	        stmtActualizar.setString(1, pNuevoNombre);
+	        stmtActualizar.setBoolean(2, pNuevaPrivacidad);
+	        stmtActualizar.setInt(3, pZerrendaID);
+
+	        int rowsAffected = stmtActualizar.executeUpdate();
+	        if (rowsAffected > 0) {
+	            ondo = true; 
+	        }
+
+	    } catch (SQLException | ClassNotFoundException e) {
+	        e.printStackTrace();
+	    }
+
+	    return ondo; 
+	}
+
+
 	public List<Film> kargatuFilmak() {
         List<Film> filmak = new ArrayList<>();
         String query = "SELECT * FROM Film";

@@ -19,7 +19,6 @@ import Kontroladorea.GestoreZerrenda;
 
 public class ZXehetasunakAldatu extends JFrame {
 
-	private static ZXehetasunakAldatu nZXA = null;
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
@@ -36,7 +35,7 @@ public class ZXehetasunakAldatu extends JFrame {
 
 	/**
 	 * Launch the application.
-	 */
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -49,18 +48,10 @@ public class ZXehetasunakAldatu extends JFrame {
 			}
 		});
 	}
-	
-	public static ZXehetasunakAldatu getnZXA(){
-		if(nZXA==null) {
-			nZXA=new ZXehetasunakAldatu();
-		}
-		return nZXA;
-	}
-
 	/**
 	 * Create the frame.
 	 */
-	public ZXehetasunakAldatu() {
+	public ZXehetasunakAldatu(int ID) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -102,9 +93,7 @@ public class ZXehetasunakAldatu extends JFrame {
 		lblNewLabel_2.setForeground(new Color(255, 0, 0));
 		lblNewLabel_2.setBounds(30, 219, 210, 20);
 		contentPane.add(lblNewLabel_2);
-	}
-	
-	public void setID(int ID) {
+
 		this.ID = ID;
 	}
 	
@@ -132,10 +121,9 @@ public class ZXehetasunakAldatu extends JFrame {
 					}
 					GestoreZerrenda GZ = GestoreZerrenda.getnZZ();
 					GZ.aldatuXehetasunak(ID, izena, pribazitatea);
-					ZerrendaXehetasunak ZX = ZerrendaXehetasunak.getnZX();
-					ZX.setID(ID);
+					ZerrendaXehetasunak ZX = new ZerrendaXehetasunak(ID);
 					ZX.setVisible(true);
-					dispose();
+					setVisible(false);
 				}
 				
 			}

@@ -7,6 +7,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -16,30 +18,34 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import Eredua.Erabiltzaile;
-import Eredua.FilmZerrenda;
-import Kontroladorea.GestoreErabiltzaile;
+import org.json.JSONObject;
 
-public class ErabiltzaileZerrendak extends JFrame {
+import Eredua.FilmZerrenda;
+import Kontroladorea.GestoreKatalogoZabaldua;
+import Kontroladorea.GestoreZerrenda;
+
+public class ZerrendaIkusi extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JLabel titulua;
+	private JLabel izena;
 	private JPanel panel;
-	private JPanel panel_1;
-	private JButton sortu;
 	private Controller controller;
-	private String NAN;
-	private JButton exit;
+	private JPanel panel_1;
+	private JButton btnExit;
+	private GestoreZerrenda GZ = GestoreZerrenda.getnZZ();
+	private int ID;
+	private List<JButton> pelikulenBotoiak;
+	private JPanel panel_2;
 
 	/**
 	 * Launch the application.
-	 
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ErabiltzaileZerrendak frame = new ErabiltzaileZerrendak();
+					ZerrendaIkusi frame = new ZerrendaIkusi();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,23 +53,22 @@ public class ErabiltzaileZerrendak extends JFrame {
 			}
 		});
 	}
-*/
 
 	/**
 	 * Create the frame.
 	 */
-	public ErabiltzaileZerrendak(String NAN) {
+	public ZerrendaIkusi(int ID) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 500, 350);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		
+
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		String izena = GestoreErabiltzaile.getGE().erabiltzaileaBilatuNAN(NAN).getIzena();
-		titulua = new JLabel(izena +" dituen Zerrendak");
-		titulua.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(titulua, BorderLayout.NORTH);
+		
+		izena = new JLabel("Titulua");
+		izena.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(izena, BorderLayout.NORTH);
 		
 		panel = new JPanel();
 		contentPane.add(panel, BorderLayout.CENTER);
@@ -73,24 +78,25 @@ public class ErabiltzaileZerrendak extends JFrame {
 		contentPane.add(panel_1, BorderLayout.SOUTH);
 		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		sortu = new JButton("Zerrenda Berria sortu");
-		sortu.addActionListener(getCont());
+		btnExit = new JButton("EXIT");
+		btnExit.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnExit.addActionListener(getCont());
+		panel_1.add(btnExit);
 		
-		exit = new JButton("EXIT");
-		exit.addActionListener(getCont());
-		exit.setFont(new Font("Tahoma", Font.BOLD, 14));
-		panel_1.add(exit);
-		panel_1.add(sortu);
+		panel_2 = new JPanel();
+		contentPane.add(panel_2, BorderLayout.EAST);
+		panel_2.setLayout(null);
 		
-		this.NAN = NAN;
-		getZerrendak(NAN);
+		this.ID = ID;
+		filmakSartu(ID);
 	}
 	
-	private void getZerrendak(String NAN) {
-		GestoreErabiltzaile GE = GestoreErabiltzaile.getGE();
-		Erabiltzaile e = GE.erabiltzaileaBilatuNAN(NAN);
-		for (FilmZerrenda f : e.getZerrendak()) {
-			JButton button = new JButton(f.getIzena());
+	private void filmakSartu(int id) {
+		FilmZerrenda z = GZ.bilatuZerrenda(id);
+		izena.setText(z.getIzena());
+		ArrayList<String> izenak = z.filmenIzenak();
+		for (String izena : izenak) {
+			JButton button = new JButton(izena);
 	        panel.add(button);
 	        button.setAlignmentX(Component.CENTER_ALIGNMENT);
 	        button.setMaximumSize(new Dimension(Integer.MAX_VALUE, button.getPreferredSize().height));
@@ -98,9 +104,9 @@ public class ErabiltzaileZerrendak extends JFrame {
 	        revalidate();
 	        repaint();
 		}
-		
 	}
-
+	
+	
 	public Controller getCont() {
 		if (controller == null) {
 			controller = new Controller();
@@ -108,31 +114,25 @@ public class ErabiltzaileZerrendak extends JFrame {
 		return controller;
 	}
 	
+	
 	public class Controller implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (e.getSource().equals(sortu) || e.getSource().equals(exit)) {
-				if (e.getSource().equals(sortu)){
-					SortuZerrenda s = new SortuZerrenda();
-					s.SetNAN(NAN);
-					s.setVisible(true);
-					setVisible(false);
-				}
-				if (e.getSource().equals(exit)) {
-					new ErabiltzailePN();
-					setVisible(false);
-				}
-			} else {
-				String zerrendarenIzena = ((JButton) e.getSource()).getText();
-				Erabiltzaile erab = GestoreErabiltzaile.getGE().erabiltzaileaBilatuNAN(NAN);
-				int ID = erab.bilatuZerrendaID(zerrendarenIzena);
-				if (ID != -1) {
-					ZerrendaPertsonalizatuaB z = new ZerrendaPertsonalizatuaB(ID);
-					z.setVisible(true);
-					setVisible(false);
-				}
-			}
+			if(e.getSource().equals(btnExit)) {
+				ZerrendaKatalogoa k = new ZerrendaKatalogoa();
+				k.setVisible(true);
+				setVisible(false);
+            } else {
+            	JButton botoia = (JButton) e.getSource();
+				String datuak = botoia.getText();
+				JSONObject xehetasunak = GestoreKatalogoZabaldua.getnZK().xehetasunakBilatu(datuak);
+				XehetasunakZ X = new XehetasunakZ(xehetasunak);
+				X.setVisible(true);
+				X.setID(ID);
+				X.setFlag(1);
+				setVisible(false);
+            }
 		}
 	}
 }

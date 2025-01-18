@@ -95,6 +95,10 @@ public class GestoreNagusia extends Observable {
 	}
 	
 	public void KZXehetasunakBilatu(String izena) {
+		GestoreKatalogoZabaldua.getnZK().xehetasunakBilatu(izena);
+	}
+	
+	public void KZXehetasunakErakutsi(String izena) {
 		GestoreKatalogoZabaldua.getnZK().xehetasunakErakutsi(izena);
 	}
 	

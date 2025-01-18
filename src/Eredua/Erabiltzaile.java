@@ -82,6 +82,16 @@ public class Erabiltzaile {
 		filmZerrendak.add(z);
 	}
 	
+	public int bilatuZerrendaID (String izena) {
+		int ID = -1;
+		for (FilmZerrenda z : filmZerrendak) {
+			if (z.getIzena().equals(izena)) {
+				ID = z.getID();
+			}
+		}
+		return ID;
+	}
+	
 	public boolean izenaTestuarekinKointziditu(String text) {
 		 if (izena == null || text == null) {
 		        return false; 
