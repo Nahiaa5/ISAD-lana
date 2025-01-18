@@ -37,6 +37,7 @@ public class FilmKat extends JFrame {
 	private JScrollPane scrollPane;
 	private int ID;
 	private int flag;
+	private ArrayList<JButton> botoiak;
 
 	/**
 	 * Create the frame.
@@ -102,6 +103,7 @@ public class FilmKat extends JFrame {
 			String izena = f.getIzenburua() ;
 			String urtea = f.getUrtea();
 			JButton button = new JButton(izena + " (" + urtea + ")");
+			botoiak.add(button);
 	        panel1.add(button);
 	        button.setAlignmentX(Component.CENTER_ALIGNMENT);
 	        button.setMaximumSize(new Dimension(Integer.MAX_VALUE, button.getPreferredSize().height));

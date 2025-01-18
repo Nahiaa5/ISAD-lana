@@ -122,8 +122,30 @@ public class DB_kudeatzailea {
 	    } catch (SQLException | ClassNotFoundException e) {
 	        e.printStackTrace();
 	    }
-
+	    ErlazioakZerrendaFilm();
 	    return zerrendak;
+	}
+	
+	public void ErlazioakZerrendaFilm() {
+	    String queryZerrenda = "SELECT * FROM filmazerrendan"; // Obtener todas las listas de películas
+
+	    try (Connection conn = DB_konexioa.getConexion();
+	         PreparedStatement stmtZerrenda = conn.prepareStatement(queryZerrenda);
+	         ResultSet rsZerrenda = stmtZerrenda.executeQuery()) {
+
+	        // Iterar sobre cada FilmZerrenda (lista de películas)
+	        while (rsZerrenda.next()) {
+	            int zerrendaID = rsZerrenda.getInt("zerrendaID");
+	            int FilmID = rsZerrenda.getInt("FilmID");
+	            
+	            Film f = GestoreFilm.getKN().bilatuFilma(FilmID);
+	            GestoreZerrenda.getnZZ().bilatuZerrenda(zerrendaID).sartuFilma(f);
+	        }
+	        
+		    } catch (SQLException | ClassNotFoundException e) {
+		        e.printStackTrace();
+		    }
+
 	}
 
 	

@@ -145,7 +145,7 @@ public class ZerrendaPertsonalizatuaB extends JFrame {
 			if (e.getSource().equals(gehitu) || e.getSource().equals(kendu) || e.getSource().equals(xehetasunak) || e.getSource().equals(btnExit)) {
 				if (e.getSource().equals(gehitu)) {
 					FilmKat FK = new FilmKat();
-					FK.setFlag (1);
+					FK.setFlag (2);
 					FK.setID(ID);
 	                FK.setVisible(true);
 	                dispose();

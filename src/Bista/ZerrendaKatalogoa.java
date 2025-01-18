@@ -30,11 +30,13 @@ public class ZerrendaKatalogoa extends JFrame {
 	private JButton bJButton;
 	private JButton eJButton;
 	private JScrollPane scrollPane;
+	private ArrayList<JButton> botoiak;
 
 	/**
 	 * Create the frame.
 	 */
 	public ZerrendaKatalogoa() {
+		botoiak = new ArrayList<JButton>();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -84,14 +86,23 @@ public class ZerrendaKatalogoa extends JFrame {
 	
 	private void getZerrendak(ArrayList<FilmZerrenda> z) {
 		for (FilmZerrenda f : z) {
+			boolean badago = false;
 			String izena = f.getIzena() +"   ID:" + f.getID();
-			JButton button = new JButton(izena);
-	        panel1.add(button);
-	        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-	        button.setMaximumSize(new Dimension(Integer.MAX_VALUE, button.getPreferredSize().height));
-	        button.addActionListener(getCont());
-	        revalidate();
-	        repaint();
+			for (JButton b : botoiak) {
+				if (b.getText().equals(izena)) {
+					badago = true;
+				}
+			}
+			if (!badago) {
+				JButton button = new JButton(izena);
+				botoiak.add(button);
+		        panel1.add(button);
+		        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+		        button.setMaximumSize(new Dimension(Integer.MAX_VALUE, button.getPreferredSize().height));
+		        button.addActionListener(getCont());
+		        revalidate();
+		        repaint();
+			}
 		}
 	}
 
