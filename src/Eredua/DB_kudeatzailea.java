@@ -487,5 +487,21 @@ public class DB_kudeatzailea {
 			e.printStackTrace();	
 		}
 	}
+	
+	public void erabiltzaileDatuakEguneratu(String saioaNan, String pIzena, String pAbizena, String pEmail, String pPasahitza) {
+		String query = "UPDATE Erabiltzaile SET izena = ?, abizena = ?, email = ?, pasahitza = ? WHERE NAN = ?";
+		try {
+			Connection conn = DB_konexioa.getConexion();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, pIzena);
+            stmt.setString(2, pAbizena);
+            stmt.setString(3, pEmail);
+            stmt.setString(4, pPasahitza);
+            stmt.setString(5, saioaNan);
+            stmt.executeUpdate();
+		} catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();	
+		}
+	}
 
 }

@@ -156,5 +156,10 @@ public class GestoreErabiltzaile {
 	public boolean alokatutaDaukaJada(String erabNAN, Film film) {
 		Erabiltzaile erab = getErabiltzaileByNAN(erabNAN);
 		return erab.filmaAlokatutaDauka(film);
-	}	
+	}
+	
+	public void erabiltzailearenDatuakDBEguneratu(String pIzena, String pAbizena, String pEmail, String pPasahitza) {
+		String saioaNan = getSaioaNan();
+		DB_kudeatzailea.getDB().erabiltzaileDatuakEguneratu(saioaNan, pIzena, pAbizena, pEmail, pPasahitza);
+	}
 }

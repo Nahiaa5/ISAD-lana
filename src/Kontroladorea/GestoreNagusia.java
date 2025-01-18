@@ -91,20 +91,23 @@ public class GestoreNagusia extends Observable {
 		DB_kudeatzailea.getDB().erabiltzaileaEzabatu(nan);
 	}
 	
-	public void KZFilmakBilatu(String izena) {
-		GestoreKatalogoZabaldua.getnZK().FilmakBilatu(izena);
+	public JSONArray KZFilmakBilatu(String izena) {
+		JSONArray filmak = GestoreKatalogoZabaldua.getnZK().FilmakBilatu(izena);
+		return filmak;
 	}
 	
-	public void KZXehetasunakBilatu(String izena) {
-		GestoreKatalogoZabaldua.getnZK().xehetasunakBilatu(izena);
+	public JSONObject KZXehetasunakBilatu(String izena) {
+		JSONObject datuak = GestoreKatalogoZabaldua.getnZK().xehetasunakErakutsi(izena);
+		return datuak;
 	}
 	
 	public void KZXehetasunakErakutsi(String izena) {
 		GestoreKatalogoZabaldua.getnZK().xehetasunakErakutsi(izena);
 	}
 	
-	public void KZBidaliEskaera() {
-		GestoreKatalogoZabaldua.getnZK().bidaliEskaera();
+	public Boolean KZBidaliEskaera() {
+		Boolean bidalita = GestoreKatalogoZabaldua.getnZK().bidaliEskaera();
+		return bidalita;
 	}
 	
 	public JSONArray getFilmEskaerak() {
@@ -129,8 +132,7 @@ public class GestoreNagusia extends Observable {
 		return film;
 	}
 	
-	public void gordePuntuazioa(String NAN, int filmID, int puntu, String iruzkina, LocalDate data) {
-		
+	public void gordePuntuazioa(String NAN, int filmID, int puntu, String iruzkina, LocalDate data) {	
 		Puntuazioa p=new Puntuazioa(NAN, filmID, puntu, iruzkina, data);
 		GestorePuntuazio.getGP().gordePuntuazioa(p);
 		GestoreFilm.getKN().gordePuntuazioaFilman(p, filmID);
@@ -197,6 +199,7 @@ public class GestoreNagusia extends Observable {
 			e.setAbizena(pAbizena);
 			e.setEmail(pEmail);
 			e.setPasahitza(pPasahitza);
+			GestoreErabiltzaile.getGE().erabiltzailearenDatuakDBEguneratu(pIzena, pAbizena, pEmail, pPasahitza);
 			setChanged();
 			notifyObservers("Sartuta");
 		}

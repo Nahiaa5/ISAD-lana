@@ -11,7 +11,7 @@ import Bista.KZ_XehetasunakIkusi;
 import Kontroladorea.GestoreFilm;
 
 @SuppressWarnings("deprecation")
-public class GestoreKatalogoZabaldua extends Observable{
+public class GestoreKatalogoZabaldua{
 	private static GestoreKatalogoZabaldua nKZK;
 	private JSONObject datuak;
 	
@@ -25,7 +25,7 @@ public class GestoreKatalogoZabaldua extends Observable{
 		return nKZK;
 	}
 
-	public void FilmakBilatu(String izena) {
+	public JSONArray FilmakBilatu(String izena) {
 		try {
 			String apiKey = "209e2977";
 			String urlString = "http://www.omdbapi.com/?apikey=" + apiKey + "&s=" + izena.replace(" ", "%20");
@@ -50,24 +50,21 @@ public class GestoreKatalogoZabaldua extends Observable{
 	        if (jsonResponse.has("Search")) {
 	            // Get the array of movies
 	            JSONArray movies = jsonResponse.getJSONArray("Search");
-	            setChanged();
-	    		notifyObservers(movies);
+	            return movies;
 	    		
 	        } else {
 	            System.out.println("No movies found with the title: " + izena);
+	            return null;
 	        }
 		}catch (Exception e) {
 			e.printStackTrace();
+			return null;
 		}
 	}
 	
-	public void xehetasunakErakutsi(String informazioa) {
-			datuak = xehetasunakBilatu(informazioa);
-	        KZ_XehetasunakIkusi xehetasunak = new KZ_XehetasunakIkusi();
-	        this.addObserver(xehetasunak);
-	        setChanged();
-	        notifyObservers(datuak);
-	        xehetasunak.setVisible(true);       
+	public JSONObject xehetasunakErakutsi(String informazioa) {
+			datuak = xehetasunakBilatu(informazioa);    
+	        return datuak;
 	}
 	
 	public JSONObject xehetasunakBilatu(String informazioa) {
@@ -100,15 +97,15 @@ public class GestoreKatalogoZabaldua extends Observable{
 		return datuak;
 	}
 	
-	public void bidaliEskaera() {
+	public Boolean bidaliEskaera() {
 		String izenburua = datuak.getString("Title");
 		String urtea = datuak.getString("Year");
 		if (GestoreFilm.getKN().badagoFilma(izenburua, urtea)) {
-            setChanged();
-            notifyObservers(false);
+            return false;
         } 
 		else {
 			GestoreFilm.getKN().addFilma(datuak);
+			return true;
 		}
 	}
 }
