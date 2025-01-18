@@ -93,6 +93,40 @@ public class DB_kudeatzailea {
         return alokairuak;
 	}
 	
+	public List<FilmZerrenda> kargatuFilmZerrendak() {
+	    List<FilmZerrenda> zerrendak = new ArrayList<>();
+	    String queryZerrenda = "SELECT * FROM filmzerrenda"; // Obtener todas las listas de películas
+
+	    try (Connection conn = DB_konexioa.getConexion();
+	         PreparedStatement stmtZerrenda = conn.prepareStatement(queryZerrenda);
+	         ResultSet rsZerrenda = stmtZerrenda.executeQuery()) {
+
+	        // Iterar sobre cada FilmZerrenda (lista de películas)
+	        while (rsZerrenda.next()) {
+	            int zerrendaID = rsZerrenda.getInt("zerrendaID");
+	            String zerrendaIzena = rsZerrenda.getString("izena");
+	            boolean zerrendaprib = rsZerrenda.getBoolean("pribazitatea");
+	            String zerrendaNAN = rsZerrenda.getString("erabiltzaileNAN");
+
+	            FilmZerrenda zerrenda = new FilmZerrenda(zerrendaID, zerrendaIzena, zerrendaprib, zerrendaNAN);
+	            GestoreZerrenda.getnZZ().kargatuZerrenda(zerrenda);
+	            
+	            Erabiltzaile e = GestoreErabiltzaile.getGE().erabiltzaileaBilatuNAN(zerrendaNAN);
+	            e.ZerrendanSartu(zerrenda);
+	          
+
+	            // Agregar la FilmZerrenda con sus películas a la lista
+	            zerrendak.add(zerrenda);
+	        }
+
+	    } catch (SQLException | ClassNotFoundException e) {
+	        e.printStackTrace();
+	    }
+
+	    return zerrendak;
+	}
+
+	
 	public void alokairuaGorde(String erabNAN, int filmID, LocalDate hasData, LocalDate bukData) {
 	    String checkQuery = "SELECT COUNT(*) FROM HasData WHERE data = ?";
 	    String insertHasDataQuery = "INSERT INTO HasData (data) VALUES (?)";
@@ -155,8 +189,8 @@ public class DB_kudeatzailea {
 	    return ondo;
 	}
 	
-	public int sortuZerrendaBerria(String pIzena, boolean pPribazitatea) {
-	    String queryLista = "INSERT INTO filmZerrenda (izena, pribazitatea) VALUES (?, ?)";
+	public int sortuZerrendaBerria(String pIzena, boolean pPribazitatea, String NAN) {
+	    String queryLista = "INSERT INTO filmZerrenda (izena, pribazitatea, erabiltzaileNAN) VALUES (?, ?, ?)";
 	    int zerrendaID = -1;
 
 	    try (Connection conn = DB_konexioa.getConexion();
@@ -164,6 +198,7 @@ public class DB_kudeatzailea {
 
 	        stmtLista.setString(1, pIzena);
 	        stmtLista.setBoolean(2, pPribazitatea);
+	        stmtLista.setString(3, NAN);
 
 	        // Ejecutar la consulta
 	        int rowsAffected = stmtLista.executeUpdate();

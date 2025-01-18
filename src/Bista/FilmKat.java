@@ -17,24 +17,31 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import Bista.ZerrendaKatalogoa.Controller;
+import Eredua.Film;
 import Eredua.FilmZerrenda;
+import Kontroladorea.GestoreFilm;
+import Kontroladorea.GestoreNagusia;
 import Kontroladorea.GestoreZerrenda;
 
-public class ZerrendaKatalogoa extends JFrame {
+public class FilmKat extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	GestoreZerrenda GZ = GestoreZerrenda.getnZZ();
 	private JPanel panel1;
 	private Controller controller;
 	private JTextField bTextField;
 	private JButton bJButton;
 	private JButton eJButton;
 	private JScrollPane scrollPane;
+	private int ID;
+	private int flag;
 
 	/**
 	 * Create the frame.
 	 */
-	public ZerrendaKatalogoa() {
+	public FilmKat() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -55,6 +62,14 @@ public class ZerrendaKatalogoa extends JFrame {
 		panel.add(getBilatuJButton());
 		panel.add(getExitJButton());
 		
+	}
+	
+	public void setID (int ID) {
+		this.ID = ID;
+	}
+	
+	public void setFlag (int flag) {
+		this.flag = flag;
 	}
 	
 	private JTextField getBilatuTextField() {
@@ -82,10 +97,11 @@ public class ZerrendaKatalogoa extends JFrame {
 		return eJButton;
 	}
 	
-	private void getZerrendak(ArrayList<FilmZerrenda> z) {
-		for (FilmZerrenda f : z) {
-			String izena = f.getIzena() +"   ID:" + f.getID();
-			JButton button = new JButton(izena);
+	private void getZerrendak(ArrayList<Film> z) {
+		for (Film f : z) {
+			String izena = f.getIzenburua() ;
+			String urtea = f.getUrtea();
+			JButton button = new JButton(izena + " (" + urtea + ")");
 	        panel1.add(button);
 	        button.setAlignmentX(Component.CENTER_ALIGNMENT);
 	        button.setMaximumSize(new Dimension(Integer.MAX_VALUE, button.getPreferredSize().height));
@@ -108,19 +124,43 @@ public class ZerrendaKatalogoa extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			
 			if (e.getSource().equals(bJButton) || e.getSource().equals(bTextField)) {
-				getZerrendak(GestoreZerrenda.getnZZ().bilatuZerrendakKat(getBilatuTextField().getText()));
+				getZerrendak(GestoreFilm.getKN().bilatuFilmakKat(getBilatuTextField().getText()));
 			}
+
 			else if (e.getSource().equals(eJButton)){
 				new ErabiltzailePN();
 				setVisible(false);
-			} else {
+			}
+			else {
 				JButton botoia = (JButton) e.getSource();
-				String izena = botoia.getText();
-				String[] partes = izena.split("ID:");
-				int id = Integer.parseInt(partes[1].trim());
-				ZerrendaIkusi z = new ZerrendaIkusi(id);
-				z.setVisible(true);
-				setVisible(false);
+				String datuak = botoia.getText();
+				switch (flag) {
+				
+					case 0:
+						GestoreNagusia.getGN().KZXehetasunakErakutsi(datuak);
+						break;
+					case 1:
+						FilmakSartuZerrenda FSZ = new FilmakSartuZerrenda(ID);
+						String izena = GZ.bilatuZerrenda(ID).getIzena();
+						System.out.println(izena);
+						System.out.println(ID);
+						FSZ.setIzena(izena);
+						Boolean b = GZ.sartuFilmaZerrendaBaten(ID, datuak);
+						if (b) {
+							FSZ.sartuFilma(datuak);
+						}
+						FSZ.setID(ID);
+						FSZ.setVisible(true);
+						setVisible(false);
+						break;
+					case 2:
+						GZ.sartuFilmaZerrendaBaten(ID, datuak);
+						ZerrendaPertsonalizatuaB ZPB = new ZerrendaPertsonalizatuaB(ID);
+						ZPB.setVisible(true);
+						dispose();
+						break;
+						
+				}
 			}
 		}
 	}

@@ -31,7 +31,6 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
 	private static final long serialVersionUID = 1L;
 	private static FilmKatalogoZabaldua nFKZ;
 	GestoreZerrenda GZ = GestoreZerrenda.getnZZ();
-	FilmakSartuZerrenda FSZ = FilmakSartuZerrenda.getFSZ();
 	private JPanel contentPane;
 	private JPanel panel1;
 	private Controller controller;
@@ -173,28 +172,25 @@ public class FilmKatalogoZabaldua extends JFrame implements Observer {
 						GestoreNagusia.getGN().KZXehetasunakErakutsi(datuak);
 						break;
 					case 1:
+						FilmakSartuZerrenda FSZ = new FilmakSartuZerrenda(ID);
 						String izena = GZ.bilatuZerrenda(ID).getIzena();
 						FSZ.setIzena(izena);
 						Boolean b = GZ.sartuFilmaZerrendaBaten(ID, datuak);
 						if (b) {
 							FSZ.sartuFilma(datuak);
 						}
+						FSZ.setID(ID);
 						FSZ.setVisible(true);
-						flag = 0;
 						setVisible(false);
 						break;
 					case 2:
-						Boolean b1 = GZ.sartuFilmaZerrendaBaten(ID, datuak);
-						if (b1) {
-							FSZ.sartuFilma(datuak);
-						}
-						FSZ.setVisible(true);
-						flag = 0;
-						setVisible(false);
+						GZ.sartuFilmaZerrendaBaten(ID, datuak);
+						ZerrendaPertsonalizatuaB ZPB = new ZerrendaPertsonalizatuaB(ID);
+						ZPB.setVisible(true);
+						dispose();
 						break;
 						
 				}
-				FSZ.setID(ID);
 			}
 		}
 	}

@@ -34,6 +34,7 @@ public class GestoreNagusia extends Observable {
 			GestoreFilm.getKN().loadPuntuazioak();
 			GestoreErabiltzaile.getGE().loadErabiltzaileak();
 			GestoreAlokairu.getGA().loadAlokairuak();
+			GestoreZerrenda.getnZZ().loadZerrenda();
 			kargatuDira = true;
 		}
 	}
