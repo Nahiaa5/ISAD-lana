@@ -137,6 +137,10 @@ public class FilmXehetasunakB extends JFrame implements Observer {
     	GestoreNagusia.getGN().kalkulatuPuntuazioaBb(izenburua, urtea);
     }
     
+    public void itxi() {
+    	GestoreNagusia.getGN().deleteObserver(this);
+    }
+    
     private boolean eguneratu = false; //esto es raro, pero funciona
     @Override
     public void update(Observable o, Object arg) {
@@ -182,6 +186,7 @@ public class FilmXehetasunakB extends JFrame implements Observer {
                 
             } else if (e.getSource().equals(itxiBtn)) {
             	KatalogoNagusiaB.getKNB().katalogoaErakutsi();
+            	itxi();
                 dispose();
             } else if (e.getSource().equals(alokatuBtn)) {
             	String labelText = ((JLabel) panel_2.getComponent(0)).getText();
