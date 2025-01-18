@@ -22,6 +22,10 @@ public class GestoreAlokairu {
 		return nGA;
 	}
 	
+	public List<Alokairua> getAlokairuak() {
+		return this.alokairuak;
+	}
+	
 	public void loadAlokairuak() {
 	    this.alokairuak=DB_kudeatzailea.getDB().kargatuAlokairuak();
 	}

@@ -19,7 +19,6 @@ public class AdminPN extends JFrame {
 	private JButton btnFilm;
 	private JButton btnExit;
 	private AdminKontroladorea kontroladorea = null;
-	private String NAN;
 
 	public AdminPN() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -70,11 +69,7 @@ public class AdminPN extends JFrame {
 		}
 		return btnExit;
 	}
-	
-	public void SetNAN(String NAN) {
-		this.NAN = NAN;
-	}
-	
+
 	private AdminKontroladorea getA() {
 		if (kontroladorea == null) {
 			kontroladorea = new AdminKontroladorea ();
