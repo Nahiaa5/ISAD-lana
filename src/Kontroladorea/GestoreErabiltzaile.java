@@ -66,6 +66,7 @@ public class GestoreErabiltzaile {
 	
 	public void gehituErabiltzailea(Erabiltzaile e) {
 		this.erabiltzaileak.add(e);
+		DB_kudeatzailea.getDB().erabiltzaileBerriaSartu(e.getNan(), e.getIzena(), e.getAbizena(), e.getEmail(), e.getPasahitza());
 	}
 	
 	public void setSaioaNan(String pNan) {

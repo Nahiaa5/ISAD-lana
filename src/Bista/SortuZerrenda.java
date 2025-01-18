@@ -130,11 +130,10 @@ public class SortuZerrenda extends JFrame {
 						pribazitatea = false;
 					}
 					GestoreZerrenda GZ = GestoreZerrenda.getnZZ();
-					boolean b = GZ.sortuZerrendaBerria(izena, pribazitatea, NAN);
-					if (b) {
+					int ID = GZ.sortuZerrendaBerria(izena, pribazitatea, NAN);
+					if (ID == -1) {
 						lblNewLabel_2.setText("Jadanik badago izen hori duen zerrenda bat.");
 					} else {
-						int ID = GZ.getKont()-1;
 						FilmKatalogoZabaldua FKZ = FilmKatalogoZabaldua.getPN();
 						FKZ.setFlag (1);
 						FKZ.setID(ID);

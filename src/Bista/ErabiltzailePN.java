@@ -102,7 +102,7 @@ public class ErabiltzailePN extends JFrame{
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource().equals(btnKN)) {
-                new KatalogoNagusiaB();
+                new FilmakEdoZerrendak();
                 setVisible(false);
             }
 
@@ -118,7 +118,7 @@ public class ErabiltzailePN extends JFrame{
             }
             
             if (e.getSource().equals(btnNireZerrendakIkusi)) {
-            	ErabiltzaileZerrendak.getEZ(NAN);
+            	new ErabiltzaileZerrendak(GestoreErabiltzaile.getGE().getSaioaNan()).setVisible(true);;
             	setVisible(false);
             }
             

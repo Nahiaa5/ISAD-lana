@@ -91,15 +91,6 @@ public class FilmakSartuZerrenda extends JFrame {
 		}
 	}
 	
-	public void kenduFilm(String izena) {
-		for (JButton botoia : pelikulenBotoiak) {
-			if (botoia.getText().equals(izena)) {
-				panel.remove(botoia);
-				pelikulenBotoiak.remove(botoia);
-			}
-		}
-	}
-	
 	/**
 	 * Create the frame.
 	 */
@@ -114,7 +105,7 @@ public class FilmakSartuZerrenda extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		izena = new JLabel("Titulua");
+		izena = new JLabel();
 		izena.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(izena, BorderLayout.NORTH);
 		
@@ -154,23 +145,12 @@ public class FilmakSartuZerrenda extends JFrame {
 	                FKZ.setVisible(true);
 	                dispose();
 				} else if (e.getSource().equals(sortu)){
-					for (JButton b : pelikulenBotoiak) {
-						GestoreZerrenda.getnZZ().sartuFilmaZerrendaBaten(ID, b.getText());
-					}
 					ZerrendaPertsonalizatuaB ZPB = new ZerrendaPertsonalizatuaB(ID);
 					ZPB.setVisible(true);
 					dispose();
 					
 				}
-			} else {
-				JButton botoia = (JButton) e.getSource();
-				String datuak = botoia.getText();
-				JSONObject xehetasunak = GestoreKatalogoZabaldua.getnZK().xehetasunakBilatu(datuak);
-				XehetasunakZ X = new XehetasunakZ(xehetasunak);
-				X.setVisible(true);
-				X.setflag(0);
-				dispose();
-			}
+			} 
 		}
 	}
 }

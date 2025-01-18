@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
+import Kontroladorea.GestoreErabiltzaile;
 import Kontroladorea.GestoreNagusia;
 import java.util.Observer;
 import java.util.Observable;
@@ -114,7 +115,6 @@ public class SaioaHasi extends JFrame implements Observer {
 		}
 		else {
 			AdminPN A = new AdminPN();
-			A.setName(textFieldNan.getText());
 			A.setVisible(true);
 			setVisible(false);
 		}
@@ -138,6 +138,7 @@ public class SaioaHasi extends JFrame implements Observer {
 			// TODO Auto-generated method stub
 			if (e.getSource().equals(btnSaioaHasi)) {
 				GestoreNagusia.getGN().getErabiltzaile(textFieldNan.getText(), textFieldPas.getText());
+				
 			}
 		}
 	}

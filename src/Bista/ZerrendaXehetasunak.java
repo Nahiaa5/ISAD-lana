@@ -25,12 +25,12 @@ public class ZerrendaXehetasunak extends JFrame {
 	private JButton aldatu;
 	private JLabel lblNewLabel_4;
 	private JLabel lblNewLabel_3;
-	private int ID;
+	private int Id;
 	private JButton btnBueltatu;
 
 	/**
 	 * Launch the application.
-	 */
+	 * 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -43,17 +43,10 @@ public class ZerrendaXehetasunak extends JFrame {
 			}
 		});
 	}
-
-	public static ZerrendaXehetasunak getnZX() {
-		if (nZX == null) {
-			nZX = new ZerrendaXehetasunak();
-		}
-		return nZX;
-	}
 	/**
 	 * Create the frame.
 	 */
-	public ZerrendaXehetasunak() {
+	public ZerrendaXehetasunak(int ID) {
 		GestoreZerrenda GZ = GestoreZerrenda.getnZZ();
 		String izena = GZ.bilatuZerrenda(ID).getIzena();
 		String pribazitatea;
@@ -95,14 +88,12 @@ public class ZerrendaXehetasunak extends JFrame {
 		contentPane.add(lblNewLabel_4);
 		
 		btnBueltatu = new JButton("Bueltatu");
+		btnBueltatu.addActionListener(getCont());
 		btnBueltatu.setBounds(122, 225, 82, 29);
 		contentPane.add(btnBueltatu);
+		
+		this.Id = ID;
 	}
-	
-	public void setID(int ID) {
-		this.ID = ID;
-	}
-	
 	public Controller getCont() {
 		if (controller == null) {
 			controller = new Controller();
@@ -114,12 +105,14 @@ public class ZerrendaXehetasunak extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (e.getActionCommand().equals(aldatu)) {
-				
-			} else if (e.getActionCommand().equals(btnBueltatu)) {
-				//ZerrendaPertsonalizatuaB ZPB = ZerrendaPertsonalizatuaB.getnZP();
-				//ZPB.setVisible(true);
-				dispose();
+			if (e.getSource().equals(aldatu)) {
+				ZXehetasunakAldatu x = new ZXehetasunakAldatu(Id);
+				x.setVisible(true);
+				setVisible(false);
+			} else if (e.getSource().equals(btnBueltatu)) {
+				ZerrendaPertsonalizatuaB ZPB = new ZerrendaPertsonalizatuaB(Id);
+				ZPB.setVisible(true);
+				setVisible(false);
 			}
 		}
 	}

@@ -27,10 +27,9 @@ public class XehetasunakZ extends JFrame {
     private JTextArea iruzkinakArea;
     private Controller controller = null;
     private JPanel panel_2;
-    private JButton ezabatu;
-    private int flag;
-    private FilmakSartuZerrenda FSZ = FilmakSartuZerrenda.getFSZ();
+    private int id;
     private JSONObject datuak;
+    private int flag;
 
 	/**
 	 * Launch the application.
@@ -54,6 +53,8 @@ public class XehetasunakZ extends JFrame {
 	 */
 	public XehetasunakZ(JSONObject xehetasunak) {
 		datuak = xehetasunak;
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 500, 350);
 		JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JScrollPane scrollPane=new JScrollPane();
@@ -61,10 +62,6 @@ public class XehetasunakZ extends JFrame {
 
         itxiBtn=new JButton("Bueltatu");
         itxiBtn.addActionListener(getController());
-        
-        ezabatu = new JButton("Ezabatu");
-        ezabatu.addActionListener(getController());
-        panel.add(ezabatu);
         panel.add(itxiBtn);
         
         getContentPane().add(panel, BorderLayout.SOUTH);
@@ -90,7 +87,11 @@ public class XehetasunakZ extends JFrame {
         setVisible(true);
 	}
 
-	public void setflag (int flag) {
+	public void setID (int ID) {
+		this.id = ID;
+	}
+	
+	public void setFlag (int flag) {
 		this.flag = flag;
 	}
 	
@@ -106,25 +107,16 @@ public class XehetasunakZ extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource().equals(itxiBtn)) {
-				setVisible(false);
-				FSZ.setVisible(true);
-			} else if (e.getSource().equals(ezabatu)) {
 				if (flag == 0) {
-					String titulua = datuak.getString("Title");
-			        String urtea = datuak.getString("Year");
-			        String izena = titulua + " (" + urtea + ")";
-					FSZ.kenduFilm(izena);
-					FSZ.setVisible(true);
-					//GestoreZerrenda.getZZ().kenduFilmaZerrendaBaten(ID,izena);
+					ZerrendaPertsonalizatuaB ZPB = new ZerrendaPertsonalizatuaB(id);
+					ZPB.setVisible(true);
+					dispose();
 				} else if (flag == 1) {
-					String titulua = datuak.getString("Title");
-			        String urtea = datuak.getString("Year");
-			        String izena = titulua + " (" + urtea + ")";
-					//ZPB.kenduFilm(izena);
-					//ZPB.setVisible(true);
-					//GestoreZerrenda.getZZ().kenduFilmaZerrendaBaten(ID,izena);
+					ZerrendaIkusi z = new ZerrendaIkusi(id);
+					z.setVisible(true);
+					setVisible(false);
 				}
-			}
+			} 
 		}
 	}
 }

@@ -54,17 +54,26 @@ public class FilmZerrenda {
 	}
 	
 	public void kenduFilma(Film filma) {
-		for (Film film : FilmZerrenda) {
-			if (film.equals(filma)){
-				FilmZerrenda.remove(film);
-			}
-		}
+	    Iterator<Film> iter = FilmZerrenda.iterator();
+	    while (iter.hasNext()) {
+	        Film film = iter.next();
+	        if (film.equals(filma)) {
+	            iter.remove();
+	        }
+	    }
 	}
 	
+	public void print() {
+		for (Film f : FilmZerrenda) {
+			System.out.println(f.getIzenburua());
+		}
+	}
 	public ArrayList<String> filmenIzenak() {
 		ArrayList<String> izenak = new ArrayList<>();
 		for (Film filma : FilmZerrenda) {
-			String izena = filma.getIzenburua();
+			String titulua = filma.getIzenburua();
+            String urtea = filma.getUrtea();
+            String izena = (titulua + " (" + urtea + ")");
 			izenak.add(izena);
 		}
 		return izenak;

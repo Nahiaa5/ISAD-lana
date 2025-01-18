@@ -12,6 +12,7 @@ import Kontroladorea.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.Set;
+import java.time.LocalDate;
 import java.util.HashSet;
 
 class GestoreNagusiaTest {
@@ -131,5 +132,25 @@ class GestoreNagusiaTest {
 		String path = GestoreNagusia.getGN().filmaPantailaratu("La la land");
 		assertEquals(path, "resources/LaLaLand.mp4");
 	}
-
+	
+	@Test 
+	void testErabiltzaileakAlokatuDu() {
+		LocalDate gaur=LocalDate.now();
+		HasData hasData=new HasData(gaur);
+		
+		//Erabiltzaileak filma alokatu du
+		Alokairua alok1= new Alokairua(film1, hasData, gaur.plusDays(5));
+		erab.getEgindakoAlokairuak().add(alok1);
+		
+		boolean emaitza1=GestoreNagusia.getGN().erabiltzaileakAlokatuDu("12345678Z", 1);
+		assertTrue(emaitza1, "Erabiltzaileak filma alokatu du.");
+		
+		//Erabiltzaileak ez du filma alokatu
+		boolean emaitza2=GestoreNagusia.getGN().erabiltzaileakAlokatuDu("12345678Z", 2);
+		assertFalse(emaitza2, "Erabiltzaileak ez du filma alokatu.");
+		
+		//Erabiltzailea ez dago sisteman
+		boolean emaitza3=GestoreNagusia.getGN().erabiltzaileakAlokatuDu("98765432M", 1);
+		assertFalse(emaitza3, "Erabiltzailea ez da existitzen.");	
+	}
 }

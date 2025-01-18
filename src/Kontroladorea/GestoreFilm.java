@@ -57,18 +57,19 @@ public class GestoreFilm extends Observable {
 	}
 	
 	public Film bilatuFilma(JSONObject datuak) {
-		for (Film film : filmak) {
-			if (datuak.getString("Title") == film.getIzenburua() &&
-				datuak.getString("Actors") == film.getAktoreak() &&	
-				datuak.getString("Year").equals(film.getUrtea()) &&
-				datuak.getString("Genre") == film.getIzenburua() &&
-				datuak.getString("Director") == film.getIzenburua()
-			) {
-				return film;
-			}
-		}
-		return null;
+	    for (Film film : filmak) {
+	        if (datuak.getString("Title").trim().equalsIgnoreCase(film.getIzenburua().trim()) &&
+	            datuak.getString("Actors").trim().equalsIgnoreCase(film.getAktoreak().trim()) &&	
+	            datuak.getString("Year").trim().equalsIgnoreCase(film.getUrtea().trim()) &&
+	            datuak.getString("Genre").trim().equalsIgnoreCase(film.getGeneroa().trim()) &&
+	            datuak.getString("Director").trim().equalsIgnoreCase(film.getZuzendaria().trim())
+	        ) {
+	            return film;
+	        }
+	    }
+	    return null;
 	}
+
 	
 	public JSONArray bilatuFilmKatalogoan(String text) {
 		JSONArray zerrenda = new JSONArray();

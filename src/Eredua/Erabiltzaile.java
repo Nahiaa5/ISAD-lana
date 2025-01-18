@@ -42,6 +42,14 @@ public class Erabiltzaile {
 		return this.izena;
 	}
 	
+	public String getAbizena() {
+		return this.abizena;
+	}
+	
+	public String getEmail() {
+		return this.email;
+	}
+	
 	public int getOnartuta() {
 		return this.onartuta;
 	}
@@ -80,6 +88,16 @@ public class Erabiltzaile {
 
 	public void ZerrendanSartu(FilmZerrenda z) {
 		filmZerrendak.add(z);
+	}
+	
+	public int bilatuZerrendaID (String izena) {
+		int ID = -1;
+		for (FilmZerrenda z : filmZerrendak) {
+			if (z.getIzena().equals(izena)) {
+				ID = z.getID();
+			}
+		}
+		return ID;
 	}
 	
 	public boolean izenaTestuarekinKointziditu(String text) {

@@ -40,7 +40,7 @@ public class FilmKatalogoZabaldua extends JFrame{
 	private JButton bJButton;
 	private JButton eJButton;
 	private JScrollPane scrollPane;
-	private int ID = -1;
+	private int ID;
 	private int flag = 0;
 	
 
@@ -175,29 +175,32 @@ public class FilmKatalogoZabaldua extends JFrame{
 			else {
 				JButton botoia = (JButton) e.getSource();
 				String datuak = botoia.getText();
-				new KZ_XehetasunakIkusi(datuak);
 				switch (flag) {
 				
 					case 0:
-						//No quito esto por si acaso, pero como que lo llama otra vez
-						//GestoreKatalogoZabaldua.getnZK().xehetasunakErakutsi(datuak);
+						new KZ_XehetasunakIkusi(datuak);
 						break;
 					case 1:
 						String izena = GZ.bilatuZerrenda(ID).getIzena();
 						FSZ.setIzena(izena);
-						FSZ.sartuFilma(datuak);
-						GZ.sartuFilmaZerrendaBaten(ID, datuak);
+						Boolean b = GZ.sartuFilmaZerrendaBaten(ID, datuak);
+						if (b) {
+							FSZ.sartuFilma(datuak);
+						}
 						FSZ.setVisible(true);
 						flag = 0;
-						dispose();
+						setVisible(false);
 						break;
 					case 2:
-						FSZ.sartuFilma(datuak);
-						GZ.sartuFilmaZerrendaBaten(ID, datuak);
+						Boolean b1 = GZ.sartuFilmaZerrendaBaten(ID, datuak);
+						if (b1) {
+							FSZ.sartuFilma(datuak);
+						}
 						FSZ.setVisible(true);
 						flag = 0;
-			            dispose();
-			            break;
+						setVisible(false);
+						break;
+						
 				}
 				FSZ.setID(ID);
 			}

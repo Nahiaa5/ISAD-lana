@@ -100,6 +100,10 @@ public class GestoreNagusia extends Observable {
 		return datuak;
 	}
 	
+	public void KZXehetasunakErakutsi(String izena) {
+		GestoreKatalogoZabaldua.getnZK().xehetasunakErakutsi(izena);
+	}
+	
 	public Boolean KZBidaliEskaera() {
 		Boolean bidalita = GestoreKatalogoZabaldua.getnZK().bidaliEskaera();
 		return bidalita;
@@ -127,8 +131,7 @@ public class GestoreNagusia extends Observable {
 		return film;
 	}
 	
-	public void gordePuntuazioa(String NAN, int filmID, int puntu, String iruzkina, LocalDate data) {
-		
+	public void gordePuntuazioa(String NAN, int filmID, int puntu, String iruzkina, LocalDate data) {	
 		Puntuazioa p=new Puntuazioa(NAN, filmID, puntu, iruzkina, data);
 		GestorePuntuazio.getGP().gordePuntuazioa(p);
 		GestoreFilm.getKN().gordePuntuazioaFilman(p, filmID);
