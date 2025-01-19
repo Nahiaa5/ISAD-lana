@@ -95,13 +95,13 @@ public class DB_kudeatzailea {
 	
 	public List<FilmZerrenda> kargatuFilmZerrendak() {
 	    List<FilmZerrenda> zerrendak = new ArrayList<>();
-	    String queryZerrenda = "SELECT * FROM filmzerrenda"; // Obtener todas las listas de películas
+	    String queryZerrenda = "SELECT * FROM filmzerrenda"; 
 
 	    try (Connection conn = DB_konexioa.getConexion();
 	         PreparedStatement stmtZerrenda = conn.prepareStatement(queryZerrenda);
 	         ResultSet rsZerrenda = stmtZerrenda.executeQuery()) {
 
-	        // Iterar sobre cada FilmZerrenda (lista de películas)
+	        
 	        while (rsZerrenda.next()) {
 	            int zerrendaID = rsZerrenda.getInt("zerrendaID");
 	            String zerrendaIzena = rsZerrenda.getString("izena");
@@ -114,8 +114,6 @@ public class DB_kudeatzailea {
 	            Erabiltzaile e = GestoreErabiltzaile.getGE().erabiltzaileaBilatuNAN(zerrendaNAN);
 	            e.ZerrendanSartu(zerrenda);
 	          
-
-	            // Agregar la FilmZerrenda con sus películas a la lista
 	            zerrendak.add(zerrenda);
 	        }
 
@@ -127,15 +125,15 @@ public class DB_kudeatzailea {
 	}
 	
 	public void ErlazioakZerrendaFilm() {
-	    String queryZerrenda = "SELECT * FROM filmazerrendan"; // Obtener todas las listas de películas
+	    String queryZerrenda = "SELECT * FROM parteIzan";
 
 	    try (Connection conn = DB_konexioa.getConexion();
 	         PreparedStatement stmtZerrenda = conn.prepareStatement(queryZerrenda);
 	         ResultSet rsZerrenda = stmtZerrenda.executeQuery()) {
 
-	        // Iterar sobre cada FilmZerrenda (lista de películas)
+	        
 	        while (rsZerrenda.next()) {
-	            int zerrendaID = rsZerrenda.getInt("zerrendaID");
+	            int zerrendaID = rsZerrenda.getInt("ZerrendaID");
 	            int FilmID = rsZerrenda.getInt("FilmID");
 	            
 	            Film f = GestoreFilm.getKN().bilatuFilma(FilmID);
@@ -239,7 +237,7 @@ public class DB_kudeatzailea {
 	}
 
 	public boolean ErlazioaFilmZerrendak(int pZerrendaID, int pFilmID) {
-		String queryRelacion = "INSERT INTO FilmaZerrendan (ZerrendaID, FilmID) VALUES (?, ?)";
+		String queryRelacion = "INSERT INTO parteIzan (ZerrendaID, FilmID) VALUES (?, ?)";
 	    boolean ondo = false;
 
 	    try (Connection conn = DB_konexioa.getConexion();
@@ -261,7 +259,7 @@ public class DB_kudeatzailea {
 	}
 
 	public boolean kenduFilmaZerrendatik (int pZerrendaID, int pFilmID) {
-	    String queryEliminar = "DELETE FROM filmazerrendan WHERE ZerrendaID = ? AND FilmID = ?";
+	    String queryEliminar = "DELETE FROM parteIzan WHERE ZerrendaID = ? AND FilmID = ?";
 	    boolean ondo = false;
 
 	    try (Connection conn = DB_konexioa.getConexion();
@@ -284,7 +282,7 @@ public class DB_kudeatzailea {
 	}
 	
 	public boolean kenduZerrenda(int pZerrendaID) {
-	    String queryEliminarFilmazerrendan = "DELETE FROM filmazerrendan WHERE ZerrendaID = ?";
+	    String queryEliminarFilmazerrendan = "DELETE FROM parteIzan WHERE ZerrendaID = ?";
 	    String queryEliminarFilmzerrenda = "DELETE FROM filmzerrenda WHERE zerrendaID = ?";
 	    boolean ondo = false;
 
