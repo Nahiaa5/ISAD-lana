@@ -54,6 +54,7 @@ public class FilmZerrenda {
 		for (Film f : FilmZerrenda) {
 			if (f.equals(filma)) {
 				badago = true;
+				System.out.println("Filma badago zerrendan");
 			}
 		}
 		if (badago == false) {

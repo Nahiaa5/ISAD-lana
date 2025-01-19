@@ -34,8 +34,10 @@ class FilmZerrendaTest {
 	@Test
 	void SartuFilmatest() {
 		assertTrue(zerrenda.getZerrenda().isEmpty()); //Zerrenda film barik hutsik dago
-		zerrenda.sartuFilma(film1); //Film bat sartzen da
+		assertFalse(zerrenda.sartuFilma(film1)); //Film bat sartzen da eta ez dagoenez badago false da
 		assertFalse(zerrenda.getZerrenda().isEmpty()); //Zerrenda ez dago hutsik
+		
+		assertTrue(zerrenda.sartuFilma(film1)); //Filma jadanik badago beraz badago true eta ez da sartzen
 	}
 	
 	@Test
