@@ -127,7 +127,7 @@ class GestoreKatalogoZabalduaTest {
 			gKZ.bidaliEskaera();
 			fail("Ez da saiatu filma gehitzen");
 		}catch(UnsupportedOperationException e) {
-			assertEquals("Proba modua: DB ez da erabiliko", e.getMessage());;
+			assertEquals("Proba modua: DB ez da erabiliko", e.getMessage());
 		}
 	}
 

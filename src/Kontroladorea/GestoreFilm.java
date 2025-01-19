@@ -95,7 +95,6 @@ public class GestoreFilm extends Observable {
 	}
 
 	public boolean badagoFilma(String izena, String urtea) {
-		System.out.println("entra");
 		for (Film filma : filmak) {
 			if (filma.getIzenburua().equalsIgnoreCase(izena) && filma.getUrtea().contains(urtea)) { 
 				return true;
@@ -106,7 +105,7 @@ public class GestoreFilm extends Observable {
 	
 	public void addFilma(JSONObject filmDatuak) {
 		//Zerrendan ez dagoen ID bat ezarri
-		int id = 0;
+		int id = 1;
 		for(Film filma : filmak) {
 			if(filma.getFilmID()>=id) {
 				id = filma.getFilmID() + 1;
@@ -121,9 +120,8 @@ public class GestoreFilm extends Observable {
         boolean katalogoan = false;
         double puntuazioaBb = 0.0;
         Film filma = new Film(id, izenburua, aktoreak, urtea, generoa, zuzendaria, adminNAN, katalogoan, puntuazioaBb, null);
-        DB_kudeatzailea.getDB().gordeFilma(id, izenburua, aktoreak, urtea, generoa, zuzendaria, adminNAN, null);
         filmak.add(filma);
-        System.out.println(filmak);
+        DB_kudeatzailea.getDB().gordeFilma(id, izenburua, aktoreak, urtea, generoa, zuzendaria, adminNAN, null);
 	}
 	
 	public void loadFilmak() {

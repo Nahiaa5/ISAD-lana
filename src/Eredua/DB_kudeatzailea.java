@@ -472,6 +472,9 @@ public class DB_kudeatzailea {
 	}
 	
 	public void filmaOnartu(int filmID, String adminNAN) {
+		if(inTestMode) {
+			throw new UnsupportedOperationException("Proba modua: DB ez da erabiliko");
+		}
 		String query = "UPDATE film SET katalogoan = ?, adminNAN = ? WHERE filmID = ?";
 		try {
 			Connection conn = DB_konexioa.getConexion();
@@ -486,6 +489,9 @@ public class DB_kudeatzailea {
 	}
 	
 	public void filmaEzabatu(String izena) { //Esto en verdad es solo para las eskaerak
+		if(inTestMode) {
+			throw new UnsupportedOperationException("Proba modua: DB ez da erabiliko");
+		}
 		String query = "DELETE FROM film WHERE katalogoan = ? AND izenburua = ?";
 		try {
 			Connection conn = DB_konexioa.getConexion();

@@ -9,17 +9,21 @@ import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import Eredua.DB_kudeatzailea;
 import Eredua.Film;
 import Eredua.Puntuazioa;
+import Kontroladorea.GestoreErabiltzaile;
 import Kontroladorea.GestoreFilm;
 import Kontroladorea.GestoreNagusia;
 
 class GestoreFilmTest {
 	private GestoreFilm gestoreFilm;
     private Film film1, film2, film3;
+    private GestoreErabiltzaile gestoreErabiltzaile;
    
     @BeforeEach
     void setUp() {
@@ -33,6 +37,18 @@ class GestoreFilmTest {
         gestoreFilm.getFilmak().add(film1);
         gestoreFilm.getFilmak().add(film2);
         gestoreFilm.getFilmak().add(film3);
+        
+        gestoreErabiltzaile = GestoreErabiltzaile.getGE();
+        gestoreErabiltzaile.getErabiltzaileak().clear();
+
+        gestoreErabiltzaile.setSaioaNan("12345678Z");
+        
+        DB_kudeatzailea.setTestMode(true);
+    }
+    
+    @AfterEach
+    void tearDown(){
+    	DB_kudeatzailea.setTestMode(false);
     }
     
     public boolean berdinakDira(JSONArray array1, JSONArray array2) {
@@ -52,6 +68,17 @@ class GestoreFilmTest {
         }
         return set;
     }
+    
+ // getFilmXehetasunak existitzen da, baina honek eta addFilma izen desberdinak erabiltzen dituzte
+ 	public JSONObject filmJSONBihurtu(Film pFilm) {
+ 		JSONObject filma = new JSONObject();
+ 		filma.put("Title", pFilm.getIzenburua());
+ 		filma.put("Actors", pFilm.getAktoreak());
+ 		filma.put("Year", pFilm.getUrtea());
+ 		filma.put("Genre", pFilm.getGeneroa());
+ 		filma.put("Director", pFilm.getZuzendaria());
+ 		return filma;
+ 	}
 
 	@Test
 	void testOrdenatuPuntuazioz() {
@@ -155,5 +182,90 @@ class GestoreFilmTest {
 		//Metodoak filmaren path lortu eta itzuli behar du, asertzioan espero den emaitza jasotakoarekin konparatzen da
 		String path = gestoreFilm.getFilmarenPath(film1);
 		assertEquals(path, "resources/LaLaLand.mp4");
+	}
+	
+	@Test
+	void testBadagoFilma() {
+		//Izena ondo, urtea txarto
+		assertFalse(gestoreFilm.badagoFilma("La la land", "2020"));
+		//Izena txarto, izena ondo
+		assertFalse(gestoreFilm.badagoFilma("La land", "2021"));
+		//Biak ondo
+		assertTrue(gestoreFilm.badagoFilma("La la land", "2021"));
+		//Biak txarto
+		assertFalse(gestoreFilm.badagoFilma("La land", "2020"));
+		//Filma zerrendatik kendu eta gero
+		gestoreFilm.getFilmak().clear();
+		assertFalse(gestoreFilm.badagoFilma("La la land", "2021"));
+
+	}
+	
+	@Test
+	void testAddFilma() {
+		try {
+			gestoreFilm.getFilmak().clear();  
+	        JSONObject filma = filmJSONBihurtu(film1);
+	        gestoreFilm.addFilma(filma);
+	        fail("Ez da saiatu filma gehitzen");
+		}catch(UnsupportedOperationException e) {
+			assertEquals("Proba modua: DB ez da erabiliko", e.getMessage());
+			assertEquals(gestoreFilm.getFilmak().size(), 1);
+			//Katalogoko lehen filma izango denez id 1 izango da
+			assertEquals(gestoreFilm.getFilmak().get(0).getFilmID(),1);
+		}
+	}
+	
+	@Test
+	void testGetFilmEskaerak() {
+		//Filmak daude gordeta, baina guztiak onartuta
+		JSONArray eskaerak = gestoreFilm.getFilmEskaerak();
+		assertEquals(0, eskaerak.length());
+		
+		//Onartu gabeko film eskaerak daude
+		film1.setKatalogoan(false);
+		eskaerak = gestoreFilm.getFilmEskaerak();
+		assertEquals(1, eskaerak.length());
+	}
+	
+	@Test 
+	void testGetFilmXehetasunak(){
+		JSONObject film = gestoreFilm.getFilmXehetasunak(film1.getIzenburua());
+		assertEquals(film1.getIzenburua(),film.getString("izenburua"));
+		assertEquals(film1.getAktoreak(),film.getString("aktoreak"));
+		assertEquals(film1.getUrtea(),film.getString("urtea"));
+		assertEquals(film1.getGeneroa(),film.getString("generoa"));
+		assertEquals(film1.getZuzendaria(),film.getString("zuzendaria"));
+		assertEquals(film1.getPuntuazioaBb(),film.getDouble("puntuazioaBb"));
+	}
+	
+	@Test
+	void testFilmaOnartu() {
+		try {
+			film1.setKatalogoan(false);
+			JSONArray eskaerak = gestoreFilm.getFilmEskaerak();
+			assertEquals(1, eskaerak.length());
+			gestoreFilm.filmaOnartu("La la land");
+			fail("Ez da saiatu filma onartzen");
+		}catch(UnsupportedOperationException e) {
+			assertEquals("Proba modua: DB ez da erabiliko", e.getMessage());
+			JSONArray eskaerak = gestoreFilm.getFilmEskaerak();
+			assertEquals(0, eskaerak.length());
+			assertTrue(film1.getKatalogoan());
+			assertEquals("12345678Z", film1.getErabiltzaileNAN());
+		}
+	}
+	
+	@Test
+	void testFilmaEzabatu() {
+		try {
+			assertEquals(gestoreFilm.getFilmak().size(),3);
+			assertTrue(gestoreFilm.badagoFilma("La la land", "2021"));
+			gestoreFilm.filmaEzabatu("La la land");
+			fail("Ez da saiatu filma ezabatzen");
+		}catch(UnsupportedOperationException e) {
+			assertEquals("Proba modua: DB ez da erabiliko", e.getMessage());
+			assertFalse(gestoreFilm.badagoFilma("La la land", "2021"));
+			assertEquals(gestoreFilm.getFilmak().size(),2);
+		}
 	}
 }
