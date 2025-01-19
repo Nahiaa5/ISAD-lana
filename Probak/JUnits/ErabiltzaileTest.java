@@ -37,6 +37,23 @@ class ErabiltzaileTest {
 	}
 	
 	@Test
+	void testIzenaTestuarekinKointziditu() {
+		//Zehazki kointzidetzen du
+        assertTrue(erab.izenaTestuarekinKointziditu("Manolito"), "Izena zehazki kointziditu behar du.");
+        //Kointziditu letra larriak/meheak 
+        assertTrue(erab.izenaTestuarekinKointziditu("manolito"), "Izena kointziditu behar du letra larriak/meheak alde batera utziz.");
+        //Hutsuneekin kointziditu
+        assertTrue(erab.izenaTestuarekinKointziditu("  Manolito  "), "Izena gehitutako hutsuneekin kointziditu.");
+        //Ez dago kointzidentziarik
+        assertFalse(erab.izenaTestuarekinKointziditu("Antonio"), "Izena ez du kointziditzen.");
+        //Bilatutako testua null da
+        assertFalse(erab.izenaTestuarekinKointziditu(null), "Izena ez da kointzidituko null-ekin.");
+        //Erabiltzailearen izena null da
+        Erabiltzaile erabNull = new Erabiltzaile("12345891Y", null, "López", "email@proba.com", "9876", 0, 1);
+        assertFalse(erabNull.izenaTestuarekinKointziditu("Nombre"), "Izena ez du kointziditzen null bada.");
+	}
+	
+	@Test
 	void testGehituAlokairua() {
 		//Erabiltzaileak ez dauka alokairurik film horretarako edo beste edozeinerako (setUp metodoan definitu dugunaren arabera), beraz bere alokairu zerrenda hutsik egongo da
 		assertTrue(erab.getEgindakoAlokairuak().isEmpty());

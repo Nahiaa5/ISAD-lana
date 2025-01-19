@@ -14,12 +14,15 @@ import org.json.JSONObject;
 import java.util.Set;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 
 class GestoreNagusiaTest {
 	private GestoreFilm gestoreFilm;
     private Film film1, film2;
     private GestoreErabiltzaile gestoreErabiltzaile;
     private Erabiltzaile erab;
+    private Erabiltzaile erab2;
+
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -36,9 +39,12 @@ class GestoreNagusiaTest {
         gestoreErabiltzaile.getErabiltzaileak().clear();
         
         erab = new Erabiltzaile("12345678Z", "Manolito", "Fernandez", "manolito@gmail.com", "1234", 0, 1);
-        
+		erab2 = new Erabiltzaile("56789101Y", "Antonio", "Pérez", "antonio@gmail.com", "7891", 0, 0); //Ez onartua
+
         gestoreErabiltzaile.getErabiltzaileak().add(erab);
         gestoreErabiltzaile.setSaioaNan("12345678Z");
+        gestoreErabiltzaile.setSaioaNan("56789101Y");
+
 	}
 
 	@AfterEach
@@ -62,7 +68,72 @@ class GestoreNagusiaTest {
         }
         return set;
     }
-
+    
+    @Test
+    void testErabiltzaileDatuakAldatu() {
+    	//Eremu guztiak behar bezala beteta daude
+    	GestoreNagusia.getGN().erabiltzaileDatuakAldatu("12345678Z", "Manolo", "Fernandez", "manolo@gmail.com", "1234");
+    	Erabiltzaile erabEguneratua = gestoreErabiltzaile.getErabiltzaileByNAN("12345678Z");
+    	
+    	assertEquals("Manolo", erabEguneratua.getIzena(), "Izena eguneratu da.");
+	    assertEquals("manolo@gmail.com", erabEguneratua.getEmail(), "email-a eguneratu da.");
+	    
+	    //Eremu baten bat hutsik dago
+	    GestoreNagusia.getGN().erabiltzaileDatuakAldatu("12345678Z", "", "Fernandez", "manolo@gmail.com", "1234");
+	    Erabiltzaile erabBerdina = gestoreErabiltzaile.getErabiltzaileByNAN("12345678Z");
+	    
+	    assertEquals("Manolo", erabBerdina.getIzena(), "Izena ez da aldatu.");
+	    assertEquals("Fernandez", erabBerdina.getAbizena(), "Abizena ez da aldatu.");
+	    assertEquals("manolo@gmail.com", erabBerdina.getEmail(), "Emaila ez da aldatu.");
+	    assertEquals("1234", erabBerdina.getPasahitza(), "Pasahitza ez da aldatu.");
+	    
+	    //Eremu guztiak beteta baina aldaketarik gabe
+	    GestoreNagusia.getGN().erabiltzaileDatuakAldatu("12345678Z", "Manolito", "Fernandez", "manolito@gmail.com", "1234");
+	    Erabiltzaile aldakEz = gestoreErabiltzaile.getErabiltzaileByNAN("12345678Z");
+	    
+	    assertEquals("Manolito", aldakEz.getIzena(), "Izena mantendu aldaketarik gabe.");
+	    assertEquals("Fernandez", aldakEz.getAbizena(), "Abizena mantendu aldaketarik gabe.");
+	    assertEquals("manolito@gmail.com", aldakEz.getEmail(), "email-a mantendu aldaketarik gabe.");
+	    assertEquals("1234", aldakEz.getPasahitza(), "Pasahitza mantendu aldaketarik gabe.");
+    }
+    
+    @Test
+    void testErabiltzaileBerriaSartu() {
+    	String nan1 = "98765432X";
+        String izena1 = "Paco";
+        String abizena1 = "Sánchez";
+        String email1 = "paco@gmail.com";
+        String pasahitza1 = "2345";
+        
+        String nan2 = "11111111Y";
+        String izena2 = ""; // Izena hutsik
+        String abizena2 = "Lopez";
+        String email2 = "quien@gmail.com";
+        String pasahitza2 = "1234";
+        
+        //Baliozko datuak
+        GestoreNagusia.getGN().ErabiltzaileBerriaSartu(nan1, izena1, abizena1, email1, pasahitza1);
+        Erabiltzaile berria = gestoreErabiltzaile.getErabiltzaileByNAN(nan1);
+        assertAll("Erabiltzailea behar bezala gehitu den konprobatu",
+                () -> assertNotNull(berria, "Erabiltzailea gehitu behar izan da."),
+                () -> assertEquals(izena1, berria.getIzena(), "Izena berdina izan behar da."),
+                () -> assertEquals(abizena1, berria.getAbizena(), "Abizena berdina izan behar da."),
+                () -> assertEquals(email1, berria.getEmail(), "Email-a berdina izan behar da.")
+            );
+        
+        //Datu baliogabeak, datu bat hutsik dago
+        GestoreNagusia.getGN().ErabiltzaileBerriaSartu(nan2, izena2, abizena2, email2, pasahitza2);
+        Erabiltzaile baliogabea = gestoreErabiltzaile.getErabiltzaileByNAN(nan2);
+        assertNull(baliogabea, "Erabiltzailea ez da gehitu.");
+    }
+    
+    @Test
+    void testGetErabiltzaile() {
+        GestoreNagusia.getGN().getErabiltzaile("12345678Z", "1234");
+        //Saioa zuzen hasi dela konprobatu
+        assertEquals("12345678Z", gestoreErabiltzaile.getSaioaNan(), "Saioa hasita egon behar da onartutako erabiltzailearen NAN-arekin.");
+    }
+    
 	@Test
 	void testGetInfoKatalogokoFilmGuztiak() {
 		//JSONArray honek katalogoan ditugun film guztien izenak eta puntuazioak gordetzen ditu
