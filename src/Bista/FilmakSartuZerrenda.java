@@ -105,7 +105,7 @@ public class FilmakSartuZerrenda extends JFrame {
 	
 	private void filmakSartu(int id) {
 		FilmZerrenda z = GestoreZerrenda.getnZZ().bilatuZerrenda(id);
-		ArrayList<String> izenak = z.filmenIzenak();
+		ArrayList<String> izenak = z.filmenIzenUrte();
 		for (String izena : izenak) {
 			JButton button = new JButton(izena);
 	        panel.add(button);

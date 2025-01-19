@@ -98,7 +98,7 @@ public class ZerrendaPertsonalizatuaB extends JFrame {
 	private void filmakSartu(int id) {
 		FilmZerrenda z = GZ.bilatuZerrenda(id);
 		izena.setText(z.getIzena());
-		ArrayList<String> izenak = z.filmenIzenak();
+		ArrayList<String> izenak = z.filmenIzenUrte();
 		for (String izena : izenak) {
 			JButton button = new JButton(izena);
 	        panel.add(button);
