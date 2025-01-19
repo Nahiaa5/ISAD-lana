@@ -46,6 +46,7 @@ public class GestoreZerrenda {
 		for (FilmZerrenda f : e.getZerrendak()) {
 			if (f.getIzena().equals(izena)) {
 				aurkituta = true;
+				System.out.println("Zerrenda jadanik existitzen da");
 			}
 		}
 		if (aurkituta == false) {
