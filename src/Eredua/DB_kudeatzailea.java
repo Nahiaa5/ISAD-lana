@@ -448,6 +448,9 @@ public class DB_kudeatzailea {
 	}
 	
 	public void gordeFilma(int id, String izenburua, String aktoreak, String urtea, String generoa, String zuzendaria, String adminNAN, String path) {
+		if(inTestMode) {
+			throw new UnsupportedOperationException("Proba modua: DB ez da erabiliko");
+		}
 		String query = "INSERT INTO film (filmID, izenburua, aktoreak, urtea, generoa, zuzendaria, adminNAN, katalogoan, puntuazioaBb, path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			Connection conn = DB_konexioa.getConexion();
