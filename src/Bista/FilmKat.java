@@ -101,16 +101,24 @@ public class FilmKat extends JFrame {
 	
 	private void getZerrendak(ArrayList<Film> z) {
 		for (Film f : z) {
+			boolean badago = false;
 			String izena = f.getIzenburua() ;
 			String urtea = f.getUrtea();
-			JButton button = new JButton(izena + " (" + urtea + ")");
-			botoiak.add(button);
-	        panel1.add(button);
-	        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-	        button.setMaximumSize(new Dimension(Integer.MAX_VALUE, button.getPreferredSize().height));
-	        button.addActionListener(getCont());
-	        revalidate();
-	        repaint();
+			for (JButton b : botoiak) {
+				if (b.getText().equals(izena + " (" + urtea + ")")) {
+					badago = true;
+				}
+			}
+			if (!badago) {
+				JButton button = new JButton(izena + " (" + urtea + ")");
+				botoiak.add(button);
+		        panel1.add(button);
+		        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+		        button.setMaximumSize(new Dimension(Integer.MAX_VALUE, button.getPreferredSize().height));
+		        button.addActionListener(getCont());
+		        revalidate();
+		        repaint();
+			}
 		}
 	}
 
@@ -145,8 +153,6 @@ public class FilmKat extends JFrame {
 					case 1:
 						FilmakSartuZerrenda FSZ = new FilmakSartuZerrenda(ID);
 						String izena = GZ.bilatuZerrenda(ID).getIzena();
-						System.out.println(izena);
-						System.out.println(ID);
 						FSZ.setIzena(izena);
 						Boolean b = GZ.sartuFilmaZerrendaBaten(ID, datuak);
 						if (b) {

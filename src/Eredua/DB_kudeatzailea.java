@@ -283,6 +283,41 @@ public class DB_kudeatzailea {
 	    return ondo;
 	}
 	
+	public boolean kenduZerrenda(int pZerrendaID) {
+	    String queryEliminarFilmazerrendan = "DELETE FROM filmazerrendan WHERE ZerrendaID = ?";
+	    String queryEliminarFilmzerrenda = "DELETE FROM filmzerrenda WHERE zerrendaID = ?";
+	    boolean ondo = false;
+
+	    try (Connection conn = DB_konexioa.getConexion();
+	    	PreparedStatement stmtEliminarFilmazerrendan = conn.prepareStatement(queryEliminarFilmazerrendan)) {
+	        stmtEliminarFilmazerrendan.setInt(1, pZerrendaID);
+            stmtEliminarFilmazerrendan.executeUpdate();
+            int rowsAffected = stmtEliminarFilmazerrendan.executeUpdate();
+            if (rowsAffected > 0) {
+                ondo = true;
+            }
+            
+	    } catch (SQLException | ClassNotFoundException e) {
+	        e.printStackTrace();
+	    }
+
+	        // Eliminar fila de filmzerrenda (principal)
+        try (Connection conn = DB_konexioa.getConexion();
+        	PreparedStatement stmtEliminarFilmzerrenda = conn.prepareStatement(queryEliminarFilmzerrenda)) {
+            stmtEliminarFilmzerrenda.setInt(1, pZerrendaID);
+            int rowsAffected = stmtEliminarFilmzerrenda.executeUpdate();
+            if (rowsAffected > 0) {
+                ondo = true;
+            }
+ 
+	    } catch (SQLException | ClassNotFoundException e) {
+	        e.printStackTrace();
+	    }
+
+	    return ondo;
+	}
+
+	
 	public boolean xehetasunakAldatuZerrenda(int pZerrendaID, String pNuevoNombre, boolean pNuevaPrivacidad) {
 	    String queryActualizar = "UPDATE FilmZerrenda SET izena = ?, pribazitatea = ? WHERE ZerrendaID = ?";
 	    boolean ondo = false;

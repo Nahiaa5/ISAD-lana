@@ -60,6 +60,7 @@ public class GestoreZerrenda {
 	    	FilmZerrenda b = iter.next();
 	    	if (b.getID() == ID) {
 	    		iter.remove();
+	    		DB_kudeatzailea.getDB().kenduZerrenda(ID);
 	        }
 	    }
 	}
