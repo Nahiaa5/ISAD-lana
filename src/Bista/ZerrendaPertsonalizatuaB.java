@@ -3,7 +3,6 @@ package Bista;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -39,25 +38,7 @@ public class ZerrendaPertsonalizatuaB extends JFrame {
 	private JButton xehetasunak;
 	private GestoreZerrenda GZ = GestoreZerrenda.getnZZ();
 	private int ID;
-	private List<JButton> pelikulenBotoiak;
 	private JPanel panel_2;
-	
-	/**
-	 * Launch the application.
-	 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ZerrendaPertsonalizatuaB frame = new ZerrendaPertsonalizatuaB();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-*/
 
 	/**
 	 * Create the frame.
@@ -117,7 +98,7 @@ public class ZerrendaPertsonalizatuaB extends JFrame {
 	private void filmakSartu(int id) {
 		FilmZerrenda z = GZ.bilatuZerrenda(id);
 		izena.setText(z.getIzena());
-		ArrayList<String> izenak = z.filmenIzenak();
+		ArrayList<String> izenak = z.filmenIzenUrte();
 		for (String izena : izenak) {
 			JButton button = new JButton(izena);
 	        panel.add(button);

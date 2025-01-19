@@ -8,7 +8,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -35,24 +34,7 @@ public class ZerrendaIkusi extends JFrame {
 	private JButton btnExit;
 	private GestoreZerrenda GZ = GestoreZerrenda.getnZZ();
 	private int ID;
-	private List<JButton> pelikulenBotoiak;
 	private JPanel panel_2;
-
-	/**
-	 * Launch the application.
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ZerrendaIkusi frame = new ZerrendaIkusi();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -94,7 +76,7 @@ public class ZerrendaIkusi extends JFrame {
 	private void filmakSartu(int id) {
 		FilmZerrenda z = GZ.bilatuZerrenda(id);
 		izena.setText(z.getIzena());
-		ArrayList<String> izenak = z.filmenIzenak();
+		ArrayList<String> izenak = z.filmenIzenUrte();
 		for (String izena : izenak) {
 			JButton button = new JButton(izena);
 	        panel.add(button);

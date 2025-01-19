@@ -1,8 +1,6 @@
 package Bista;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,10 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.border.EmptyBorder;
 
 import org.json.JSONObject;
-import Kontroladorea.GestoreZerrenda;
 
 public class XehetasunakZ extends JFrame {
 
@@ -28,31 +24,12 @@ public class XehetasunakZ extends JFrame {
     private Controller controller = null;
     private JPanel panel_2;
     private int id;
-    private JSONObject datuak;
     private int flag;
 
-	/**
-	 * Launch the application.
-	 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					XehetasunakZ frame = new XehetasunakZ();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	 */
-    
 	/**
 	 * Create the frame.
 	 */
 	public XehetasunakZ(JSONObject xehetasunak) {
-		datuak = xehetasunak;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 350);
 		JPanel panel = new JPanel();

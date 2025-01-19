@@ -1,7 +1,6 @@
 package Bista;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,9 +14,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import Bista.SortuZerrenda.Controller;
-import Eredua.DB_kudeatzailea;
-import Eredua.Film;
 import Kontroladorea.GestoreZerrenda;
 
 public class SortuZerrenda extends JFrame {
@@ -35,22 +31,6 @@ public class SortuZerrenda extends JFrame {
 	private String izena;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private String NAN;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					SortuZerrenda frame = new SortuZerrenda();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.

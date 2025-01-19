@@ -1,6 +1,5 @@
 package Bista;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -10,13 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import org.json.JSONObject;
-
-import Eredua.Film;
 import Eredua.FilmZerrenda;
 import Kontroladorea.GestoreZerrenda;
-import Kontroladorea.GestoreFilm;
-import Kontroladorea.GestoreKatalogoZabaldua;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -111,7 +105,7 @@ public class FilmakSartuZerrenda extends JFrame {
 	
 	private void filmakSartu(int id) {
 		FilmZerrenda z = GestoreZerrenda.getnZZ().bilatuZerrenda(id);
-		ArrayList<String> izenak = z.filmenIzenak();
+		ArrayList<String> izenak = z.filmenIzenUrte();
 		for (String izena : izenak) {
 			JButton button = new JButton(izena);
 	        panel.add(button);

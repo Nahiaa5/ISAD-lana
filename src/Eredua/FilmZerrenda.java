@@ -16,7 +16,6 @@ public class FilmZerrenda {
 	private boolean pribazitatea;
 	private String erabiltzaileNAN;
 	private List<Film> FilmZerrenda;
-	private Iterator iter;
 	
 	public FilmZerrenda(int ID, String izena, boolean pribazitatea, String NAN) {
 		this.ZerrendaID = ID;
@@ -42,6 +41,10 @@ public class FilmZerrenda {
 		return this.pribazitatea;
 	}
 	
+	public List<Film> getZerrenda() {
+		return this.FilmZerrenda;
+	}
+	
 	public void setPribazitatea(Boolean pribazitatea) {
 		this.pribazitatea = pribazitatea;
 	}
@@ -51,6 +54,7 @@ public class FilmZerrenda {
 		for (Film f : FilmZerrenda) {
 			if (f.equals(filma)) {
 				badago = true;
+				System.out.println("Filma badago zerrendan");
 			}
 		}
 		if (badago == false) {
@@ -79,7 +83,7 @@ public class FilmZerrenda {
 			System.out.println(f.getIzenburua());
 		}
 	}
-	public ArrayList<String> filmenIzenak() {
+	public ArrayList<String> filmenIzenUrte() {
 		ArrayList<String> izenak = new ArrayList<>();
 		for (Film filma : FilmZerrenda) {
 			String titulua = filma.getIzenburua();
