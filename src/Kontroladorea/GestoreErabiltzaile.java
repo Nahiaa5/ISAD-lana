@@ -64,9 +64,15 @@ public class GestoreErabiltzaile {
 		return aurkituta;
 	}
 	
-	public void gehituErabiltzailea(Erabiltzaile e) {
-		this.erabiltzaileak.add(e);
-		DB_kudeatzailea.getDB().erabiltzaileBerriaSartu(e.getNan(), e.getIzena(), e.getAbizena(), e.getEmail(), e.getPasahitza());
+	public boolean gehituErabiltzailea(Erabiltzaile e) {
+		Erabiltzaile erab = getErabiltzaileByNAN(e.getNan());
+		if (erab == null) {
+			this.erabiltzaileak.add(e);
+			DB_kudeatzailea.getDB().erabiltzaileBerriaSartu(e.getNan(), e.getIzena(), e.getAbizena(), e.getEmail(), e.getPasahitza());
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	public void setSaioaNan(String pNan) {

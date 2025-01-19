@@ -176,6 +176,10 @@ public class Erregistratu extends JFrame implements Observer {
 		}
 	}
 	
+	public void observerEzabatu() {
+		GestoreNagusia.getGN().deleteObserver(this);
+	}
+	
 	private ErregistratuKontroladorea getE() {
 		if (kontroladorea == null) {
 			kontroladorea = new ErregistratuKontroladorea ();
@@ -196,6 +200,7 @@ public class Erregistratu extends JFrame implements Observer {
 			}
 			else if (e.getSource().equals(btnExit)) {
 				new PantailaNagusia();
+				observerEzabatu();
 				setVisible(false);
 			}
 		}

@@ -63,14 +63,18 @@ public class GestoreNagusia extends Observable {
 	}
 	
 	public void ErabiltzaileBerriaSartu(String pNAN, String pIzena, String pAbizena, String pEmail, String pPasahitza) {
-		boolean ondo;
+		boolean ondo = false;
 		if(pNAN.isEmpty()|| pIzena.isEmpty() || pAbizena.isEmpty() || pEmail.isEmpty() || pPasahitza.isEmpty()) {
 			ondo = false;
 		}
 		else {
 			Erabiltzaile e = new Erabiltzaile(pNAN, pIzena, pAbizena, pEmail, pPasahitza, 0, 0);
-			GestoreErabiltzaile.getGE().gehituErabiltzailea(e);
-			ondo = true;
+			boolean erabEzExistitu = GestoreErabiltzaile.getGE().gehituErabiltzailea(e);
+			if (erabEzExistitu) {
+				ondo = true;
+			} else {
+				ondo = false;
+			}
 		}
 		setChanged();
 		notifyObservers(ondo);

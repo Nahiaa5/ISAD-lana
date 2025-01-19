@@ -111,14 +111,20 @@ public class SaioaHasi extends JFrame implements Observer {
 			ErabiltzailePN E = new ErabiltzailePN();
 			E.SetNAN(textFieldNan.getText());
 			E.setVisible(true);
+			observerEzabatu();
 			setVisible(false);
 		}
 		else {
 			AdminPN A = new AdminPN();
 			A.setVisible(true);
+			observerEzabatu();
 			setVisible(false);
 		}
 		
+	}
+	
+	public void observerEzabatu() {
+		GestoreNagusia.getGN().deleteObserver(this);
 	}
 	
 	private SaioaHasiKontroladorea getSH() {
@@ -138,7 +144,6 @@ public class SaioaHasi extends JFrame implements Observer {
 			// TODO Auto-generated method stub
 			if (e.getSource().equals(btnSaioaHasi)) {
 				GestoreNagusia.getGN().getErabiltzaile(textFieldNan.getText(), textFieldPas.getText());
-				
 			}
 		}
 	}
