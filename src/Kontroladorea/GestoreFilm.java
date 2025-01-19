@@ -1,9 +1,9 @@
 package Kontroladorea;
 
 import org.json.JSONArray;
+
 import org.json.JSONObject;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -98,8 +98,6 @@ public class GestoreFilm extends Observable {
 		System.out.println("entra");
 		for (Film filma : filmak) {
 			if (filma.getIzenburua().equalsIgnoreCase(izena) && filma.getUrtea().contains(urtea)) { 
-			//Para mirar el año usa contains porque por alguna razon al pasarlo desde la DB, donde es un valor tipo year, se pasa como Año-mes-dia
-				System.out.println("yaesta");
 				return true;
 			}
 		}

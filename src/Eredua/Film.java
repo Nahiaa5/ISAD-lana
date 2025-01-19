@@ -1,11 +1,9 @@
 package Eredua;
 
 import java.util.ArrayList;
-import java.util.Collections;
+
 import java.util.List;
 import java.util.Observable;
-
-import Kontroladorea.GestoreErabiltzaile;
 
 public class Film extends Observable{
     private int filmID;
@@ -117,7 +115,7 @@ public class Film extends Observable{
     	return this.balorazioak;
     }
     
-    public void setBalorazioak(ArrayList pBalorazioak){
+   public void setBalorazioak(ArrayList pBalorazioak){
     	this.balorazioak=pBalorazioak;
     }
     

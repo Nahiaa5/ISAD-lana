@@ -13,7 +13,7 @@ import Kontroladorea.*;
 public class DB_kudeatzailea {
 	
 	private static DB_kudeatzailea nDB=null;
-	private static boolean inTestMode=false; //Flag para las pruebas
+	private static boolean inTestMode=false; //Probetarako
 	private DB_kudeatzailea() {}
 	
 	public static DB_kudeatzailea getDB() {
@@ -270,7 +270,7 @@ public class DB_kudeatzailea {
 	        stmtEliminar.setInt(1, pZerrendaID);
 	        stmtEliminar.setInt(2, pFilmID);
 
-	        // Ejecutar la consulta
+	        // Kontsulta exekutatu
 	        int rowsAffected = stmtEliminar.executeUpdate();
 	        if (rowsAffected > 0) {
 	            ondo = true; 
@@ -301,7 +301,7 @@ public class DB_kudeatzailea {
 	        e.printStackTrace();
 	    }
 
-	        // Eliminar fila de filmzerrenda (principal)
+	    //filmZerrendatik (nagusia) errenkada ezabatu 
         try (Connection conn = DB_konexioa.getConexion();
         	PreparedStatement stmtEliminarFilmzerrenda = conn.prepareStatement(queryEliminarFilmzerrenda)) {
             stmtEliminarFilmzerrenda.setInt(1, pZerrendaID);
@@ -385,29 +385,6 @@ public class DB_kudeatzailea {
 		}
 	}
 	
-	public List<String> iruzkinakKargatu(int filmID) {
-        List<String> comments = new ArrayList<>();
-        String query = "SELECT iruzkina FROM Puntuazioa WHERE filmID = ?";
-
-        try (Connection conn = DB_konexioa.getConexion();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            stmt.setInt(1, filmID);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                comments.add(rs.getString("iruzkina"));
-            }
-
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return comments;
-    }
-	
-	
-
 	public void gordePuntuazioa(Puntuazioa puntuazioa) {
 		if(inTestMode) {
 			throw new UnsupportedOperationException("Proba modua: DB ez da erabiliko");
