@@ -109,6 +109,7 @@ public class GestoreKatalogoZabaldua{
 		}
 	}
 	
+	//JUnit probak egiteko
 	public void setDatuak(JSONObject pDatuak) {
 		datuak = pDatuak;
 	}
