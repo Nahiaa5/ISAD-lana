@@ -108,4 +108,8 @@ public class GestoreKatalogoZabaldua{
 			return true;
 		}
 	}
+	
+	public void setDatuak(JSONObject pDatuak) {
+		datuak = pDatuak;
+	}
 }
