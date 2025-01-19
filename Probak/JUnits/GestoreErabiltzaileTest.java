@@ -57,7 +57,7 @@ class GestoreErabiltzaileTest {
 	
 	@Test
 	void testBilatzaileanErabiltzaileak() {
-		//Bilaketa osoa
+		//Onartuta dagoen erabiltzailea aurkitu
 		JSONArray emaitza = gestoreErabiltzaile.bilatzaileanErabiltzaileak("Manolito");
 		assertEquals(1, emaitza.length(), "Emaitza egon behar da Manolitorentzat.");
 		JSONObject json = emaitza.getJSONObject(0);
@@ -71,7 +71,6 @@ class GestoreErabiltzaileTest {
 	    //Ez onartutako erabiltzailea
 		emaitza = gestoreErabiltzaile.bilatzaileanErabiltzaileak("Antonio");
 	    assertEquals(0, emaitza.length(), "Ez da emaitzik egon behar Antoniorentzat onartuta ez dagoelako.");
-		
 	}
 	
 	@Test

@@ -55,9 +55,11 @@ class GestoreFilmTest {
 
 	@Test
 	void testOrdenatuPuntuazioz() {
+		//Filmak ordenatu
         gestoreFilm.ordenatuPuntuazioz();
-        
+        //Zerrenda ordenatua lortu
         List<Film> ordenatuta = gestoreFilm.getFilmak();
+        //Ordena zuzena dela konprobatu
         assertEquals(film1, ordenatuta.get(0)); 
         assertEquals(film3, ordenatuta.get(1)); 
         assertEquals(film2, ordenatuta.get(2));
@@ -65,21 +67,28 @@ class GestoreFilmTest {
 
 	@Test
 	void testBilatuIzenaDatarekin() {
+		//Filma izena eta urtearekin bilatu
 		Film aurkitua=gestoreFilm.bilatuIzenaDatarekin("Interstellar", "2014");
+		//Filma aurkitu dela konprobatu
 		assertNotNull(aurkitua);
 		assertEquals(film2, aurkitua);
 		
+		//Gordeta ez dagoen film bat bilatu
 		Film ezAurkitua=gestoreFilm.bilatuIzenaDatarekin("Avatar", "2016");
+		//Emaitza ez dela aurkitu konprobatu
 		assertNull(ezAurkitua);
 	}
 
 	@Test
 	void testGordePuntuazioaFilman() {
+		//Puntuazio bat sortu eta gorde film batentzat
 		Puntuazioa p=new Puntuazioa("12345678Z", 1, 5, "Zoragarria", LocalDate.now());
 		gestoreFilm.gordePuntuazioaFilman(p, 1);
+		//Puntuazioa filman gorde dela konprobatu
 		assertEquals(1, film1.getBalorazioak().size());
 		assertEquals(p, film1.getBalorazioak().get(0));
 		
+		//Puntuazio bat gorde existitzen ez den film batean
 		try {
             gestoreFilm.gordePuntuazioaFilman(p, 8); 
             fail("Salbuespena filmID okerragatik.");

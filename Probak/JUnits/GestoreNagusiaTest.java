@@ -106,7 +106,7 @@ class GestoreNagusiaTest {
         String pasahitza1 = "2345";
         
         String nan2 = "11111111Y";
-        String izena2 = ""; // Izena hutsik
+        String izena2 = ""; //Izena hutsik
         String abizena2 = "Lopez";
         String email2 = "quien@gmail.com";
         String pasahitza2 = "1234";
@@ -119,7 +119,7 @@ class GestoreNagusiaTest {
                 () -> assertEquals(izena1, berria.getIzena(), "Izena berdina izan behar da."),
                 () -> assertEquals(abizena1, berria.getAbizena(), "Abizena berdina izan behar da."),
                 () -> assertEquals(email1, berria.getEmail(), "Email-a berdina izan behar da.")
-            );
+        );
         
         //Datu baliogabeak, datu bat hutsik dago
         GestoreNagusia.getGN().ErabiltzaileBerriaSartu(nan2, izena2, abizena2, email2, pasahitza2);

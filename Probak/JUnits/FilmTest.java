@@ -40,7 +40,7 @@ class FilmTest {
 		film.kalkulatuPuntuBb();
 		assertEquals(0.0, film.getPuntuazioaBb(), 0.001, "Batez besteko puntuazioa 0.0 izango da puntuaziorik ez badago.");
 		
-		//Hasierako puntuazioak 
+		//Puntuazioak daude
 		ArrayList<Puntuazioa> puntuazioak=new ArrayList<>();
 		puntuazioak.add(new Puntuazioa("12345678Z", 1, 5, "Bikaina", LocalDate.now()));
 		puntuazioak.add(new Puntuazioa("98765432M", 1, 3, "Film arrunta", LocalDate.now()));
