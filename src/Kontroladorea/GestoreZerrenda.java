@@ -27,6 +27,10 @@ public class GestoreZerrenda {
 		return nZZ;
 	}
 	
+	public List<FilmZerrenda> getZerrendak(){
+		return this.zerrenda;
+	}
+	
 	public void loadZerrenda() {
 		this.zerrenda = DB_kudeatzailea.getDB().kargatuFilmZerrendak();
 	}
@@ -60,6 +64,7 @@ public class GestoreZerrenda {
 	    	FilmZerrenda b = iter.next();
 	    	if (b.getID() == ID) {
 	    		iter.remove();
+	    		zerrenda.remove(b);
 	    		DB_kudeatzailea.getDB().kenduZerrenda(ID);
 	        }
 	    }
