@@ -125,6 +125,9 @@ public class DB_kudeatzailea {
 	}
 	
 	public void ErlazioakZerrendaFilm() {
+		if(inTestMode) {
+			throw new UnsupportedOperationException("Proba modua: DB ez da erabiliko");
+		}
 	    String queryZerrenda = "SELECT * FROM parteIzan";
 
 	    try (Connection conn = DB_konexioa.getConexion();
@@ -210,7 +213,10 @@ public class DB_kudeatzailea {
 	}
 	
 	public int sortuZerrendaBerria(String pIzena, boolean pPribazitatea, String NAN) {
-	    String queryLista = "INSERT INTO filmZerrenda (izena, pribazitatea, erabiltzaileNAN) VALUES (?, ?, ?)";
+		if(inTestMode) {
+			throw new UnsupportedOperationException("Proba modua: DB ez da erabiliko");
+		}
+		String queryLista = "INSERT INTO filmZerrenda (izena, pribazitatea, erabiltzaileNAN) VALUES (?, ?, ?)";
 	    int zerrendaID = -1;
 
 	    try (Connection conn = DB_konexioa.getConexion();
@@ -237,6 +243,9 @@ public class DB_kudeatzailea {
 	}
 
 	public boolean ErlazioaFilmZerrendak(int pZerrendaID, int pFilmID) {
+		if(inTestMode) {
+			throw new UnsupportedOperationException("Proba modua: DB ez da erabiliko");
+		}
 		String queryRelacion = "INSERT INTO parteIzan (ZerrendaID, FilmID) VALUES (?, ?)";
 	    boolean ondo = false;
 
@@ -259,7 +268,10 @@ public class DB_kudeatzailea {
 	}
 
 	public boolean kenduFilmaZerrendatik (int pZerrendaID, int pFilmID) {
-	    String queryEliminar = "DELETE FROM parteIzan WHERE ZerrendaID = ? AND FilmID = ?";
+		if(inTestMode) {
+			throw new UnsupportedOperationException("Proba modua: DB ez da erabiliko");
+		}
+		String queryEliminar = "DELETE FROM parteIzan WHERE ZerrendaID = ? AND FilmID = ?";
 	    boolean ondo = false;
 
 	    try (Connection conn = DB_konexioa.getConexion();
@@ -282,7 +294,10 @@ public class DB_kudeatzailea {
 	}
 	
 	public boolean kenduZerrenda(int pZerrendaID) {
-	    String queryEliminarFilmazerrendan = "DELETE FROM parteIzan WHERE ZerrendaID = ?";
+		if(inTestMode) {
+			throw new UnsupportedOperationException("Proba modua: DB ez da erabiliko");
+		}
+		String queryEliminarFilmazerrendan = "DELETE FROM parteIzan WHERE ZerrendaID = ?";
 	    String queryEliminarFilmzerrenda = "DELETE FROM filmzerrenda WHERE zerrendaID = ?";
 	    boolean ondo = false;
 
@@ -317,7 +332,10 @@ public class DB_kudeatzailea {
 
 	
 	public boolean xehetasunakAldatuZerrenda(int pZerrendaID, String pNuevoNombre, boolean pNuevaPrivacidad) {
-	    String queryActualizar = "UPDATE FilmZerrenda SET izena = ?, pribazitatea = ? WHERE ZerrendaID = ?";
+		if(inTestMode) {
+			throw new UnsupportedOperationException("Proba modua: DB ez da erabiliko");
+		}
+		String queryActualizar = "UPDATE FilmZerrenda SET izena = ?, pribazitatea = ? WHERE ZerrendaID = ?";
 	    boolean ondo = false;
 
 	    try (Connection conn = DB_konexioa.getConexion();
@@ -513,6 +531,12 @@ public class DB_kudeatzailea {
 	
 	public void erabiltzaileaEzabatu(String nan) {
 		String query = "DELETE FROM erabiltzaile WHERE NAN = ?";
+		
+		Erabiltzaile erab = GestoreErabiltzaile.getGE().erabiltzaileaBilatuNAN(nan);
+		for (FilmZerrenda z : erab.getZerrendak()) {
+			kenduZerrenda(z.getID());
+		}
+		
 		try {
 			Connection conn = DB_konexioa.getConexion();
             PreparedStatement stmt = conn.prepareStatement(query);
