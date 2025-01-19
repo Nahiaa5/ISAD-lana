@@ -56,15 +56,4 @@ public class Puntuazioa {
     		return false;
     	}
     }
-    
-    @Override
-    public String toString() {
-        return "Puntuazioa{" +
-                "NAN='" + NAN + '\'' +
-                ", filmID=" + filmID +
-                ", puntuazioa=" + puntuazioa +
-                ", iruzkina='" + iruzkina + '\'' +
-                ", data=" + data +
-                '}';
-    }
 }
