@@ -5,6 +5,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 
 public class PantailaIkusi extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -36,8 +38,33 @@ public class PantailaIkusi extends JFrame {
         setVisible(true);
 
         if (pathBideoa != null) {
-            bideoaJarri(pathBideoa);
+            try {
+                File tempVideoFile = extractResourceToFile(pathBideoa);
+                bideoaJarri(tempVideoFile.getAbsolutePath());
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.err.println("No se pudo extraer el video: " + pathBideoa);
+            }
         }
+    }
+    
+    private File extractResourceToFile(String resourcePath) throws Exception {
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(resourcePath);
+        if (inputStream == null) {
+            throw new IllegalArgumentException("El recurso no existe: " + resourcePath);
+        }
+
+        File tempFile = File.createTempFile("video", ".mp4");
+        tempFile.deleteOnExit();
+
+        try (FileOutputStream outputStream = new FileOutputStream(tempFile)) {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+        }
+        return tempFile;
     }
 
     public void bideoaJarri(String pathBideoa) {

@@ -82,9 +82,9 @@ CREATE TABLE `film` (
 --
 
 INSERT INTO `film` (`filmID`, `izenburua`, `aktoreak`, `urtea`, `generoa`, `zuzendaria`, `adminNAN`, `katalogoan`, `puntuazioaBb`, `path`) VALUES
-(1, 'La la land', 'Ryan Gosling, Emma Stone', '2016', 'Musikala', 'Damien Chazelle', '79224675A', 1, 0, 'resources/LaLaLand.mp4'),
-(2, 'Interstellar', 'Matthew McConaughey, Anne Hathaway, Jessica Chastain', '2014', 'Adventure, Drama, Sci-Fi', 'Christopher Nolan', '79224675A', 1, 0, 'resources/Interstellar.mp4'),
-(3, 'A Minecraft Movie', 'Jason Momoa, Jack Black', '2025', 'Akzioa', 'Jared Hess', '79224675A', 1, 0, 'resources/AMinecraftMovie.mp4');
+(1, 'La la land', 'Ryan Gosling, Emma Stone', '2016', 'Musikala', 'Damien Chazelle', '79224675A', 1, 0, 'LaLaLand.mp4'),
+(2, 'Interstellar', 'Matthew McConaughey, Anne Hathaway, Jessica Chastain', '2014', 'Adventure, Drama, Sci-Fi', 'Christopher Nolan', '79224675A', 1, 0, 'Interstellar.mp4'),
+(3, 'A Minecraft Movie', 'Jason Momoa, Jack Black', '2025', 'Akzioa', 'Jared Hess', '79224675A', 1, 0, 'AMinecraftMovie.mp4');
 
 -- --------------------------------------------------------
 
