@@ -1,6 +1,5 @@
 package Bista;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,7 +16,6 @@ import java.awt.Font;
 public class ZerrendaXehetasunak extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private static ZerrendaXehetasunak nZX = null;
 	private JPanel contentPane;
 	private JLabel lblNewLabel;
 	private JLabel lblNewLabel_1;
@@ -27,22 +25,7 @@ public class ZerrendaXehetasunak extends JFrame {
 	private JLabel lblNewLabel_3;
 	private int Id;
 	private JButton btnBueltatu;
-
-	/**
-	 * Launch the application.
-	 * 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ZerrendaXehetasunak frame = new ZerrendaXehetasunak();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 	/**
 	 * Create the frame.
 	 */

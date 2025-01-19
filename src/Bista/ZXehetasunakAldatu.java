@@ -1,7 +1,6 @@
 package Bista;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -34,23 +33,9 @@ public class ZXehetasunakAldatu extends JFrame {
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	/**
-	 * Launch the application.
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ZXehetasunakAldatu frame = new ZXehetasunakAldatu();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	/**
 	 * Create the frame.
 	 */
+	
 	public ZXehetasunakAldatu(int ID) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
