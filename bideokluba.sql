@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-01-2025 a las 12:01:39
+-- Tiempo de generación: 19-01-2025 a las 15:51:27
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -119,17 +119,6 @@ CREATE TABLE `hasdata` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `kudeatu`
---
-
-CREATE TABLE `kudeatu` (
-  `erabiltzaileNAN` varchar(10) NOT NULL,
-  `adminNAN` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `parteizan`
 --
 
@@ -199,13 +188,6 @@ ALTER TABLE `hasdata`
   ADD PRIMARY KEY (`data`);
 
 --
--- Indices de la tabla `kudeatu`
---
-ALTER TABLE `kudeatu`
-  ADD PRIMARY KEY (`erabiltzaileNAN`,`adminNAN`),
-  ADD KEY `adminNAN` (`adminNAN`);
-
---
 -- Indices de la tabla `parteizan`
 --
 ALTER TABLE `parteizan`
@@ -258,13 +240,6 @@ ALTER TABLE `film`
 --
 ALTER TABLE `filmzerrenda`
   ADD CONSTRAINT `filmzerrenda_ibfk_1` FOREIGN KEY (`erabiltzaileNAN`) REFERENCES `erabiltzaile` (`NAN`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `kudeatu`
---
-ALTER TABLE `kudeatu`
-  ADD CONSTRAINT `kudeatu_ibfk_1` FOREIGN KEY (`erabiltzaileNAN`) REFERENCES `erabiltzaile` (`NAN`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `kudeatu_ibfk_2` FOREIGN KEY (`adminNAN`) REFERENCES `erabiltzaile` (`NAN`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `parteizan`

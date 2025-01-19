@@ -31,6 +31,8 @@ class GestoreKatalogoZabalduaTest {
 		DB_kudeatzailea.setTestMode(true);
 		gKZ = GestoreKatalogoZabaldua.getnZK();
 		gF = GestoreFilm.getKN();
+		gF.getFilmak().clear();
+
 		
         film1 = new Film(1, "La la land", "Ryan Gosling", "2021", "Musikala", "Damien Chazelle", "79224675A", true, 4.00, "resources/LaLaLand.mp4"); 
         film2 = new Film(2, "Interstellar", "Matthew McConaughey, Jessica Chastain", "2014", "Zientzia fikzioa", "Christopher Nolan", "79224675A", true, 2.50, "resources/Interstellar.mp4");  
@@ -42,7 +44,6 @@ class GestoreKatalogoZabalduaTest {
 	void tearDown() throws Exception {
 		DB_kudeatzailea.setTestMode(false);
 		gKZ.setDatuak(null);
-		gF.getFilmak().clear();
 	}
 	
 	public boolean izenburuaDauka(String izenb, JSONArray filmak) {
@@ -127,7 +128,7 @@ class GestoreKatalogoZabalduaTest {
 			gKZ.bidaliEskaera();
 			fail("Ez da saiatu filma gehitzen");
 		}catch(UnsupportedOperationException e) {
-			assertEquals("Proba modua: DB ez da erabiliko", e.getMessage());;
+			assertEquals("Proba modua: DB ez da erabiliko", e.getMessage());
 		}
 	}
 

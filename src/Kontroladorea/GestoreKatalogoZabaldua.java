@@ -7,8 +7,6 @@ import java.net.URL;
 import java.util.Observable;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import Bista.KZ_XehetasunakIkusi;
-import Kontroladorea.GestoreFilm;
 
 @SuppressWarnings("deprecation")
 public class GestoreKatalogoZabaldua{
