@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-01-2025 a las 17:14:47
+-- Tiempo de generación: 19-01-2025 a las 12:01:39
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -89,17 +89,6 @@ INSERT INTO `film` (`filmID`, `izenburua`, `aktoreak`, `urtea`, `generoa`, `zuze
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `filmazerrendan`
---
-
-CREATE TABLE `filmazerrendan` (
-  `ZerrendaID` int(11) NOT NULL,
-  `FilmID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `filmzerrenda`
 --
 
@@ -109,6 +98,13 @@ CREATE TABLE `filmzerrenda` (
   `izena` varchar(30) DEFAULT NULL,
   `pribazitatea` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `filmzerrenda`
+--
+
+INSERT INTO `filmzerrenda` (`zerrendaID`, `erabiltzaileNAN`, `izena`, `pribazitatea`) VALUES
+(32, '12345678Z', 'test', 1);
 
 -- --------------------------------------------------------
 
@@ -138,9 +134,17 @@ CREATE TABLE `kudeatu` (
 --
 
 CREATE TABLE `parteizan` (
-  `zerrendaID` int(11) NOT NULL,
-  `filmID` int(11) NOT NULL
+  `ZerrendaID` int(11) NOT NULL,
+  `FilmID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `parteizan`
+--
+
+INSERT INTO `parteizan` (`ZerrendaID`, `FilmID`) VALUES
+(32, 1),
+(32, 2);
 
 -- --------------------------------------------------------
 
@@ -182,13 +186,6 @@ ALTER TABLE `film`
   ADD KEY `adminNAN` (`adminNAN`);
 
 --
--- Indices de la tabla `filmazerrendan`
---
-ALTER TABLE `filmazerrendan`
-  ADD PRIMARY KEY (`ZerrendaID`,`FilmID`),
-  ADD KEY `FilmID` (`FilmID`);
-
---
 -- Indices de la tabla `filmzerrenda`
 --
 ALTER TABLE `filmzerrenda`
@@ -212,8 +209,8 @@ ALTER TABLE `kudeatu`
 -- Indices de la tabla `parteizan`
 --
 ALTER TABLE `parteizan`
-  ADD PRIMARY KEY (`zerrendaID`,`filmID`),
-  ADD KEY `filmID` (`filmID`);
+  ADD PRIMARY KEY (`ZerrendaID`,`FilmID`),
+  ADD KEY `FilmID` (`FilmID`);
 
 --
 -- Indices de la tabla `puntuazioa`
@@ -236,7 +233,7 @@ ALTER TABLE `film`
 -- AUTO_INCREMENT de la tabla `filmzerrenda`
 --
 ALTER TABLE `filmzerrenda`
-  MODIFY `zerrendaID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `zerrendaID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- Restricciones para tablas volcadas
@@ -257,13 +254,6 @@ ALTER TABLE `film`
   ADD CONSTRAINT `film_ibfk_1` FOREIGN KEY (`adminNAN`) REFERENCES `erabiltzaile` (`NAN`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `filmazerrendan`
---
-ALTER TABLE `filmazerrendan`
-  ADD CONSTRAINT `filmazerrendan_ibfk_1` FOREIGN KEY (`ZerrendaID`) REFERENCES `filmzerrenda` (`zerrendaID`),
-  ADD CONSTRAINT `filmazerrendan_ibfk_2` FOREIGN KEY (`FilmID`) REFERENCES `film` (`filmID`);
-
---
 -- Filtros para la tabla `filmzerrenda`
 --
 ALTER TABLE `filmzerrenda`
@@ -280,8 +270,8 @@ ALTER TABLE `kudeatu`
 -- Filtros para la tabla `parteizan`
 --
 ALTER TABLE `parteizan`
-  ADD CONSTRAINT `parteizan_ibfk_1` FOREIGN KEY (`zerrendaID`) REFERENCES `filmzerrenda` (`zerrendaID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `parteizan_ibfk_2` FOREIGN KEY (`filmID`) REFERENCES `film` (`filmID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `parteizan_ibfk_1` FOREIGN KEY (`ZerrendaID`) REFERENCES `filmzerrenda` (`zerrendaID`),
+  ADD CONSTRAINT `parteizan_ibfk_2` FOREIGN KEY (`FilmID`) REFERENCES `film` (`filmID`);
 
 --
 -- Filtros para la tabla `puntuazioa`
